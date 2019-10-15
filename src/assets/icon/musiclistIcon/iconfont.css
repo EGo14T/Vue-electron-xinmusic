@@ -7,7 +7,7 @@
   url('iconfont.svg?t=1571039136546#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-.iconfont {
+.iconfont-list {
   cursor:Pointer;
   padding-left: 10px;
   color: #adafb2;
@@ -18,7 +18,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.iconfont:hover{
+.iconfont-list:hover{
   color: #cfddc4;
 }
 

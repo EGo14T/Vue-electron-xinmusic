@@ -1,6 +1,5 @@
 <template>
-  <header>
-
+  <div class="leftmenu">
     <ul class="nav flex-column">
       <li class="nav-item">
         <div class="navtitle">推荐</div>
@@ -35,13 +34,11 @@
       <li class="nav-item">
         <div class="navtitleMusicList" @click="showAll = !showAll">创建的歌单</div>
           <div class="nav-citem nav-list" v-for='item in showList'>
-            <i :class="['iconfont' , addclass(item.status)]" @click="toMusciList(item.musicListID)">&ensp;{{item.musicListName}}</i>         
+            <i :class="['iconfont-list' , addclass(item.status)]" @click="toMusciList(item.musicListID)">&ensp;{{item.musicListName}}</i>         
           </div>
       </li>
     </ul>
-
-      
-  </header>
+  </div>
 </template>
 
 <script>
@@ -204,6 +201,7 @@ export default {
   bottom: 1px;
 }
 
+
 .nav-citem:hover  .navtext{
  
   color: #cfddc4;
@@ -215,7 +213,8 @@ export default {
 }
 
 .nav-list{
-  padding-top:3px;
+  padding-top:4px;
+  padding-bottom: 4px;
 }
 
 

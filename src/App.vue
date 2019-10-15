@@ -8,14 +8,16 @@
       <LeftMenu></LeftMenu>
     </div>
 
-    
-
     <div class="container">
         <router-view></router-view>
     </div>
     <div class="footer">
-        <musicplayer></musicplayer>
+        <footerbar></footerbar>
     </div>
+
+
+
+
     
   </div>  
 </template>
@@ -24,12 +26,14 @@
 import Header from './components/Header'
 import Music from './components/music'
 import LeftMenu from './components/LeftMeun'
+import footerbar from './components/footer'
 
 export default {
   components:{
     'appHeader':Header,
     'musicplayer':Music,
-    'LeftMenu':LeftMenu
+    'LeftMenu':LeftMenu,
+    'footerbar': footerbar
   }
 
 }
@@ -37,7 +41,7 @@ export default {
 
 <style>
 .app{
-  height: 1000px;
+  height: 100%;
 }
 
 .leftbar{
@@ -45,7 +49,7 @@ export default {
   left: 0;
   top: 50px;
   width: 199px;
-  height: 543px;
+  height: 563px;
 
   overflow-y:scroll;
 
@@ -59,7 +63,7 @@ export default {
   background: rgb(22, 24, 28);
   
   width: 830px;
-  height: 543px;
+  height: 563px;
   overflow-y:scroll
 
 }
@@ -71,6 +75,7 @@ export default {
         width: 100%;
    z-index: 9999;
    background: #ffffff;
+   height: 56px;
 }
 
 .header{

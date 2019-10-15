@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import 'hls.js'
 import '../src/assets/icon/musiclistIcon/iconfont.css'
+import '../src/assets/icon/playbarbtn/iconfont.css'
 
 Vue.config.productionTip = false
 
