@@ -26,15 +26,30 @@ export default {
       per: this.value //当前值
     };
   },
+
+  watch: {
+	    per : {
+	      handler (newVal) {
+          //console.log("当前"+newVal)
+          this.$emit('input', newVal);
+	      },
+	      immediate: true,
+	    }
+    },
+
+
   //渲染到页面的时候
   mounted() {
     this.slider = this.$refs.slider;
     this.thunk = this.$refs.trunk;
     this.process = this.$refs.process;
     var _this = this;
+
+
     this.thunk.onmousedown = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
+
       
       document.onmousemove = function(e) {
         // value, left, width
@@ -52,6 +67,7 @@ export default {
       document.onmouseup = function() {
         document.onmousemove = document.onmouseup = null;
       };
+      
       return false;
     };
 
@@ -59,28 +75,38 @@ export default {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-215;
-      console.log("点击到边框的距离"+e.clientX)
-      console.log("点击到dom的距离"+e.offsetX)
+      var newWidth = e.clientX-247;
+      console.log("process点击到边框的距离"+e.clientX)
+      console.log("process点击到dom的距离"+e.offsetX)
       console.log(newWidth);
 
-      var scale = newWidth / 300;
+      var scale = newWidth / 447;
       console.log(scale)
       console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
-
-
+      _this.per = Math.max(_this.per, _this.min);
+      _this.per = Math.min(_this.per, _this.max);
 
 
     }
 
     this.slider.onclick = function(e){
+      var width = parseInt(_this.width);
+      var disX = e.clientX;
       e.cancelBubble = true;
-       alert("未有")
+      var newWidth = e.clientX-247;
+      console.log("slider点击到边框的距离"+e.clientX)
+      console.log("slider点击到dom的距离"+e.offsetX)
+      console.log(newWidth);
+
+      var scale = newWidth / 447;
+      console.log(scale)
+      console.log(Math.ceil((_this.max - _this.min)*scale));
+      _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
+      _this.per = Math.max(_this.per, _this.min);
+      _this.per = Math.min(_this.per, _this.max);
+      
     }
-
-
-
 
   },
   computed: {
@@ -124,36 +150,36 @@ export default {
 .slider {
   position: relative;
   margin: 20px 0;
-  width: 300px;
-  height: 5px;
-  background: #e4e7ed;
+  width: 447px;
+  height: 4px;
+  background:#454546;
   border-radius: 5px;
-  cursor: pointer;
+  cursor:default;
 }
 .slider .process {
   position: absolute;
   left: 0;
   top: 0;
-  width: 112px;
-  height: 5px;
+  height: 4px;
   border-radius: 5px;
   background: #b82525;
 }
 .slider .thunk {
   position: absolute;
   left: 100px;
-  top: -7px;
-  width: 20px;
-  height: 20px;
+  top: -5px;
+  width: 14px;
+  height: 14px;
 }
 .slider .block {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  border: 4px solid #ffffff;
+  border: 5px solid #ffffff;
   background:#b82525;
-  position: relative;
-  top: 4px;
+
+  cursor:pointer;
+
 }
 .slider .tips {
   position: absolute;

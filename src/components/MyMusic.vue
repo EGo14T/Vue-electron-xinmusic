@@ -1,7 +1,15 @@
 <template>
   <div>
     <h1>我的音乐</h1>
-    <slider :min=0 :max=100 v-model = "per"></slider>
+  
+
+    <audio autoplay="autoplay"
+    controls="controls"
+    preload="auto"
+    src="https://ego1st.cn/1.mp3" ref="audio">
+  </audio>
+
+  <button @click="play()">bofang</button>
   </div>
 
   
@@ -9,16 +17,22 @@
 </template>
 
 <script>
-import timebar from '../components/progress-pc';
+
 
   export default {
     components: {
-      'slider' : timebar
+      
           
      },
      data(){
        return{
          per:''
+       }
+     },
+
+     methods:{
+       play(){
+         this.$refs.audio.play();
        }
      }
   }
