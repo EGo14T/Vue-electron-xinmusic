@@ -30,9 +30,18 @@ export default {
   watch: {
 	    per : {
 	      handler (newVal) {
-          //console.log("当前"+newVal)
+          console.log("当前"+newVal)
           this.$emit('input', newVal);
-	      },
+        },
+        deep:true,
+	      immediate: true,
+      },
+      value : {
+	      handler (newVal) {
+          this.per = newVal;
+          console.log("当前"+newVal)
+        },
+        deep:true,
 	      immediate: true,
 	    }
     },
@@ -56,7 +65,7 @@ export default {
         // 当value变化的时候，会通过计算属性修改left，width
 
         // 拖拽的时候获取的新width
-        var newWidth = e.clientX - disX + width;
+        var newWidth = e.clientX - 247;
         // 拖拽的时候得到新的百分比
         var scale = newWidth / _this.slider.offsetWidth;
         _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);

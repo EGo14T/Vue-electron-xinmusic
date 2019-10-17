@@ -8,10 +8,25 @@
         </div> 
 
         <div class="timebar row col-md-auto">   
-          <div class="starttime">
+           <slider class="timebar-process" :min=0 :max=100  v-model:value = "per"></slider>
         </div>
-           <slider class="timebar-process" :min=0 :max=100  v-model = "per"></slider>
-        </div>   
+
+        <div class="starttime timefont">
+             0{{ctimeMinutes}}:{{ctimeSeconds}}
+        </div>
+
+        <div class="endtime timefont">
+            {{ntimeMinutes}}:{{ntimeSeconds}}
+        </div>
+
+        <audio autoplay="autoplay"
+            preload="auto"
+            src="https://ego1st.cn/1.mp3" 
+            @canplay="canplay"
+            ref="audio">
+        </audio>
+
+
         </div>
 </template>
 
@@ -29,16 +44,44 @@ import timebar from '../components/timebar';
         data () {
             return {
                 timepercent: '10%',
-                per: 10,
-                pper: ''
-            };
+                per: '',
+                time: '',
+
+                secondNum: '',
+            }
         },
         computed: {
+            
 
+            //总长
+            ntimeMinutes:function(){
+                return parseInt(this.secondNum/60)
+            },
+
+            ntimeSeconds:function(){
+                return parseInt(this.secondNum%60)
+            },
+
+            //当前播放时间
+            ctimeMinutes:function(){
+                return parseInt(this.secondNum*this.per/100/60)
+            },
+
+            ctimeSeconds:function(){
+                return parseInt(this.secondNum*this.per/100%60)
+            }
+
+
+            
         },
         methods: {
             play(){
-                $refs.audio.play();
+                alert(this.$refs.audio.duration)
+                
+            },
+
+            canplay(){
+                this.secondNum = this.$refs.audio.duration
             }
 
         },
@@ -70,7 +113,7 @@ import timebar from '../components/timebar';
     width: 800px;
     color: #ffffff;
     position: absolute;
-    top: 2px;
+    top: 3px;
     left: 230px;
 
 }
@@ -89,6 +132,28 @@ import timebar from '../components/timebar';
     position: relative;
     left: 29px;
     top: 5px;
+}
+
+
+.starttime{
+    position: absolute;
+    left: 198px;
+
+}
+
+.endtime{
+    position: absolute;
+    left: 706px;
+
+}
+
+.timefont{
+    font-size: 12px;
+    color: rgba(255, 255, 255, .9);
+    height: 24px;
+    letter-spacing: 1px;
+    top: 20px;
+
 }
 
 
