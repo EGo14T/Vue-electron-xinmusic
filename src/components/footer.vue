@@ -2,27 +2,43 @@
 <template>
     <div class='footerbar row'>
         <div class="playbtn col-md-auto">   
-            <i class= "iconfont-playbar icon-shangyishou icon-space"></i>
-            <i class= "iconfont-playbar icon-bofang icon-space" @click="play()"></i> 
-            <i class= "iconfont-playbar icon-xiayishou icon-space"></i>
+            <i class= "iconfont-playbar iconfont-pSize icon-shangyishou icon-space" @click="test()"></i>
+            <i :class= "['iconfont-playbar', 'iconfont-pSize', 'icon-space',audioFlag?'icon-bofang':'icon-zanting' ]" @click="playAudio(audioFlag)"></i> 
+            <i class= "iconfont-playbar iconfont-pSize icon-xiayishou icon-space"></i>
         </div> 
 
         <div class="timebar row col-md-auto">   
-           <slider class="timebar-process" :min=0 :max=100  v-model:value = "per"></slider>
+           <slider class="timebar-process" :min=0 :max=1000  v-model:value = "per" 
+           @getSlide="getSlideValue" 
+           @getSlideFlag="getSlideFlagValue">
+           </slider>
         </div>
 
+        <div class="volumebar row col-md-auto">
+            <volumebar class="timebar-process" :min=0 :max=100  v-model:value = "perr"
+            @getVolume="getVolumeValue">
+            </volumebar>
+        </div>
+
+        <!--当前音乐时间-->
         <div class="starttime timefont">
-             0{{ctimeMinutes}}:{{ctimeSeconds}}
+             {{ctimeMinutes | addZero}}:{{ctimeSeconds | addZero}}
         </div>
 
+        <!--音乐总长-->
         <div class="endtime timefont">
-            {{ntimeMinutes}}:{{ntimeSeconds}}
+            {{ntimeMinutes | addZero}}:{{ntimeSeconds | addZero}}
         </div>
 
-        <audio autoplay="autoplay"
+        <div class="volumebarbtn">
+            <i class= "iconfont-playbar iconfont-vSize icon-shengyinkai icon-space"></i>
+        </div>
+
+        <audio
             preload="auto"
             src="https://ego1st.cn/1.mp3" 
             @canplay="canplay"
+            @timeupdate="updatetime"
             ref="audio">
         </audio>
 
@@ -33,58 +49,116 @@
 <script>
 
 import timebar from '../components/timebar';
-
-
+import volumebar from '../components/VolumeProgress';
 
     export default {
         components: {
-            'slider' : timebar
+            'slider' : timebar,
+            'volumebar':volumebar
+
 
         },
         data () {
             return {
-                timepercent: '10%',
                 per: '',
-                time: '',
-
+                perr:'60',
+                slide: '',
+                nowTime: '',
                 secondNum: '',
+                audioFlag: 'false',
+                slideFlag: 'true',
             }
         },
         computed: {
-            
-
             //总长
             ntimeMinutes:function(){
-                return parseInt(this.secondNum/60)
+                return this.secondNum/60 | 0
             },
 
             ntimeSeconds:function(){
-                return parseInt(this.secondNum%60)
+                return this.secondNum%60 | 0
             },
 
             //当前播放时间
             ctimeMinutes:function(){
-                return parseInt(this.secondNum*this.per/100/60)
+                return this.nowTime/60 | 0;
             },
 
             ctimeSeconds:function(){
-                return parseInt(this.secondNum*this.per/100%60)
+                return this.nowTime%60 | 0;
             }
-
-
-            
+ 
         },
         methods: {
-            play(){
-                alert(this.$refs.audio.duration)
+            playAudio(flag){
+                if(flag){
+                    this.$refs.audio.play();
+                    this.audioFlag = !this.audioFlag
+                }else{
+                    this.$refs.audio.pause();
+                    this.audioFlag = !this.audioFlag
+                }
                 
+            },
+
+            test(){
+                let varint = this.secondNum | 0;
+                let minutes = varint / 60 | 0;
+                let seconds = varint % 60 | 0;
+
+                console.log(varint);
+                console.log(minutes);
+                console.log(seconds);
             },
 
             canplay(){
                 this.secondNum = this.$refs.audio.duration
+            },
+
+            updatetime(e){
+                if(this.slideFlag){
+                    this.nowTime = e.target.currentTime;
+                    this.per = this.nowTime.toFixed(4) / this.secondNum * 1000;
+                }
+                
+            },
+
+            getSlideValue(data){
+                this.slide = data
+                this.$refs.audio.currentTime = this.secondNum * this.slide / 1000 ;
+                //console.log("slide值"+this.slide)
+            },
+
+            getSlideFlagValue(data){
+                console.log(data)
+                this.slideFlag = data;
+            },
+
+            getVolumeValue(data){
+                
+                this.$refs.audio.volume =  data / 100;
             }
 
         },
+
+        watch:{
+            per: function(){
+               this.nowTime = this.secondNum * this.per / 1000;
+               console.log("当前时间"+this.nowTime);
+            }
+            
+        },
+
+        filters:{
+            addZero:function(value){
+                if(value<10){
+                    return '0'+value;
+                }else{
+                    return value;
+                }
+
+            }
+        }
     }
 </script>
 
@@ -154,6 +228,18 @@ import timebar from '../components/timebar';
     letter-spacing: 1px;
     top: 20px;
 
+}
+
+.volumebarbtn{
+    position:absolute;
+    top: 17px;
+    left: 745px;
+}
+
+.volumebar{
+    position: relative;
+    left: 620px;
+    top: 3px;
 }
 
 

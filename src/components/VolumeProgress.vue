@@ -1,8 +1,8 @@
 <template>
-  <div class="slider" ref="slider">
-    <div class="process" ref="process" :style="{width}"></div>
-    <div class="thunk" ref="trunk" :style="{left}">
-      <div class="block"></div>
+  <div class="volSlider" ref="volSlider">
+    <div class="volProcess" ref="volProcess" :style="{width}"></div>
+    <div class="thunk" ref="volTrunk" :style="{left}">
+      <div class="volBlock"></div>
       <!--<div class="tips">
         <span>{{per}}</span>
         <i class="fas fa-caret-down"></i>
@@ -17,12 +17,12 @@
  * v-model 对当前值进行双向绑定实时显示拖拽进度
  * */
 export default {
-  props: ["min", "max", "value", "slidetime"],
+  props: ["min", "max", "value"],
   data() {
     return {
-      slider: null, //滚动条DOM元素
+      volSlider: null, //滚动条DOM元素
       thunk: null, //拖拽DOM元素
-      process:null,
+      volProcess:null,
       per: this.value, //当前值
       slide: ''
     };
@@ -36,7 +36,7 @@ export default {
         deep:true,
 	      immediate: true,
       },
-      value : {
+        value : {
 	      handler (newVal) {
           this.per = newVal;       
         },
@@ -50,9 +50,9 @@ export default {
 
   //渲染到页面的时候
   mounted() {
-    this.slider = this.$refs.slider;
-    this.thunk = this.$refs.trunk;
-    this.process = this.$refs.process;
+    this.volSlider = this.$refs.volSlider;
+    this.thunk = this.$refs.volTrunk;
+    this.volProcess = this.$refs.volProcess;
     var _this = this;
 
 
@@ -66,91 +66,85 @@ export default {
         // 当value变化的时候，会通过计算属性修改left，width
 
         // 拖拽的时候获取的新width
-        var newWidth = e.clientX - 247;
+        var newWidth = e.clientX - 784;
         // 拖拽的时候得到新的百分比
-        var scale = newWidth / _this.slider.offsetWidth;
+        var scale = newWidth / _this.volSlider.offsetWidth;
         _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
         _this.per = Math.max(_this.per, _this.min);
         _this.per = Math.min(_this.per, _this.max);
 
-        
-        console.log("滑动事件"+_this.per)
-        _this.$emit('getSlideFlag',false);
-
-        
+        _this.$emit('getVolume',_this.per);
+  
+        //console.log("滑动事件"+_this.per)
       };
       document.onmouseup = function() {
-        console.log("鼠标抬起")
-        _this.$emit('getSlideFlag',true);
-        _this.$emit('getSlide',_this.per);
+          _this.$emit('getVolume',_this.per);
+        //console.log("鼠标抬起")
         document.onmousemove = document.onmouseup = null;
       };
       
       return false;
     };
 
-    this.process.onclick = function(e){
+    this.volProcess.onclick = function(e){
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-247;
-      console.log("process点击到边框的距离"+e.clientX)
-      console.log("process点击到dom的距离"+e.offsetX)
-      console.log(newWidth);
+      var newWidth = e.clientX-784;
+      //console.log("volProcess点击到边框的距离"+e.clientX)
+      //console.log("volProcess点击到dom的距离"+e.offsetX)
+      //console.log(newWidth);
 
-      var scale = newWidth / 447;
-      console.log(scale)
-      console.log(Math.ceil((_this.max - _this.min)*scale));
+      var scale = newWidth / 100;
+      //console.log(scale)
+      //console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-    
-     _this.$emit('getSlide',_this.per);
-
+      _this.$emit('getVolume',_this.per);
 
     }
 
-    this.slider.onclick = function(e){
+    this.volSlider.onclick = function(e){
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-247;
-      console.log("slider点击到边框的距离"+e.clientX)
-      console.log("slider点击到dom的距离"+e.offsetX)
-      console.log(newWidth);
+      var newWidth = e.clientX-784;
+      //console.log("volSlider点击到边框的距离"+e.clientX)
+      //console.log("volSlider点击到dom的距离"+e.offsetX)
+      //console.log(newWidth);
 
-      var scale = newWidth / 447;
-      console.log(scale)
-      console.log(Math.ceil((_this.max - _this.min)*scale));
+      var scale = newWidth / 100;
+      //console.log(scale)
+      //console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-
-      _this.$emit('getSlide',_this.per);
+      _this.$emit('getVolume',_this.per);
       
     }
 
   },
   computed: {
-    // 设置一个百分比，提供计算slider进度宽度和trunk的left值
-    // 对应公式为  当前值-最小值/最大值-最小值 = slider进度width / slider总width
-    // trunk left =  slider进度width + trunk宽度/2
+    // 设置一个百分比，提供计算volSlider进度宽度和volTrunk的left值
+    // 对应公式为  当前值-最小值/最大值-最小值 = volSlider进度width / volSlider总width
+    // volTrunk left =  volSlider进度width + volTrunk宽度/2
     scale() {
       return (this.per - this.min) / (this.max - this.min);
     },
     width() {
-      if (this.slider) {
-        return this.slider.offsetWidth * this.scale + "px";
+      if (this.volSlider) {
+        return this.volSlider.offsetWidth * this.scale + "px";
       } else {
         return 0 + "px";
       }
     },
     left() {
-      if (this.slider) {
+      if (this.volSlider) {
         return (
-          this.slider.offsetWidth * this.scale -
+          this.volSlider.offsetWidth * this.scale -
           this.thunk.offsetWidth / 2 +
           "px"
         );
@@ -166,21 +160,24 @@ export default {
   margin: 100px auto 0;
   width: 80%;
 }
+
 .clear:after {
   content: "";
-  display: block;
+  display: volBlock;
   clear: both;
 }
-.slider {
+
+.volSlider {
   position: relative;
   margin: 20px 0;
-  width: 447px;
+  width: 100px;
   height: 4px;
   background:#454546;
   border-radius: 5px;
   cursor:default;
 }
-.slider .process {
+
+.volSlider .volProcess {
   position: absolute;
   left: 0;
   top: 0;
@@ -188,14 +185,27 @@ export default {
   border-radius: 5px;
   background: #b82525;
 }
-.slider .thunk {
+
+.volSlider .thunk {
   position: absolute;
   left: 100px;
   top: -5px;
   width: 14px;
   height: 14px;
+
+  z-index: -99999;
 }
-.slider .block {
+
+.volSlider:hover  .thunk{
+    z-index: 10;  
+}
+
+.volSlider:active .thunk{
+    z-index: 10;  
+}
+
+
+.volSlider .volBlock {
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -205,7 +215,7 @@ export default {
   cursor:pointer;
 
 }
-.slider .tips {
+.volSlider .tips {
   position: absolute;
   left: -7px;
   bottom: 30px;
@@ -217,7 +227,8 @@ export default {
   height: 24px;
   color: #fff;
 }
-.slider .tips i {
+
+.volSlider .tips i {
   position: absolute;
   margin-left: -5px;
   left: 50%;

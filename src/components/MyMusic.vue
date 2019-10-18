@@ -54,7 +54,7 @@ import { timeout } from 'q';
 
        jump(){
          var audio = this.$refs.audio;
-         audio.currentTime = 20;
+         audio.volume = 0.6;
        },
 
        getTime(){

@@ -7,16 +7,30 @@
   url('iconfont.svg?t=1571109702481#iconfont') format('svg'); /* iOS 4.1- */
 }
 
+
+
+
+
 .iconfont-playbar {
   cursor:Pointer;
   padding-left: 10px;
   color: #adafb2;
   font-family: "iconfont" !important;
-  font-size: 35px;
+  
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.iconfont-pSize{
+  font-size: 35px;
+}
+
+.iconfont-vSize{
+  font-size: 16px;
+}
+
+
 
 .iconfont-playbar:hover{
   color: #cfddc4;
