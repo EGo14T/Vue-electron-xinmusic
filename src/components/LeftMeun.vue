@@ -32,7 +32,7 @@
 
     <ul class="nav flex-column">
       <li class="nav-item">
-        <div class="navtitleMusicList" @click="showAll = !showAll">创建的歌单</div>
+        <div class="navtitleMusicList" @click="showAll = !showAll">创建的歌单<button @click.stop="ttt()">1</button></div>
           <div class="nav-citem nav-list" v-for='item in showList'>
             <i :class="['iconfont-list' , addclass(item.status)]" @click="toMusciList(item.musicListID)">&ensp;{{item.musicListName}}</i>         
           </div>
@@ -171,7 +171,11 @@ export default {
         case 2:
             return 'icon-lock';
     }
-}
+  },
+
+  ttt(){
+    alert(111);
+  }
  }
 
 }

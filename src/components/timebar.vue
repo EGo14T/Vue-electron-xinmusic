@@ -74,13 +74,13 @@ export default {
         _this.per = Math.min(_this.per, _this.max);
 
         
-        console.log("滑动事件"+_this.per)
+        //console.log("滑动事件"+_this.per)
         _this.$emit('getSlideFlag',false);
 
         
       };
       document.onmouseup = function() {
-        console.log("鼠标抬起")
+        //console.log("鼠标抬起")
         _this.$emit('getSlideFlag',true);
         _this.$emit('getSlide',_this.per);
         document.onmousemove = document.onmouseup = null;
@@ -94,13 +94,13 @@ export default {
       var disX = e.clientX;
       e.cancelBubble = true;
       var newWidth = e.clientX-247;
-      console.log("process点击到边框的距离"+e.clientX)
-      console.log("process点击到dom的距离"+e.offsetX)
-      console.log(newWidth);
+      //console.log("process点击到边框的距离"+e.clientX)
+      //console.log("process点击到dom的距离"+e.offsetX)
+      //console.log(newWidth);
 
       var scale = newWidth / 447;
-      console.log(scale)
-      console.log(Math.ceil((_this.max - _this.min)*scale));
+      //console.log(scale)
+      //console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
@@ -116,13 +116,13 @@ export default {
       var disX = e.clientX;
       e.cancelBubble = true;
       var newWidth = e.clientX-247;
-      console.log("slider点击到边框的距离"+e.clientX)
-      console.log("slider点击到dom的距离"+e.offsetX)
-      console.log(newWidth);
+      //console.log("slider点击到边框的距离"+e.clientX)
+      //console.log("slider点击到dom的距离"+e.offsetX)
+      //console.log(newWidth);
 
       var scale = newWidth / 447;
-      console.log(scale)
-      console.log(Math.ceil((_this.max - _this.min)*scale));
+      //console.log(scale)
+      //console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);

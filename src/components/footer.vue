@@ -2,9 +2,9 @@
 <template>
     <div class='footerbar row'>
         <div class="playbtn col-md-auto">   
-            <i class= "iconfont-playbar iconfont-pSize icon-shangyishou icon-space" @click="test()"></i>
+            <i class= "iconfont-playbar iconfont-pSize icon-shangyishou icon-space" @click="last()"></i>
             <i :class= "['iconfont-playbar', 'iconfont-pSize', 'icon-space',audioFlag?'icon-bofang':'icon-zanting' ]" @click="playAudio(audioFlag)"></i> 
-            <i class= "iconfont-playbar iconfont-pSize icon-xiayishou icon-space"></i>
+            <i class= "iconfont-playbar iconfont-pSize icon-xiayishou icon-space"@click="next()"></i>
         </div> 
 
         <div class="timebar row col-md-auto">   
@@ -39,6 +39,7 @@
             src="https://ego1st.cn/1.mp3" 
             @canplay="canplay"
             @timeupdate="updatetime"
+            autobuffer
             ref="audio">
         </audio>
 
@@ -86,7 +87,8 @@ import volumebar from '../components/VolumeProgress';
 
             ctimeSeconds:function(){
                 return this.nowTime%60 | 0;
-            }
+            },
+
  
         },
         methods: {
@@ -137,6 +139,13 @@ import volumebar from '../components/VolumeProgress';
             getVolumeValue(data){
                 
                 this.$refs.audio.volume =  data / 100;
+            },
+
+            next(){
+                this.$refs.audio.src = "https://ego1st.cn/2.mp3";
+                this.audioFlag = false;
+                this.$refs.audio.play();
+
             }
 
         },
