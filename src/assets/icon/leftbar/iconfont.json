@@ -1,0 +1,58 @@
+{
+  "id": "1474682",
+  "name": "leftbar",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "159235",
+      "name": "本地音乐",
+      "font_class": "bendiyinle",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "621161",
+      "name": "加",
+      "font_class": "jia",
+      "unicode": "e6e0",
+      "unicode_decimal": 59104
+    },
+    {
+      "icon_id": "866517",
+      "name": "喜欢",
+      "font_class": "xihuan",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "5111456",
+      "name": "ic_myfriends",
+      "font_class": "ic_myfriends",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "7281647",
+      "name": "ic_add music",
+      "font_class": "ic_addmusic",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
+      "icon_id": "9644268",
+      "name": "下  拉",
+      "font_class": "xiala",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    },
+    {
+      "icon_id": "11513583",
+      "name": "下  拉",
+      "font_class": "xiala-copy",
+      "unicode": "e6f7",
+      "unicode_decimal": 59127
+    }
+  ]
+}

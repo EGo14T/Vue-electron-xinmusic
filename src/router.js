@@ -6,6 +6,7 @@ import Friends from './components/Friends'
 import Users from './components/Users'
 import Login from './components/Login'
 import Register from './components/Register'
+import MusicList from './components/MusicList'
 
 Vue.use(Router)
 
@@ -19,6 +20,8 @@ export default new Router({
     {path:'/about',component:Users},
     {path:'/login',component:Login},
     {path:'/register',component:Register},
+    {path:'/home',component:Home},
+    {path:'/musicList',component:MusicList},
     {path:'*',redirect:'/'}
 
   ]

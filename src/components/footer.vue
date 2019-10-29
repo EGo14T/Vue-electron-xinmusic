@@ -251,15 +251,4 @@ import volumebar from '../components/VolumeProgress';
     top: 3px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 </style>

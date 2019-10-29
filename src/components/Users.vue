@@ -15,7 +15,7 @@ export default {
     name: 'Users',
     data() {
         return {
-            users: ["hello","lamda","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn"]
+            users: ["hello","lamda","learn","learn","learn","learn","learn","learn","learn","learn","learn","learn"]
         }
     },
 
