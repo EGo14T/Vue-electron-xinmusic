@@ -21,9 +21,9 @@ function createWindow () {
   win = new BrowserWindow({ 
     width: 1030, 
     height: 670, 
-    resizable: false,
+    resizable: true,
     skipTaskbar: false,
-    frame: false,
+    frame: true,
     webPreferences: {
     nodeIntegration: true
   } })
@@ -106,9 +106,6 @@ app.on('ready', async () => {
      // 是否最小到托盘
 
 })
-
-
-
 
   createWindow()
 })

@@ -27,8 +27,8 @@
 
 
 
-        <div class="down">
-            2222
+        <div class="down" @click=getRequest()>
+            {{count}}
         </div>
     </div>
 </template>
@@ -47,9 +47,20 @@
             };
         },
         computed: {
-
+            count(){
+                return this.$store.state.count
+            },
         },
         methods: {
+
+            getRequest(){
+                this.$http.get("http://localhost:8082/my/music/musiclist/1")
+                .then((res) => {
+                console.log(res);
+                }).catch((err) => {
+                console.log(err);
+                });
+            }
 
         },
     }
