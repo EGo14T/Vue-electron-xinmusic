@@ -1,82 +1,19 @@
 <!DOCTYPE html>
-<html>
- 
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
-    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style></style>
 </head>
- 
+
+
 <body>
-    <div id="app">
-        <ul>
-            <li v-for="(item,index) in data1">
-                <span @click.stop="toggle(index)"></span>
-                <span>{{item.id}}</span>--
-                <span>{{item.name}}</span>
-                <div v-show="(cIndex == index) && dialog" class="modalDiaLog">dialog</div>
-            </li>
-        </ul>
-    </div>
- 
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                dialog:false,
-                cIndex: -1,
-                data1: [
-                    { id: 1, name: "a" },
-                    { id: 2, name: "b" },
-                    { id: 3, name: "c" },
-                    { id: 4, name: "d" },
-                ]
-            },
-            mounted(){
-                document.addEventListener('click', (e)=> {
-                    if (e.target.className != 'modalDiaLog') {
-                        this.dialog = false;
-                    }
-                })
-            },
-            methods:{
-                toggle(index){
-                    this.cIndex = index;
-                    this.dialog = !this.dialog;
-                }
-            }
-        })
-    </script>
+
+    <header>11111111111111</header>
+    
 </body>
- 
 </html>
-<style>
-    ul,
-    li {
-        list-style: none;
-    }
- 
-    li {
-        position: relative;
-        height: 40px;
-        line-height: 40px;
-        border-bottom: 1px solid #000;
-    }
- 
-    li span:first-child {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background-color: #000;
-    }
-    li div{
-        position: absolute;
-        left: 20px;
-        top: 0;
-        z-index: 1000;
-        width: 100px;
-        height: 100px;
-        border: 1px solid red;
-        background-color: #fff;
-    }
-</style>

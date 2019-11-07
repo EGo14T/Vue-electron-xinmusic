@@ -71,7 +71,7 @@ export default {
     },
 
     minToTask(){
-      ipcRenderer.send('minToTask');
+      ipcRenderer.send('minMax');
     },
 
     alert(){

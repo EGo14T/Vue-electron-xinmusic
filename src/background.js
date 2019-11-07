@@ -23,7 +23,7 @@ function createWindow () {
     height: 670, 
     resizable: true,
     skipTaskbar: false,
-    frame: true,
+    frame: false,
     webPreferences: {
     nodeIntegration: true
   } })
@@ -52,6 +52,15 @@ function createWindow () {
 
   ipcMain.on('minToTask', ()=> {
     win.hide()
+  })
+
+  ipcMain.on('minMax',()=>{
+    console.log(win.isMaximized())
+    if(win.isMaximized()){
+      win.unmaximize();
+    }else{
+      win.maximize();
+    }
   })
 
 }

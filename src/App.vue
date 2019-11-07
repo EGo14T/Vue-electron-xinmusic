@@ -49,7 +49,7 @@ export default {
   left: 0;
   top: 50px;
   width: 199px;
-  height: 563px;
+  height: calc(100% - 50px);;
 
   overflow-y:scroll;
 
