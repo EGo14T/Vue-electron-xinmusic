@@ -5,12 +5,12 @@
         <div class="navtitle">推荐</div>
         <div class="nav-citem">
           <i class="iconfont-leftbar icon-ic_addmusic">&ensp;</i>
-          <span class="navtext" @click="toURL()">发现音乐</span>
+          <span class="navtext" @click="toComponents('/MusicList')">发现音乐</span>
         </div>
 
         <div class="nav-citem">
           <i class="iconfont-leftbar icon-ic_myfriends">&ensp;</i>
-          <span class="navtext">朋友</span>
+          <span class="navtext" @click="toComponents('/friends')">朋友</span>
         </div>
       </li>
     </ul>
@@ -143,7 +143,8 @@ export default {
  },
  methods:{
    toMusciList(musicListID){
-     alert(musicListID)
+     //alert(musicListID)
+     toURL();
    },
    addclass(i){
     switch (i) {
@@ -160,8 +161,8 @@ export default {
     alert(123);
   },
 
-  toURL(){
-    this.$router.push({ path: '/musicList' })
+  toComponents(pathUrl){
+    this.$router.push({ path: pathUrl })
   },
 
  }

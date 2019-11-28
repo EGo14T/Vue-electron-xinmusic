@@ -8,7 +8,7 @@
       <LeftMenu></LeftMenu>
     </div>
 
-    <div class="container">
+    <div class="main">
         <router-view></router-view>
     </div>
     <div class="footer">
@@ -49,21 +49,21 @@ export default {
   left: 0;
   top: 50px;
   width: 199px;
-  height: calc(100% - 50px);;
+  height: calc(100% - 106px);
 
   overflow-y:scroll;
 
   background: rgb(22, 24, 28);
 }
 
-.container{
-   position:absolute;
+.main{
+  position:absolute;
   top: 50px;
   left: 200px;
   background: rgb(22, 24, 28);
   
-  width: 830px;
-  height: 563px;
+  width: calc(100% - 200px);;
+  height: calc(100% - 106px);
   overflow-y:scroll
 
 }

@@ -8,7 +8,7 @@
           </path>
         </svg>
 
-        <div class="navbar-brand" @click="alert()">昕音乐</div>
+        <div class="navbar-brand" @click="">昕音乐</div>
 
         <div class="history">
           <span class="historybtn">
@@ -73,10 +73,6 @@ export default {
     minToTask(){
       ipcRenderer.send('minMax');
     },
-
-    alert(){
-      alert(123);
-    }
 
   }
 

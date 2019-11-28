@@ -3,7 +3,7 @@
     <div>
         <div class="up">
             <div class="music-list-img">
-                <img :src="imgSrc" width="199px" height="199px">
+                <img :src="imgSrc" width="199px" height="199px" draggable="false">
             </div>
 
             <div class="music-list-info">
@@ -23,9 +23,6 @@
 
             </div>
         </div>
-
-
-
 
         <div class="down" @click=getRequest()>
             {{count}}
@@ -65,6 +62,7 @@
         },
     }
 </script>
+
 
 <style>
 
@@ -117,4 +115,5 @@
     right: 185px; 
     top: 3px;
 }
+
 </style>

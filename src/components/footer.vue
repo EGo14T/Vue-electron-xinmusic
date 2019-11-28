@@ -14,11 +14,11 @@
            </slider>
         </div>
 
-        <div class="volumebar row col-md-auto">
+        <!--<div class="volumebar row col-md-auto">
             <volumebar class="timebar-process" :min=0 :max=100  v-model:value = "perr"
             @getVolume="getVolumeValue">
             </volumebar>
-        </div>
+        </div>-->
 
         <!--当前音乐时间-->
         <div class="starttime timefont">
@@ -26,13 +26,13 @@
         </div>
 
         <!--音乐总长-->
-        <div class="endtime timefont">
+        <!--<div class="endtime timefont">
             {{ntimeMinutes | addZero}}:{{ntimeSeconds | addZero}}
         </div>
 
         <div class="volumebarbtn">
             <i class= "iconfont-playbar iconfont-vSize icon-shengyinkai icon-space"></i>
-        </div>
+        </div>-->
 
         <audio
             preload="auto"
@@ -130,9 +130,10 @@ import volumebar from '../components/VolumeProgress';
                 this.$refs.audio.currentTime = this.secondNum * this.slide / 1000 ;
                 //console.log("slide值"+this.slide)
             },
-
+            
+            //拖动的时候 歌曲仍然继续播放
             getSlideFlagValue(data){
-                console.log(data)
+                //console.log(data)
                 this.slideFlag = data;
             },
 
@@ -153,11 +154,13 @@ import volumebar from '../components/VolumeProgress';
         watch:{
             per: function(){
                this.nowTime = this.secondNum * this.per / 1000;
-               console.log("当前时间"+this.nowTime);
+               //console.log("当前时间"+this.nowTime);
             }
             
         },
 
+
+        //过滤器，小于10的补0
         filters:{
             addZero:function(value){
                 if(value<10){
@@ -193,7 +196,7 @@ import volumebar from '../components/VolumeProgress';
 }
 
 .timebar{
-    width: 800px;
+    width: 100%;
     color: #ffffff;
     position: absolute;
     top: 3px;
