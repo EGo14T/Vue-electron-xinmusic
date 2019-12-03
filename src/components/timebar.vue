@@ -174,7 +174,7 @@ export default {
 .slider {
   position: relative;
   margin: 20px 0;
-  width: 40%;
+  width: 447px;
   height: 4px;
   background:#454546;
   border-radius: 5px;

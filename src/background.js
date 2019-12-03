@@ -19,11 +19,11 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ 
-    minWidth: 1030, 
-    minHeight: 670, 
-    resizable: true,
+    width: 1030, 
+    height: 670, 
+    resizable: false,
     skipTaskbar: false,
-    frame: true,
+    frame: false,
     backgroundColor: '#2e2c29',
     webPreferences: {
     nodeIntegration: true
@@ -55,14 +55,14 @@ function createWindow () {
     win.hide()
   })
 
-  ipcMain.on('minMax',()=>{
-    console.log(win.isMaximized())
-    if(win.isMaximized()){
-      win.unmaximize();
-    }else{
-      win.maximize();
-    }
-  })
+  // ipcMain.on('minMax',()=>{
+  //   console.log(win.isMaximized())
+  //   if(win.isMaximized()){
+  //     win.unmaximize();
+  //   }else{
+  //     win.maximize();
+  //   }
+  // })
 
 }
 

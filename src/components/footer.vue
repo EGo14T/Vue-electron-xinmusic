@@ -14,7 +14,7 @@
            </slider>
         </div>
 
-        <!--<div class="volumebar row col-md-auto">
+        <div class="volumebar row col-md-auto">
             <volumebar class="timebar-process" :min=0 :max=100  v-model:value = "perr"
             @getVolume="getVolumeValue">
             </volumebar>
@@ -26,13 +26,13 @@
         </div>
 
         <!--音乐总长-->
-        <!--<div class="endtime timefont">
+        <div class="endtime timefont">
             {{ntimeMinutes | addZero}}:{{ntimeSeconds | addZero}}
         </div>
 
         <div class="volumebarbtn">
             <i class= "iconfont-playbar iconfont-vSize icon-shengyinkai icon-space"></i>
-        </div>-->
+        </div>
 
         <audio
             preload="auto"
@@ -196,7 +196,7 @@ import volumebar from '../components/VolumeProgress';
 }
 
 .timebar{
-    width: 100%;
+    width: 800px;
     color: #ffffff;
     position: absolute;
     top: 3px;

@@ -14,11 +14,6 @@
     <div class="footer">
         <footerbar></footerbar>
     </div>
-
-
-
-
-    
   </div>  
 </template>
 

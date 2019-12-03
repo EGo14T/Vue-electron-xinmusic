@@ -185,8 +185,6 @@ export default {
   padding: 5px;
 }
 
-
-
 .navicon {
   padding-right: 5px;
   padding-left: 10px;
@@ -196,7 +194,6 @@ export default {
 
 
 .nav-citem:hover  .navtext{
- 
   color: #cfddc4;
   text-decoration:none;
 }
