@@ -18,7 +18,7 @@
             <volumebar class="timebar-process" :min=0 :max=100  v-model:value = "perr"
             @getVolume="getVolumeValue">
             </volumebar>
-        </div>-->
+        </div>
 
         <!--当前音乐时间-->
         <div class="starttime timefont">

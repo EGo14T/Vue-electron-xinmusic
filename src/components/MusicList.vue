@@ -5,22 +5,20 @@
             <div class="music-list-img">
                 <img :src="imgSrc" width="199px" height="199px" draggable="false">
             </div>
-
             <div class="music-list-info">
                 <div class="line1">
                     <span class="font-line1">歌单</span>
                     <span class="musiclist-title">{{musicTitle}}</span>
+                    <p class="musiclist-num">
+                        123456
+                    </p>
                 </div>
-
                 <div class="line2">
 
                 </div>
-
                 <div class="line3">
 
                 </div>
-
-
             </div>
         </div>
 
@@ -39,7 +37,7 @@
         data () {
             return {
                 imgSrc: 'https://ego1st.cn/images/EGo1ST.jpg',
-                musicTitle: 'Z_ce的年度歌单',
+                musicTitle: '我喜欢的音乐',
 
             };
         },
@@ -83,11 +81,23 @@
 }
 
 .music-list-info {
+    background: #000;
     height: 200px;
-    width: 500px;
+    width: 530px;
 
     position: relative;
     left: 230px;
+}
+
+.musiclist-num {
+    color: white;
+    width: 200px;
+    height: 100px;
+    background: red;
+    
+    position: relative;
+    top: 0;
+    left: 0;
 }
 
 .line1 {
@@ -109,7 +119,7 @@
 }
 
 .musiclist-title {
-    color: white;
+    color: rgba(255,255,255,.85);
     font-size: 25px;
     position: relative;
     right: 185px; 

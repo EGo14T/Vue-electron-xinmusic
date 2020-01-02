@@ -10,6 +10,7 @@ import 'hls.js'
 import '../src/assets/icon/musiclistIcon/iconfont.css'
 import '../src/assets/icon/playbarbtn/iconfont.css'
 import '../src/assets/icon/leftbar/iconfont.css'
+import './plugins/element.js'
 
 Vue.config.productionTip = false
 
