@@ -80,6 +80,6 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 @import url('../assets/CSS/header.css');
 </style>
