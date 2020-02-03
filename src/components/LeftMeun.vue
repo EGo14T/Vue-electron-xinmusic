@@ -1,185 +1,285 @@
 <template>
-  <div class="leftmenu">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <div class="navtitle">推荐</div>
-        <div class="nav-citem">
-          <i class="iconfont-leftbar icon-ic_addmusic">&ensp;</i>
-          <span class="navtext" @click="toComponents('/MusicList')">发现音乐</span>
-        </div>
+  <myScroll>
+    <div class="leftmenu">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <div class="navtitle">推荐</div>
+          <div class="nav-citem">
+            <i class="iconfont-leftbar icon-ic_addmusic">&ensp;</i>
+            <span class="navtext" @click="toComponents('/MusicList')"
+              >发现音乐</span
+            >
+          </div>
 
-        <div class="nav-citem">
-          <i class="iconfont-leftbar icon-ic_myfriends">&ensp;</i>
-          <span class="navtext" @click="toComponents('/friends')">朋友</span>
-        </div>
-      </li>
-    </ul>
+          <div class="nav-citem">
+            <i class="iconfont-leftbar icon-ic_myfriends">&ensp;</i>
+            <span class="navtext" @click="toComponents('/friends')">朋友</span>
+          </div>
+        </li>
+      </ul>
 
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <div class="navtitle">我的音乐</div>
-        <div class="nav-citem">
-          <i class="iconfont-leftbar icon-xihuan">&ensp;</i>
-          <span class="navtext">我的收藏</span>
-        </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <div class="navtitle">我的音乐</div>
+          <div class="nav-citem">
+            <i class="iconfont-leftbar icon-xihuan">&ensp;</i>
+            <span class="navtext">我的收藏</span>
+          </div>
 
-        <div class="nav-citem">
-          <i class="iconfont-leftbar icon-bendiyinle">&ensp;</i>
-          <span class="navtext">本地音乐</span>
-        </div>
-      </li>
-    </ul>
+          <div class="nav-citem">
+            <i class="iconfont-leftbar icon-bendiyinle">&ensp;</i>
+            <span class="navtext">本地音乐</span>
+          </div>
+        </li>
+      </ul>
 
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
-          <span class="span-right1">创建的歌单</span>
-          <i class="iconfont-leftbar icon-jia" @click.stop="addmusic()"></i>
-          <i :class="['iconfont-leftbar', showAllCr?'icon-xiala-copy':'icon-xiala']"></i>
-        </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
+            <span class="span-right1">创建的歌单</span>
+            <i class="iconfont-leftbar icon-jia" @click.stop="addmusic()"></i>
+            <i
+              :class="[
+                'iconfont-leftbar',
+                showAllCr ? 'icon-xiala-copy' : 'icon-xiala'
+              ]"
+            ></i>
+          </div>
 
-        <div class="nav-citem nav-list" v-for='item in showCreateList'>
-          <i :class="['iconfont-list' , addclass(item.status)]" @click="toMusciList(item.musicListID)">&ensp;{{item.musicListName}}</i>         
-        </div>
-      </li>
+          <div class="nav-citem nav-list" v-for="item in showCreateList">
+            <i
+              :class="['iconfont-list', addclass(item.status)]"
+              @click="toMusciList(item.musicListID)"
+              >&ensp;{{ item.musicListName }}</i
+            >
+          </div>
+        </li>
 
-      <li class="nav-item">
-        <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
-          <span class="span-right2">收藏的歌单</span>
-          <i :class="['iconfont-leftbar', showAllCo?'icon-xiala-copy':'icon-xiala']"></i>
-        </div>
+        <li class="nav-item">
+          <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
+            <span class="span-right2">收藏的歌单</span>
+            <i
+              :class="[
+                'iconfont-leftbar',
+                showAllCo ? 'icon-xiala-copy' : 'icon-xiala'
+              ]"
+            ></i>
+          </div>
 
-        <div class="nav-citem nav-list" v-for='item in showCollectionList'>
-          <i :class="['iconfont-list' , addclass(item.status)]" @click="toMusciList(item.musicListID)">&ensp;{{item.musicListName}}</i>         
-        </div>
-      </li>
-    </ul>
-  </div>
+          <div class="nav-citem nav-list" v-for="item in showCollectionList">
+            <i
+              :class="['iconfont-list', addclass(item.status)]"
+              @click="toMusciList(item.musicListID)"
+              >&ensp;{{ item.musicListName }}</i
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+  </myScroll>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
-      CreateMusicListInfo:[
-    {
-        "musicListID": 8,
-        "musicListName": "我喜欢的音乐",
-        "status": 0,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 5,
-        "musicListName": "ONE AND ROCK",
-        "status": 1,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 6,
-        "musicListName": "Miku",
-        "status": 1,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 7,
-        "musicListName": "Reona",
-        "status": 2,
-        "isCollecting": 0
-    },
+  data() {
+    return {
+      CreateMusicListInfo: [
+        {
+          musicListID: 8,
+          musicListName: "我喜欢的音乐",
+          status: 0,
+          isCollecting: 0
+        },
+        {
+          musicListID: 5,
+          musicListName: "ONE AND ROCK",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 6,
+          musicListName: "Miku",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        }
       ],
 
-    CollectionMusicListInfo:[
-    {
-        "musicListID": 8,
-        "musicListName": "我喜欢的音乐",
-        "status": 0,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 5,
-        "musicListName": "ONE AND ROCK",
-        "status": 1,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 6,
-        "musicListName": "Miku",
-        "status": 1,
-        "isCollecting": 0
-    },
-    {
-        "musicListID": 7,
-        "musicListName": "Reona",
-        "status": 2,
-        "isCollecting": 0
-    },  
-    ],
+      CollectionMusicListInfo: [
+        {
+          musicListID: 8,
+          musicListName: "我喜欢的音乐",
+          status: 0,
+          isCollecting: 0
+        },
+        {
+          musicListID: 5,
+          musicListName: "ONE AND ROCK",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 6,
+          musicListName: "Miku",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        },{
+          musicListID: 8,
+          musicListName: "我喜欢的音乐",
+          status: 0,
+          isCollecting: 0
+        },
+        {
+          musicListID: 5,
+          musicListName: "ONE AND ROCK",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 6,
+          musicListName: "Miku",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        },{
+          musicListID: 8,
+          musicListName: "我喜欢的音乐",
+          status: 0,
+          isCollecting: 0
+        },
+        {
+          musicListID: 5,
+          musicListName: "ONE AND ROCK",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 6,
+          musicListName: "Miku",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        },{
+          musicListID: 8,
+          musicListName: "我喜欢的音乐",
+          status: 0,
+          isCollecting: 0
+        },
+        {
+          musicListID: 5,
+          musicListName: "ONE AND ROCK",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 6,
+          musicListName: "Miku",
+          status: 1,
+          isCollecting: 0
+        },
+        {
+          musicListID: 7,
+          musicListName: "Reona",
+          status: 2,
+          isCollecting: 0
+        }
+      ],
 
+      showAllCr: false,
+      showAllCo: false,
+      skin: "",
+    };
+  },
+  computed: {
+    showCreateList: function() {
+      if (this.showAllCr == false) {
+        //当数据不需要完全显示的时候
+        var showList = []; //定义一个空数组
+        return showList; //返回当前数组
+      } else {
+        return this.CreateMusicListInfo;
+      }
+    },
 
-   showAllCr:false, 
-   showAllCo:false, 
-
-   skin:''
+    showCollectionList: function() {
+      if (this.showAllCo == false) {
+        //当数据不需要完全显示的时候
+        var showList = []; //定义一个空数组
+        return showList; //返回当前数组
+      } else {
+        return this.CollectionMusicListInfo;
+      }
     }
   },
-  computed:{
-  showCreateList:function(){
-   if(this.showAllCr == false){          //当数据不需要完全显示的时候
-    var showList = [];　　　　　　　　　　　　　　　 //定义一个空数组
-    return showList;　　　　　　　　　　　　　　　　 //返回当前数组
-   }else{
-    return this.CreateMusicListInfo;
-   }
-  },
-
-  showCollectionList:function(){
-    if(this.showAllCo == false){          //当数据不需要完全显示的时候
-    var showList = [];　　　　　　　　　　　　　　　 //定义一个空数组
-    return showList;　　　　　　　　　　　　　　　　 //返回当前数组
-   }else{
-    return this.CollectionMusicListInfo;
-   }
-  }
- },
- methods:{
-   toMusciList(musicListID){
-     //alert(musicListID)
-     toURL();
-   },
-   addclass(i){
-    switch (i) {
+  methods: {
+    toMusciList(musicListID) {
+      //alert(musicListID)
+      toURL();
+    },
+    addclass(i) {
+      switch (i) {
         case 0:
-            return 'icon-xihuan';
+          return "icon-xihuan";
         case 1:
-            return 'icon-swticonyinle2';
+          return "icon-swticonyinle2";
         case 2:
-            return 'icon-lock';
+          return "icon-lock";
+      }
+    },
+
+    addmusic() {
+      alert(123);
+    },
+
+    toComponents(pathUrl) {
+      this.$router.push({ path: pathUrl });
     }
-  },
-
-  addmusic(){
-    alert(123);
-  },
-
-  toComponents(pathUrl){
-    this.$router.push({ path: pathUrl })
-  },
-
- }
-
-}
+  }
+};
 </script>
 
 <style>
-
-.navtitle{
+.navtitle {
   color: #adafb2;
   font-size: 13px;
   padding: 5px;
 }
 
-.navtitleMusicList{
-  cursor:Pointer;
+.navtitleMusicList {
+  cursor: Pointer;
   color: #adafb2;
   font-size: 13px;
   padding: 5px;
@@ -192,26 +292,25 @@ export default {
   bottom: 1px;
 }
 
-
-.nav-citem:hover  .navtext{
+.nav-citem:hover .navtext {
   color: #cfddc4;
-  text-decoration:none;
+  text-decoration: none;
 }
 
-.nav-citem:hover .iconfont-leftbar{
+.nav-citem:hover .iconfont-leftbar {
   color: #cfddc4;
 }
 
-.nav-list{
-  padding-top:4px;
+.nav-list {
+  padding-top: 4px;
   padding-bottom: 4px;
 }
 
-.navtext{
+.navtext {
   cursor: Pointer;
   color: #adafb2;
   font-size: 14px;
-  text-decoration:none;
+  text-decoration: none;
 }
 
 .span-right1 {
@@ -222,4 +321,7 @@ export default {
   padding-right: 88px;
 }
 
+.__bar-is-vertical:hover {
+  background: #3b3c40  ! important;
+}
 </style>

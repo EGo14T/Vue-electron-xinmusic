@@ -8,9 +8,6 @@
 }
 
 
-
-
-
 .iconfont-playbar {
   cursor:Pointer;
   padding-left: 10px;
@@ -29,8 +26,6 @@
 .iconfont-vSize{
   font-size: 16px;
 }
-
-
 
 .iconfont-playbar:hover{
   color: #cfddc4;

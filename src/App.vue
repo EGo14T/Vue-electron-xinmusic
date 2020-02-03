@@ -3,13 +3,15 @@
     <div class="header">
         <appHeader></appHeader>
     </div>
-
-    <div class="leftbar">
-      <LeftMenu></LeftMenu>
-    </div>
+    
+      <div class="leftbar">
+        <LeftMenu></LeftMenu>
+      </div>
 
     <div class="main">
+      <myScroll>
         <router-view></router-view>
+      </myScroll>
     </div>
     <div class="footer">
         <footerbar></footerbar>
@@ -45,9 +47,6 @@ export default {
   top: 50px;
   width: 199px;
   height: calc(100% - 106px);
-
-  overflow-y:scroll;
-
   background: rgb(22, 24, 28);
 }
 
@@ -59,7 +58,6 @@ export default {
   
   width: calc(100% - 200px);;
   height: calc(100% - 106px);
-  overflow-y:scroll
 
 }
 
@@ -84,34 +82,6 @@ export default {
 
   border-bottom: 1.5px transparent solid;
   border-image:linear-gradient(to right,#770b0b,#b72424,#770b0b)1;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 5px;
-    background-color: rgb(22, 24, 28);
-}
-
- 
-/*定义滚动条的轨道，内阴影及圆角*/
-::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: rgb(22, 24, 28);
-}
- 
-/*定义滑块，内阴影及圆角*/
-::-webkit-scrollbar-thumb{
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: rgba(44, 46, 50,.85);
-}
-
-
-::-webkit-scrollbar-thumb:hover{
-    
-    background-color: rgb(48, 50, 54);
 }
 
 </style>

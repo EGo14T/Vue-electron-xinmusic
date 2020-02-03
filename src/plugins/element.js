@@ -1,5 +1,8 @@
 import Vue from 'vue'
-import { Dialog ,Input } from 'element-ui'
+import { Dialog ,Input, Button , Popover } from 'element-ui'
 
 
-Vue.use(Dialog).use(Input)
+Vue.use(Dialog)
+   .use(Input)
+   .use(Button)
+   .use(Popover)
