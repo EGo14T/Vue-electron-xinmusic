@@ -20,6 +20,7 @@
     </div>
 
     <el-dialog
+      @click.native="closeEmojiPanel"
       :title="commentsTitle"
       :visible.sync="dialogVisible"
       width="477px"
@@ -28,17 +29,9 @@
       custom-class="dialogStyle"
     >
       <el-input type="textarea" placeholder="发表评论" v-model="textarea" @input="descInput" :rows="4"></el-input>
-      <el-popover
-        popper-class="el-popover_self"
-        :offset="110"
-        width="265"
-        trigger="click"
-        content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
-        v-model="showEmoji"
-      >
-        <i class="iconfont-comments icon-biaoqing" slot="reference"></i>
-      </el-popover>
 
+      <i class="iconfont-comments icon-biaoqing" @click.stop="showEmojiPanel"></i>
+      <emoji-panel @emojiClick="appendEmoji" v-if="isShowEmojiPanel"></emoji-panel>
       <i class="iconfont-comments icon-icon-test"></i>
       <i class="iconfont-comments icon-jinghao"></i>
 
@@ -52,6 +45,9 @@
 </template>
 
 <script>
+
+import EmojiPanel from "../components/emoji/EmojiPanel";
+
 export default {
   data() {
     return {
@@ -134,9 +130,14 @@ export default {
 
       wordNumber: 140, //字数
 
-      showEmoji: false //显示emoji表情框
+      isShowEmojiPanel: false, //显示emoji表情框
     };
   },
+
+  components:{
+      EmojiPanel
+  },
+
 
   computed: {
     isOver: function() {
@@ -165,6 +166,19 @@ export default {
     descInput() {
       var txtVal = this.textarea.length;
       this.wordNumber = 140 - txtVal;
+    },
+    //emoji面板显示控制
+    showEmojiPanel(){
+      this.isShowEmojiPanel = !this.isShowEmojiPanel;
+    },
+
+    closeEmojiPanel(){
+      this.isShowEmojiPanel = false;
+    },
+
+    appendEmoji(text) {
+      const el = document.getElementById("textpanel");
+      this.content = el.value + ":" + text + ":";
     }
   }
 };
