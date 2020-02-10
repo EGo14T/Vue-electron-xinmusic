@@ -85,10 +85,8 @@ export default {
   box-shadow: 0 0 3px 1px #25262a;
   border-radius: 5px;
   background-color: #2d2f33;
-  width: 265px;
-  height: 164px;
-  position: absolute;
-
-
+  width: 262px;
+  height: 200px;
+  position: fixed;
 }
 </style>

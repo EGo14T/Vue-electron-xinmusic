@@ -21,6 +21,10 @@
   color: rgb(208, 210, 216);
 }
 
+.iconfont-comments-alive {
+  color: rgb(208, 210, 216);
+}
+
 .icon-biaoqing:before {
   content: "\e659";
 }

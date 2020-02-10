@@ -81,5 +81,5 @@ export default {
 
 
 <style scoped>
-@import url('../assets/CSS/header.css');
+@import url('../assets/css/header.css');
 </style>

@@ -20,7 +20,6 @@
     </div>
 
     <el-dialog
-      @click.native="closeEmojiPanel"
       :title="commentsTitle"
       :visible.sync="dialogVisible"
       width="477px"
@@ -30,8 +29,8 @@
     >
       <el-input type="textarea" placeholder="发表评论" v-model="textarea" @input="descInput" :rows="4"></el-input>
 
-      <i class="iconfont-comments icon-biaoqing" @click.stop="showEmojiPanel"></i>
-      <emoji-panel @emojiClick="appendEmoji" v-if="isShowEmojiPanel"></emoji-panel>
+      <i :class="['iconfont-comments','icon-biaoqing',isShowEmojiPanel?'iconfont-comments-alive':'']" @click.stop="showEmojiPanel"></i>
+      <emoji-panel @emojiClick="appendEmoji" v-if="isShowEmojiPanel" ></emoji-panel>
       <i class="iconfont-comments icon-icon-test"></i>
       <i class="iconfont-comments icon-jinghao"></i>
 
@@ -177,8 +176,9 @@ export default {
     },
 
     appendEmoji(text) {
-      const el = document.getElementById("textpanel");
-      this.content = el.value + ":" + text + ":";
+      let emoji = "[" + text + "]"
+      this.textarea = this.textarea + emoji;
+      this.descInput();
     }
   }
 };
@@ -350,7 +350,6 @@ export default {
 
 .el-popover_self {
   background: #2d2f33 !important;
-  border: 1px solid #212326bd !important;
   box-shadow: 0px #000;
 }
 
@@ -362,7 +361,45 @@ export default {
   border-bottom-color:#212326 !important;
 }
 
+</style>
 
+<style  lang="scss">
+// 注意 这里因为v-html的原因 不能使用scoped 不然样式不能失效
+.emoji-item-common {
+background: url("../assets/img/emoji_sprite.png");
+display: inline-block;
+  &:hover {
+    cursor: pointer;
+  }
+}
 
+.emoji-size-small {
+// 表情大小
+zoom: 0.3;
+}
 
+.emoji-size-large {
+zoom: 0.4; // emojipanel表情大小
+margin: 4px;
+}
+.comments-list {
+margin-top: 20px;
+.comments-list-item {
+  margin-bottom: 20px;
+  .comments-list-item-heading {
+    display: inline-block;
+    img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .comments-list-item-username {
+      margin-left: 5px;
+      font-weight: bold;
+    }
+  }
+}
+}
+@import "../assets/css/emoji.css"; // 导入精灵图样式
 </style>
