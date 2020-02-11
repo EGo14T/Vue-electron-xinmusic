@@ -1,5 +1,5 @@
 <template>
-  <span class="emoji-item-common" :class="['emoji-'+text,isInput?'emoji-size-small':'emoji-size-large']" @click="emojiClick"></span>
+  <span class="emoji-item-common" :class="['emoji-'+EN,isInput?'emoji-size-small':'emoji-size-large']" @click="emojiClick"></span>
 </template>
 <script>
 export default {
@@ -7,10 +7,11 @@ export default {
     return {};
   },
   components: {},
-  props: ["text", "isInput"],
+  props: ["EN", "CN", "isInput"],
   methods: {
     emojiClick() {
-      this.$emit("onClick", this.text);
+      console.log(this.EN)
+      this.$emit("onClick", this.CN);
     }
   }
 };

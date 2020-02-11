@@ -1,311 +1,209 @@
-.emoji-angry {
-    width: 64px;
-    height: 64px;
+.emoji-smile {
+    width: 64px; height: 64px;
     background-position: -0px -0px !important;
 }
 
-.emoji-anguished {
-    width: 64px;
-    height: 64px;
+.emoji-blush {
+    width: 64px; height: 64px;
     background-position: -64px -0px !important;
 }
 
-.emoji-astonished {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -0px !important;
-}
-
-.emoji-blush {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -0px !important;
-}
-
-.emoji-cold_sweat {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -0px !important;
-}
-
-.emoji-confounded {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -0px !important;
-}
-
-.emoji-confused {
-    width: 64px;
-    height: 64px;
-    background-position: -384px -0px !important;
-}
-
-.emoji-cry {
-    width: 64px;
-    height: 64px;
-    background-position: -448px -0px !important;
-}
-
-.emoji-disappointed {
-    width: 64px;
-    height: 64px;
-    background-position: -512px -0px !important;
-}
-
-.emoji-disappointed_relieved {
-    width: 64px;
-    height: 64px;
+.emoji-relaed {
+    width: 64px; height: 64px;
     background-position: -0px -64px !important;
 }
 
-.emoji-dizzy_face {
-    width: 64px;
-    height: 64px;
+.emoji-heart_eyes {
+    width: 64px; height: 64px;
     background-position: -64px -64px !important;
 }
 
-.emoji-expressionless {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -64px !important;
-}
-
-.emoji-fearful {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -64px !important;
-}
-
-.emoji-flushed {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -64px !important;
-}
-
-.emoji-frowning {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -64px !important;
-}
-
-.emoji-grimacing {
-    width: 64px;
-    height: 64px;
-    background-position: -384px -64px !important;
-}
-
-.emoji-grin {
-    width: 64px;
-    height: 64px;
-    background-position: -448px -64px !important;
-}
-
-.emoji-grinning {
-    width: 64px;
-    height: 64px;
-    background-position: -512px -64px !important;
-}
-
-.emoji-heart_eyes {
-    width: 64px;
-    height: 64px;
-    background-position: -0px -128px !important;
-}
-
-.emoji-hushed {
-    width: 64px;
-    height: 64px;
-    background-position: -64px -128px !important;
-}
-
-.emoji-innocent {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -128px !important;
-}
-
-.emoji-joy {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -128px !important;
-}
-
-.emoji-kissing_closed_eyes {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -128px !important;
-}
-
 .emoji-kissing_heart {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -128px !important;
-}
-
-.emoji-laughing {
-    width: 64px;
-    height: 64px;
-    background-position: -384px -128px !important;
-}
-
-.emoji-neutral_face {
-    width: 64px;
-    height: 64px;
-    background-position: -448px -128px !important;
-}
-
-.emoji-no_mouth {
-    width: 64px;
-    height: 64px;
-    background-position: -512px -128px !important;
-}
-
-.emoji-open_mouth {
-    width: 64px;
-    height: 64px;
-    background-position: -0px -192px !important;
-}
-
-.emoji-pensive {
-    width: 64px;
-    height: 64px;
-    background-position: -64px -192px !important;
-}
-
-.emoji-persevere {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -192px !important;
-}
-
-.emoji-relaxed {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -192px !important;
-}
-
-.emoji-relieved {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -192px !important;
-}
-
-.emoji-sleepy {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -192px !important;
-}
-
-.emoji-smile {
-    width: 64px;
-    height: 64px;
-    background-position: -384px -192px !important;
-}
-
-.emoji-smiley {
-    width: 64px;
-    height: 64px;
-    background-position: -448px -192px !important;
-}
-
-.emoji-smirk {
-    width: 64px;
-    height: 64px;
-    background-position: -512px -192px !important;
-}
-
-.emoji-sob {
-    width: 64px;
-    height: 64px;
-    background-position: -0px -256px !important;
-}
-
-.emoji-stuck_out_tongue {
-    width: 64px;
-    height: 64px;
-    background-position: -64px -256px !important;
-}
-
-.emoji-sunglasses {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -256px !important;
-}
-
-.emoji-sweat {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -256px !important;
-}
-
-.emoji-sweat_smile {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -256px !important;
+    width: 64px; height: 64px;
+    background-position: -128px -0px !important;
 }
 
 .emoji-scream {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -256px !important;
+    width: 64px; height: 64px;
+    background-position: -128px -64px !important;
 }
 
-.emoji-wink {
-    width: 64px;
-    height: 64px;
-    background-position: -384px -256px !important;
+.emoji-sob {
+    width: 64px; height: 64px;
+    background-position: -0px -128px !important;
+}
+
+.emoji-kissing_closed_eyes {
+    width: 64px; height: 64px;
+    background-position: -64px -128px !important;
+}
+
+.emoji-flushed {
+    width: 64px; height: 64px;
+    background-position: -128px -128px !important;
 }
 
 .emoji-unamused {
-    width: 64px;
-    height: 64px;
-    background-position: -448px -256px !important;
+    width: 64px; height: 64px;
+    background-position: -192px -0px !important;
 }
 
-.emoji-satisfied {
-    width: 64px;
-    height: 64px;
-    background-position: -512px -256px !important;
+.emoji-angry {
+    width: 64px; height: 64px;
+    background-position: -192px -64px !important;
 }
 
-.emoji-worried {
-    width: 64px;
-    height: 64px;
-    background-position: -0px -320px !important;
+.emoji-sweat {
+    width: 64px; height: 64px;
+    background-position: -192px -128px !important;
 }
 
-.emoji-stuck_out_tongue_closed_eyes {
-    width: 64px;
-    height: 64px;
-    background-position: -64px -320px !important;
+.emoji-confounded {
+    width: 64px; height: 64px;
+    background-position: -0px -192px !important;
 }
 
-.emoji-weary {
-    width: 64px;
-    height: 64px;
-    background-position: -128px -320px !important;
+.emoji-cold_sweat {
+    width: 64px; height: 64px;
+    background-position: -64px -192px !important;
 }
 
-.emoji-yum {
-    width: 64px;
-    height: 64px;
-    background-position: -192px -320px !important;
+.emoji-fearful {
+    width: 64px; height: 64px;
+    background-position: -128px -192px !important;
 }
 
-.emoji-tired_face {
-    width: 64px;
-    height: 64px;
-    background-position: -256px -320px !important;
+.emoji-mask {
+    width: 64px; height: 64px;
+    background-position: -192px -192px !important;
 }
 
-.emoji-triumph {
-    width: 64px;
-    height: 64px;
-    background-position: -320px -320px !important;
+.emoji-joy {
+    width: 64px; height: 64px;
+    background-position: -256px -0px !important;
+}
+
+.emoji-astonished {
+    width: 64px; height: 64px;
+    background-position: -256px -64px !important;
 }
 
 .emoji-stuck_out_tongue_winking_eye {
-    width: 64px;
-    height: 64px;
+    width: 64px; height: 64px;
+    background-position: -256px -128px !important;
+}
+
+.emoji-triumph {
+    width: 64px; height: 64px;
+    background-position: -256px -192px !important;
+}
+
+.emoji-tired_face {
+    width: 64px; height: 64px;
+    background-position: -0px -256px !important;
+}
+
+.emoji-grin {
+    width: 64px; height: 64px;
+    background-position: -64px -256px !important;
+}
+
+.emoji-anger {
+    width: 64px; height: 64px;
+    background-position: -128px -256px !important;
+}
+
+.emoji-heart {
+    width: 64px; height: 64px;
+    background-position: -192px -256px !important;
+}
+
+.emoji-broken_heart {
+    width: 64px; height: 64px;
+    background-position: -256px -256px !important;
+}
+
+.emoji-cow {
+    width: 64px; height: 64px;
+    background-position: -320px -0px !important;
+}
+
+.emoji-beers {
+    width: 64px; height: 64px;
+    background-position: -320px -64px !important;
+}
+
+.emoji-baby_chick {
+    width: 64px; height: 64px;
+    background-position: -320px -128px !important;
+}
+
+.emoji-dog {
+    width: 64px; height: 64px;
+    background-position: -320px -192px !important;
+}
+
+.emoji-birthday {
+    width: 64px; height: 64px;
+    background-position: -320px -256px !important;
+}
+
+.emoji-clapx {
+    width: 64px; height: 64px;
+    background-position: -0px -320px !important;
+}
+
+.emoji-pray {
+    width: 64px; height: 64px;
+    background-position: -64px -320px !important;
+}
+
+.emoji-thumbsupx {
+    width: 64px; height: 64px;
+    background-position: -128px -320px !important;
+}
+
+.emoji-thumbsdown {
+    width: 64px; height: 64px;
+    background-position: -192px -320px !important;
+}
+
+.emoji-100 {
+    width: 64px; height: 64px;
+    background-position: -256px -320px !important;
+}
+
+.emoji-lemon {
+    width: 64px; height: 64px;
+    background-position: -320px -320px !important;
+}
+
+.emoji-peach {
+    width: 64px; height: 64px;
+    background-position: -384px -0px !important;
+}
+
+.emoji-ghost {
+    width: 64px; height: 64px;
+    background-position: -384px -64px !important;
+}
+
+.emoji-eyes {
+    width: 64px; height: 64px;
+    background-position: -384px -128px !important;
+}
+
+.emoji-underage {
+    width: 64px; height: 64px;
+    background-position: -384px -192px !important;
+}
+
+.emoji-accept {
+    width: 64px; height: 64px;
+    background-position: -384px -256px !important;
+}
+
+.emoji-ok_hand {
+    width: 64px; height: 64px;
     background-position: -384px -320px !important;
 }

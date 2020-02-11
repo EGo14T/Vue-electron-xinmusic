@@ -5,8 +5,7 @@
       <div class="media">
         <img class="avatar align-self-start mr-3" :src="item.fromAvatar" width="36" height="36" />
         <div class="media-body">
-          <a href class="fromName">{{ item.fromName }}：</a>
-          {{ item.content }}
+          <a href class="fromName">{{ item.fromName }}：</a>{{ item.content }}
           <div class="row justify-content-between comments-footer">
             <div class="col-4">
               <p>{{ item.date }}</p>
@@ -170,11 +169,6 @@ export default {
     showEmojiPanel(){
       this.isShowEmojiPanel = !this.isShowEmojiPanel;
     },
-
-    closeEmojiPanel(){
-      this.isShowEmojiPanel = false;
-    },
-
     appendEmoji(text) {
       let emoji = "[" + text + "]"
       this.textarea = this.textarea + emoji;
