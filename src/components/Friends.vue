@@ -5,7 +5,16 @@
       <div class="media">
         <img class="avatar align-self-start mr-3" :src="item.fromAvatar" width="36" height="36" />
         <div class="media-body">
-          <a href class="fromName">{{ item.fromName }}：</a>{{ item.content }}
+          <div v-if="item.reply==''?false:true">
+            <a href class="fromName">{{ item.reply.fromName }}：</a>{{ item.reply.content }}
+            <div class="reply">
+              <a href class="fromName">@{{ item.fromName }}：</a>{{ item.content }}
+            </div>
+          </div>
+          <div v-else>
+            <a href class="fromName">{{ item.fromName }}：</a>{{ item.content }}
+          </div>
+          
           <div class="row justify-content-between comments-footer">
             <div class="col-4">
               <p>{{ item.date }}</p>
@@ -59,7 +68,7 @@ export default {
           fromAvatar: "https://cdn.ego1st.cn/avatar/昕.jpg",
           likeNum: 2550,
           content: "地表最帅！",
-          reply: [
+          reply: 
             {
               id: 3,
               commentId: "1577779551073240367",
@@ -71,20 +80,7 @@ export default {
               toAvatar: "src/sd",
               content: "这只是一个测试的评论",
               date: "2019-12-31 18:06:56"
-            },
-            {
-              id: 4,
-              commentId: "1577779551073240367",
-              fromId: "2",
-              fromName: "ego",
-              fromAvatar: "src/ggg",
-              toId: "456",
-              toName: "ja",
-              toAvatar: "src/sd",
-              content: "这只是一个测试的评论",
-              date: "2020-01-02 10:04:40"
             }
-          ]
         },
         {
           id: "1577934436009562909",
@@ -209,6 +205,12 @@ export default {
 .media-body {
   font-size: 12.5px;
   white-space: pre-line;
+}
+
+.reply {
+  margin: 5px 0 5px 1px;
+  padding: 8px;
+  background-color: #1c1e23;
 }
 
 .comments-footer {
