@@ -3,16 +3,16 @@
     <h5>听友评论</h5>
     <div v-for="item in comments" style="margin:10px;">
       <div class="media">
-        <img class="avatar align-self-start mr-3" :src="item.fromAvatar" width="36" height="36" />
+        <img class="avatar align-self-start mr-3" :src="item.replyComments.avatar" width="36" height="36" />
         <div class="media-body">
-          <div v-if="item.reply==''?false:true">
-            <a href class="fromName">{{ item.reply.fromName }}：</a>{{ item.reply.content }}
+          <div v-if="item.originComments==null?false:true">
+            <a href class="fromName">{{ item.replyComments.name }}：</a><span class="content">{{ item.replyComments.content }}</span>
             <div class="reply">
-              <a href class="fromName">@{{ item.fromName }}：</a>{{ item.content }}
+              <a href class="fromName">@{{ item.originComments.name }}：</a><span class="content">{{ item.originComments.content }}</span>
             </div>
           </div>
           <div v-else>
-            <a href class="fromName">{{ item.fromName }}：</a>{{ item.content }}
+            <a href class="fromName">{{ item.replyComments.name }}：</a><span class="content">{{ item.replyComments.content }}</span>
           </div>
           
           <div class="row justify-content-between comments-footer">
@@ -20,7 +20,7 @@
               <p>{{ item.date }}</p>
             </div>
             <div class="col-4" align="right">
-              <span class="comments-func" @click="toLike()">点赞({{ item.likeNum }})</span>| <span class="comments-func" @click="test()">分享</span> | <span class="comments-func" @click="toComments()">回复</span>
+              <span class="comments-func" @click="toLike()">点赞({{ item.replyComments.like }})</span>| <span class="comments-func" @click="test()">分享</span> | <span class="comments-func" @click="toComments()">回复</span>
             </div>
           </div>
         </div>
@@ -58,64 +58,50 @@ import EmojiPanel from "../components/emoji/EmojiPanel";
 export default {
   data() {
     return {
-      comments: [
+      comments:
+      [
         {
-          id: "1577779551073240367",
-          date: "2020-01-02 10:04:05",
-          ownerId: "1",
-          fromId: "456",
-          fromName: "帅比昕",
-          fromAvatar: "https://cdn.ego1st.cn/avatar/昕.jpg",
-          likeNum: 2550,
-          content: "地表最帅！",
-          reply: 
-            {
-              id: 3,
-              commentId: "1577779551073240367",
-              fromId: "2",
-              fromName: "ego",
-              fromAvatar: "src/ggg",
-              toId: "456",
-              toName: "ja",
-              toAvatar: "src/sd",
-              content: "这只是一个测试的评论",
-              date: "2019-12-31 18:06:56"
-            }
+          "replyComments": {
+            "id": "1581758854743154730",
+            "showId": "11231231412",
+            "fromId": "2",
+            "toId": "1581673273524334290",
+            "content": "这只是一个测",
+            "like": 999,
+            "state": 1,
+            "createTime": "2020-02-15 17:27:35",
+            "avatar": "https://cdn.ego1st.cn/avatar/昕.jpg",
+            "name": "昕哥"
+          },
+          "originComments": {
+            "id": "1581673273524334290",
+            "showId": "11231231412",
+            "fromId": "1",
+            "toId": "",
+            "content": "这只是一个测试的评论",
+            "like": 666,
+            "state": 1,
+            "createTime": "2020-02-14 17:41:14",
+            "avatar": "https://cdn.ego1st.cn/avatar/猴.jpg",
+            "name": "egoist"
+          }
         },
         {
-          id: "1577934436009562909",
-          date: "2020-01-02 11:07:16",
-          ownerId: "1",
-          fromId: "456",
-          fromName: "狗猴",
-          fromAvatar: "https://cdn.ego1st.cn/avatar/猴.jpg",
-          likeNum: 9999999,
-          content: "欲擒故纵猴！",
-          reply: []
-        },
-        {
-          id: "1577934436009562909",
-          date: "2020-01-02 11:07:16",
-          ownerId: "1",
-          fromId: "456",
-          fromName: "狗楠",
-          fromAvatar: "https://cdn.ego1st.cn/avatar/楠.jpg",
-          likeNum: 9999999,
-          content: "21年单身男！",
-          reply: []
-        },
-        {
-          id: "1577934436009562909",
-          date: "2020-01-02 11:07:16",
-          ownerId: "1",
-          fromId: "456",
-          fromName: "狗胖",
-          fromAvatar: "https://cdn.ego1st.cn/avatar/胖.jpg",
-          likeNum: 9999999,
-          content: "还能再吃胖！",
-          reply: []
-        }
-      ],
+          "replyComments": {
+            "id": "1581673273524334290",
+            "showId": "11231231412",
+            "fromId": "1",
+            "toId": "",
+            "content": "这只是一个测试的评论",
+            "like": 666,
+            "state": 1,
+            "createTime": "2020-02-14 17:41:14",
+            "avatar": "https://cdn.ego1st.cn/avatar/猴.jpg",
+            "name": "egoist"
+          },
+          "originComments": null
+          }
+      ] ,
       commentsTitle: "歌曲：", //评论抬头  歌曲名称
 
       textarea: "", //评论内容
@@ -232,6 +218,10 @@ export default {
 
 .wordLimit {
   color: #c51919ee;
+}
+
+.content {
+  user-select: text;
 }
 
 ::v-deep .dialogStyle {
