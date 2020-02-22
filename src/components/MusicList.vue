@@ -9,27 +9,29 @@
                 <div class="line1">
                     <span class="font-line1">歌单</span>
                     <span class="musiclist-title">{{musicTitle}}</span>
-                    <p class="musiclist-num">
-                        123456
+                    <p class="musiclist-num"  @click=post()>
+                        {{user}}
                     </p>
                 </div>
                 <div class="line2">
 
                 </div>
                 <div class="line3">
-
+                    
                 </div>
             </div>
         </div>
 
-        <div class="down" @click=getRequest()>
-            {{count}}
+        <div class="down">
         </div>
     </div>
 </template>
 
 <script>
     //import x from ''
+    import * as types from '../store/types'
+    import qs from 'qs'
+
     export default {
         components: {
 
@@ -42,20 +44,34 @@
             };
         },
         computed: {
-            count(){
-                return this.$store.state.count
+            user(){
+                return this.$store.state.user
             },
         },
         methods: {
+          get(){
+              this.getRequest("http://127.0.0.1:8033")
+              .then(resp=>{
+                  console.log(123);
+              })   
+          },
 
-            getRequest(){
-                this.$http.get("http://localhost:8082/my/music/musiclist/1")
-                .then((res) => {
-                console.log(res);
-                }).catch((err) => {
-                console.log(err);
-                });
-            }
+          post(){
+              var qs = require('qs');
+              let json = {
+                grant_type:"password",
+                username:"test",
+                password:"test",
+                //scope:all
+                client_id:"client",
+                client_secret:"secret"
+              }
+              this.postRequest("/oauth/token",json)
+              .then(resp=>{
+                  console.log(resp.data.user)
+                  this.$store.commit(types.LOGIN, resp.data.user)
+              })
+          }
 
         },
     }

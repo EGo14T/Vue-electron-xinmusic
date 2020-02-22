@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+
+import {getRequest ,postRequest} from './api/api'
 
 import vuescroll from 'vuescroll'
 
@@ -15,7 +15,8 @@ import '../src/assets/icon/leftbar/iconfont.css'
 import '../src/assets/icon/comments/iconfont.css'
 import './plugins/element.js'
 
-Vue.use(VueAxios,axios);
+Vue.prototype.getRequest = getRequest;
+Vue.prototype.postRequest = postRequest;
 
 Vue.use(vuescroll, {
   //滚动条设置
