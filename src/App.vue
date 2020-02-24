@@ -79,8 +79,7 @@ export default {
         top: 0;
         width: 100%;
    z-index: 9999;
-
-  border-bottom: 1.5px transparent solid;
+  border-bottom: 2px transparent solid;
   border-image:linear-gradient(to right,#770b0b,#b72424,#770b0b)1;
 }
 

@@ -20,14 +20,19 @@
   }
   
   .history{
-    position: relative;
-    bottom: 1px;
     padding-right: 30px; 
     padding-left: 30px; 
   }
-  
+
   .historybtn{
+    width: 20px;
+    height: 20px;
+    color: #8b8b8b;
     -webkit-app-region: no-drag;
+  }
+
+  .historybtn:hover{
+    color: rgb(230, 231, 235);
   }
   
   
@@ -65,12 +70,30 @@
   
   .searchbtn{
     position: relative;
-    right: -20px;
-    bottom: 2px;
+    right: -24px;
+    bottom: 3px;
+    height: 16px;
+    width: 16px;
+    color: #8b8b8b;
+  }
+
+  .searchbtn:hover{
+    color: #dadada;
+  }
+
+  .toolbtn{
+    color: #a0a0a0;
+    height: 16px;
+    width: 16px;
+    cursor:Pointer;
+  }
+
+  .toolbtn:hover{
+    color: #dadada;
   }
   
   .svgspace{
-    padding-left: 10px;
+    padding: 4px 0 0 10px;
   }
   
   .navbar-brand{
@@ -83,12 +106,4 @@
     -ms-user-select:none;
     user-select:none;
   }
-  
-  
-  .icontool{
-    cursor:Pointer;
-  }
-  
-  .icontool:hover path{
-    fill: #ffffff;
-  }
+ 

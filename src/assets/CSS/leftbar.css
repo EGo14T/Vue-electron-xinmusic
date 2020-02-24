@@ -1,0 +1,49 @@
+.leftbtn {
+    color: red;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+.nav-citem {
+    margin: 0 0 0 8px;
+    color: #adafb2;
+    font-size: 14px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.nav-citem:hover .navitem,
+.nav-citem:hover .leftbtn,
+.nav-citem:hover .navtext{
+    color: rgb(255, 255, 255);
+}
+
+
+  .navtitle {
+    color: #adafb2;
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .navtitleMusicList {
+    cursor: Pointer;
+    color: #adafb2;
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .navtext {
+    cursor: Pointer;
+    color: #adafb2;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .span-right {
+    margin-right: 75px;
+  }
+
+  .__bar-is-vertical:hover {
+    background: #3b3c40 !important;
+  }

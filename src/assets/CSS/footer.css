@@ -1,0 +1,86 @@
+.footerbar{
+    height: 108px;
+    background: #212124;
+}
+
+.footerbtn {
+    width: 35px;
+    height: 35px;
+}
+
+
+
+
+
+.playbtn{
+    height: 108px;
+    position: relative;
+    top: 5px;
+    left: 27px;
+
+    color: #ffffff;
+}
+
+.playbtn .icon-space{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.timebar{
+    width: 800px;
+    color: #ffffff;
+    position: absolute;
+    top: 3px;
+    left: 230px;
+
+}
+
+.col-md-auto{
+    padding: 0px
+}
+
+
+.progress-bar{
+    color:#454546;
+    background: #b82525;
+}
+
+.timebar-process{
+    position: relative;
+    left: 29px;
+    top: 5px;
+}
+
+
+.starttime{
+    position: absolute;
+    left: 198px;
+
+}
+
+.endtime{
+    position: absolute;
+    left: 706px;
+
+}
+
+.timefont{
+    font-size: 12px;
+    color: rgba(255, 255, 255, .9);
+    height: 24px;
+    letter-spacing: 1px;
+    top: 20px;
+
+}
+
+.volumebarbtn{
+    position:absolute;
+    top: 17px;
+    left: 745px;
+}
+
+.volumebar{
+    position: relative;
+    left: 620px;
+    top: 3px;
+}

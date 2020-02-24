@@ -15,6 +15,8 @@ import '../src/assets/icon/leftbar/iconfont.css'
 import '../src/assets/icon/comments/iconfont.css'
 import './plugins/element.js'
 
+import './assets/iconfont/icon.css'
+
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 

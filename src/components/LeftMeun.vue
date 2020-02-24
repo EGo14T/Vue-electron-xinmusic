@@ -5,14 +5,16 @@
         <li class="nav-item">
           <div class="navtitle">推荐</div>
           <div class="nav-citem">
-            <i class="iconfont-leftbar icon-ic_addmusic">&ensp;</i>
-            <span class="navtext" @click="toComponents('/MusicList')"
-              >发现音乐</span
-            >
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
+              <use xlink:href="#icon-ic_addmusic"/>
+            </svg>
+            <span class="navtext" @click="toComponents('/MusicList')">发现音乐</span>
           </div>
 
           <div class="nav-citem">
-            <i class="iconfont-leftbar icon-ic_myfriends">&ensp;</i>
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
+              <use xlink:href="#icon-pengyou"/>
+            </svg>
             <span class="navtext" @click="toComponents('/friends')">朋友</span>
           </div>
         </li>
@@ -22,12 +24,16 @@
         <li class="nav-item">
           <div class="navtitle">我的音乐</div>
           <div class="nav-citem">
-            <i class="iconfont-leftbar icon-xihuan">&ensp;</i>
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
+              <use xlink:href="#icon-xihuan"/>
+            </svg>
             <span class="navtext">我的收藏</span>
           </div>
 
           <div class="nav-citem">
-            <i class="iconfont-leftbar icon-bendiyinle">&ensp;</i>
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
+              <use xlink:href="#icon-bendiyinle"/>
+            </svg>
             <span class="navtext">本地音乐</span>
           </div>
         </li>
@@ -36,42 +42,37 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
-            <span class="span-right1">创建的歌单</span>
-            <i class="iconfont-leftbar icon-jia" @click.stop="addmusic()"></i>
-            <i
-              :class="[
-                'iconfont-leftbar',
-                showAllCr ? 'icon-xiala-copy' : 'icon-xiala'
-              ]"
-            ></i>
+            <span class="span-right">创建的歌单</span>
+            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
+              <use xlink:href="#icon-jia"/>
+            </svg> 
+            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
+              <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'"/>
+            </svg> 
+
           </div>
 
-          <div class="nav-citem nav-list" v-for="item in showCreateList">
-            <i
-              :class="['iconfont-list', addclass(item.status)]"
-              @click="toMusciList(item.musicListID)"
-              >&ensp;{{ item.musicListName }}</i
-            >
+          <div class="nav-citem" v-for="item in showCreateList">
+            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click="toMusciList(item.musicListID)">
+              <use :xlink:href="addclass(item.status)"/>
+            </svg> 
+            <span class="navitem">{{item.musicListName}}</span>
           </div>
         </li>
 
         <li class="nav-item">
           <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
-            <span class="span-right2">收藏的歌单</span>
-            <i
-              :class="[
-                'iconfont-leftbar',
-                showAllCo ? 'icon-xiala-copy' : 'icon-xiala'
-              ]"
-            ></i>
+            <span style="margin-right:97px">收藏的歌单</span>
+            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
+              <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'"/>
+            </svg>
           </div>
 
-          <div class="nav-citem nav-list" v-for="item in showCollectionList">
-            <i
-              :class="['iconfont-list', addclass(item.status)]"
-              @click="toMusciList(item.musicListID)"
-              >&ensp;{{ item.musicListName }}</i
-            >
+          <div class="nav-citem" v-for="item in showCollectionList">
+            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click="toMusciList(item.musicListID)">
+              <use :xlink:href="addclass(item.status)"/>
+            </svg> 
+            <span class="navitem">{{item.musicListName}}</span>
           </div>
         </li>
       </ul>
@@ -134,7 +135,8 @@ export default {
           musicListName: "Reona",
           status: 2,
           isCollecting: 0
-        },{
+        },
+        {
           musicListID: 8,
           musicListName: "我喜欢的音乐",
           status: 0,
@@ -163,7 +165,8 @@ export default {
           musicListName: "Reona",
           status: 2,
           isCollecting: 0
-        },{
+        },
+        {
           musicListID: 8,
           musicListName: "我喜欢的音乐",
           status: 0,
@@ -192,7 +195,8 @@ export default {
           musicListName: "Reona",
           status: 2,
           isCollecting: 0
-        },{
+        },
+        {
           musicListID: 8,
           musicListName: "我喜欢的音乐",
           status: 0,
@@ -220,7 +224,7 @@ export default {
 
       showAllCr: false,
       showAllCo: false,
-      skin: "",
+      skin: ""
     };
   },
   computed: {
@@ -252,11 +256,11 @@ export default {
     addclass(i) {
       switch (i) {
         case 0:
-          return "icon-xihuan";
+          return "#icon-xihuan";
         case 1:
-          return "icon-swticonyinle2";
+          return "#icon-swticonyinle2";
         case 2:
-          return "icon-lock";
+          return "#icon-lock";
       }
     },
 
@@ -271,57 +275,6 @@ export default {
 };
 </script>
 
-<style>
-.navtitle {
-  color: #adafb2;
-  font-size: 13px;
-  padding: 5px;
-}
-
-.navtitleMusicList {
-  cursor: Pointer;
-  color: #adafb2;
-  font-size: 13px;
-  padding: 5px;
-}
-
-.navicon {
-  padding-right: 5px;
-  padding-left: 10px;
-  position: relative;
-  bottom: 1px;
-}
-
-.nav-citem:hover .navtext {
-  color: #cfddc4;
-  text-decoration: none;
-}
-
-.nav-citem:hover .iconfont-leftbar {
-  color: #cfddc4;
-}
-
-.nav-list {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.navtext {
-  cursor: Pointer;
-  color: #adafb2;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.span-right1 {
-  padding-right: 65px;
-}
-
-.span-right2 {
-  padding-right: 88px;
-}
-
-.__bar-is-vertical:hover {
-  background: #3b3c40  ! important;
-}
+<style scoped>
+@import url("../assets/css/leftbar.css");
 </style>
