@@ -66,7 +66,7 @@ export default {
         // 当value变化的时候，会通过计算属性修改left，width
 
         // 拖拽的时候获取的新width
-        var newWidth = e.clientX - 243;
+        var newWidth = e.clientX - 248;
         // 拖拽的时候得到新的百分比
         var scale = newWidth / _this.slider.offsetWidth;
         _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
@@ -93,7 +93,7 @@ export default {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-243;
+      var newWidth = e.clientX-248;
       //console.log("process点击到边框的距离"+e.clientX)
       //console.log("process点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -115,7 +115,7 @@ export default {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-243;
+      var newWidth = e.clientX-248;
       //console.log("slider点击到边框的距离"+e.clientX)
       //console.log("slider点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -174,7 +174,7 @@ export default {
 .slider {
   position: relative;
   margin: 20px 0;
-  width: 447px;
+  width: 377px;
   height: 4px;
   background:#454546;
   border-radius: 5px;

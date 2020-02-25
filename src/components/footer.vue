@@ -5,11 +5,17 @@
       <svg class="icon svg-icon footerbtn" aria-hidden="true" @click="last()">
         <use xlink:href="#icon-shangyishou" />
       </svg>
-      <i
-        :class="['iconfont-playbar', 'iconfont-pSize', 'icon-space',audioFlag?'icon-bofang':'icon-zanting' ]"
+      <svg
+        class="icon svg-icon footerbtn"
+        style="height:37px;width:37px"
+        aria-hidden="true"
         @click="playAudio(audioFlag)"
-      ></i>
-      <i class="iconfont-playbar iconfont-pSize icon-xiayishou icon-space" @click="next()"></i>
+      >
+        <use :xlink:href="audioFlag?'#icon-bofang':'#icon-zanting'" />
+      </svg>
+      <svg class="icon svg-icon footerbtn" aria-hidden="true" @click="next()">
+        <use xlink:href="#icon-xiayishou" />
+      </svg>
     </div>
 
     <div class="timebar row col-md-auto">
@@ -28,7 +34,7 @@
         class="timebar-process"
         :min="0"
         :max="100"
-        v-model:value="perr"
+        v-model:value="vol"
         @getVolume="getVolumeValue"
       ></volumebar>
     </div>
@@ -40,7 +46,15 @@
     <div class="endtime timefont">{{ntimeMinutes | addZero}}:{{ntimeSeconds | addZero}}</div>
 
     <div class="volumebarbtn">
-      <i class="iconfont-playbar iconfont-vSize icon-shengyinkai icon-space"></i>
+      <svg class="icon svg-icon volbtn" aria-hidden="true" @click="mute">
+        <use :xlink:href="isMute?'#icon-shengyinwu':'#icon-shengyin_shiti'" />
+      </svg>
+    </div>
+
+    <div class="volumebarbtn">
+      <svg class="icon svg-icon playStatus" aria-hidden="true" @click="next()">
+        <use xlink:href="#icon-suiji" />
+      </svg>
     </div>
 
     <audio
@@ -66,7 +80,8 @@ export default {
   data() {
     return {
       per: "",
-      perr: "60",
+      vol: "60",
+      currentVol: "60",
       slide: "",
       nowTime: "",
       secondNum: "",
@@ -91,6 +106,10 @@ export default {
 
     ctimeSeconds: function() {
       return this.nowTime % 60 | 0;
+    },
+
+    isMute: function() {
+      return this.vol === 0;
     }
   },
   methods: {
@@ -138,6 +157,7 @@ export default {
     },
 
     getVolumeValue(data) {
+      this.currentVol = data;
       this.$refs.audio.volume = data / 100;
     },
 
@@ -145,6 +165,14 @@ export default {
       this.$refs.audio.src = "https://ego1st.cn/2.mp3";
       this.audioFlag = false;
       this.$refs.audio.play();
+    },
+
+    mute() {
+      if (this.vol !== 0) {
+        this.vol = 0;
+      } else {
+        this.vol = this.currentVol;
+      }
     }
   },
 

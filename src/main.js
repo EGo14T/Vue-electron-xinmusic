@@ -9,10 +9,7 @@ import {getRequest ,postRequest} from './api/api'
 import vuescroll from 'vuescroll'
 
 import 'hls.js'
-import '../src/assets/icon/musiclistIcon/iconfont.css'
-import '../src/assets/icon/playbarbtn/iconfont.css'
-import '../src/assets/icon/leftbar/iconfont.css'
-import '../src/assets/icon/comments/iconfont.css'
+
 import './plugins/element.js'
 
 import './assets/iconfont/icon.css'

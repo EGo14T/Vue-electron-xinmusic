@@ -46,7 +46,7 @@ export default {
   left: 0;
   top: 50px;
   width: 199px;
-  height: calc(100% - 106px);
+  height: calc(100% - 99px);
   background: rgb(22, 24, 28);
 }
 
@@ -57,7 +57,7 @@ export default {
   background: rgb(22, 24, 28);
   
   width: calc(100% - 200px);;
-  height: calc(100% - 106px);
+  height: calc(100% - 99px);
 
 }
 
@@ -66,9 +66,8 @@ export default {
         margin: auto;
         bottom: 0;
         width: 100%;
-   z-index: 9999;
+   z-index: 999;
    background: #ffffff;
-   height: 56px;
 }
 
 .header{
@@ -78,7 +77,7 @@ export default {
         margin: auto;
         top: 0;
         width: 100%;
-   z-index: 9999;
+   z-index: 999;
   border-bottom: 2px transparent solid;
   border-image:linear-gradient(to right,#770b0b,#b72424,#770b0b)1;
 }

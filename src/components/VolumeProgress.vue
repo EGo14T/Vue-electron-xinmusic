@@ -66,7 +66,7 @@ export default {
         // 当value变化的时候，会通过计算属性修改left，width
 
         // 拖拽的时候获取的新width
-        var newWidth = e.clientX - 784;
+        var newWidth = e.clientX - 705;
         // 拖拽的时候得到新的百分比
         var scale = newWidth / _this.volSlider.offsetWidth;
         _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
@@ -90,7 +90,7 @@ export default {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-784;
+      var newWidth = e.clientX-705;
       //console.log("volProcess点击到边框的距离"+e.clientX)
       //console.log("volProcess点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -110,7 +110,7 @@ export default {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-784;
+      var newWidth = e.clientX-705;
       //console.log("volSlider点击到边框的距离"+e.clientX)
       //console.log("volSlider点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -145,7 +145,7 @@ export default {
       if (this.volSlider) {
         return (
           this.volSlider.offsetWidth * this.scale -
-          this.thunk.offsetWidth / 2 +
+          this.thunk.offsetWidth / 2 + 1 +
           "px"
         );
       } else {
@@ -172,7 +172,7 @@ export default {
   margin: 20px 0;
   width: 100px;
   height: 4px;
-  background:#454546;
+  background:#171719;
   border-radius: 5px;
   cursor:default;
 }
@@ -188,8 +188,7 @@ export default {
 
 .volSlider .thunk {
   position: absolute;
-  left: 100px;
-  top: -5px;
+  top: -4px;
   width: 14px;
   height: 14px;
 
@@ -206,10 +205,10 @@ export default {
 
 
 .volSlider .volBlock {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  border: 5px solid #ffffff;
+  border: 4px solid #ffffff;
   background:#b82525;
 
   cursor:pointer;
