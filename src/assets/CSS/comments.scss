@@ -93,7 +93,21 @@
             background-color: #484a4e;
         }
     }
-  }
+}
+
+.commentsbtn {
+    width: 18px;
+    height: 18px;
+    color: #8b8b8b;
+    margin: 5px 5px 0 0;
+    &:hover{
+        color: rgb(230, 231, 235);
+    }
+}
+
+.commentsbtn-alive {
+    color: rgb(230, 231, 235);
+}
 /*
 **textarea内文字 颜色 placeholder
 */
@@ -119,8 +133,8 @@
 
 .wordNum {
     position: relative;
-    left: 412px;
-    top: 2px;
+    left: 343px;
+    top: 3px;
 }
 
 .wordLimit {

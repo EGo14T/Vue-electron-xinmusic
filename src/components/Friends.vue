@@ -45,14 +45,23 @@
       custom-class="dialogStyle"
     >
       <el-input type="textarea" placeholder="发表评论" v-model="textarea" @input="descInput" :rows="4"></el-input>
-
-      <i
-        :class="['iconfont-comments','icon-biaoqing',isShowEmojiPanel?'iconfont-comments-alive':'']"
+      <!-- 表情emoji -->
+      <svg
+        :class="['icon svg-icon','commentsbtn',isShowEmojiPanel?'commentsbtn-alive':'']"
+        aria-hidden="true"
         @click.stop="showEmojiPanel"
-      ></i>
+      >
+        <use xlink:href="#icon-biaoqing" />
+      </svg>
       <emoji-panel @emojiClick="appendEmoji" v-if="isShowEmojiPanel"></emoji-panel>
-      <i class="iconfont-comments icon-icon-test"></i>
-      <i class="iconfont-comments icon-jinghao"></i>
+      <!-- @ -->
+      <svg class="icon svg-icon commentsbtn" aria-hidden="true">
+          <use xlink:href="#icon-icon-at" />
+        </svg>
+      <!-- # -->
+      <svg class="icon svg-icon commentsbtn" aria-hidden="true">
+          <use xlink:href="#icon-jinghao" />
+        </svg>
 
       <span :class="['wordNum',isOver?'wordLimit':'']">{{wordNumber}}</span>
 
@@ -169,7 +178,7 @@ export default {
 };
 </script>
 <style  lang="scss">
-@import '../assets/css/emojiPanel.scss';
+@import "../assets/css/emojiPanel.scss";
 @import "../assets/css/emoji.css"; // 导入精灵图样式
 </style>
 <style lang="scss" scoped>
