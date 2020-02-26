@@ -87,14 +87,17 @@
     top: 3px;
 }
 
+.playType {
+    position: relative;
+    left: 580px;
+    top: 13px;
+}
+
 .playStatus {
     width: 16px;
     height: 16px;
     color:#7a7a7c;
     cursor: pointer;
-
-    position: relative;
-    left: 120px;
 }
 
 .playStatus:hover {

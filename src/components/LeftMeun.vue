@@ -6,14 +6,14 @@
           <div class="navtitle">推荐</div>
           <div class="nav-citem">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-ic_addmusic"/>
+              <use xlink:href="#icon-ic_addmusic" />
             </svg>
             <span class="navtext" @click="toComponents('/MusicList')">发现音乐</span>
           </div>
 
           <div class="nav-citem">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-pengyou"/>
+              <use xlink:href="#icon-pengyou" />
             </svg>
             <span class="navtext" @click="toComponents('/friends')">朋友</span>
           </div>
@@ -25,14 +25,14 @@
           <div class="navtitle">我的音乐</div>
           <div class="nav-citem">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-xihuan"/>
+              <use xlink:href="#icon-xihuan" />
             </svg>
             <span class="navtext">我的收藏</span>
           </div>
 
           <div class="nav-citem">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-bendiyinle"/>
+              <use xlink:href="#icon-bendiyinle" />
             </svg>
             <span class="navtext">本地音乐</span>
           </div>
@@ -44,18 +44,21 @@
           <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
             <span class="span-right">创建的歌单</span>
             <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
-              <use xlink:href="#icon-jia"/>
-            </svg> 
+              <use xlink:href="#icon-jia" />
+            </svg>
             <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
-              <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'"/>
-            </svg> 
-
+              <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'" />
+            </svg>
           </div>
 
           <div class="nav-citem" v-for="item in showCreateList">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click="toMusciList(item.musicListID)">
-              <use :xlink:href="addclass(item.status)"/>
-            </svg> 
+            <svg
+              class="icon svg-icon leftbtn"
+              aria-hidden="true"
+              @click="toMusciList(item.musicListID)"
+            >
+              <use :xlink:href="addclass(item.status)" />
+            </svg>
             <span class="navitem">{{item.musicListName}}</span>
           </div>
         </li>
@@ -64,14 +67,18 @@
           <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
             <span style="margin-right:97px">收藏的歌单</span>
             <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
-              <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'"/>
+              <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'" />
             </svg>
           </div>
 
           <div class="nav-citem" v-for="item in showCollectionList">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click="toMusciList(item.musicListID)">
-              <use :xlink:href="addclass(item.status)"/>
-            </svg> 
+            <svg
+              class="icon svg-icon leftbtn"
+              aria-hidden="true"
+              @click="toMusciList(item.musicListID)"
+            >
+              <use :xlink:href="addclass(item.status)" />
+            </svg>
             <span class="navitem">{{item.musicListName}}</span>
           </div>
         </li>

@@ -22,31 +22,28 @@ export default {
     return {
       slider: null, //滚动条DOM元素
       thunk: null, //拖拽DOM元素
-      process:null,
+      process: null,
       per: this.value, //当前值
-      slide: ''
+      slide: ""
     };
   },
 
   watch: {
-	    per : {
-	      handler (newVal) {
-          this.$emit('input', newVal);
-        },
-        deep:true,
-	      immediate: true,
+    per: {
+      handler(newVal) {
+        this.$emit("input", newVal);
       },
-      value : {
-	      handler (newVal) {
-          this.per = newVal;       
-        },
-        deep:true,
-	      immediate: true,
-      },
-      
-
+      deep: true,
+      immediate: true
     },
-
+    value: {
+      handler(newVal) {
+        this.per = newVal;
+      },
+      deep: true,
+      immediate: true
+    }
+  },
 
   //渲染到页面的时候
   mounted() {
@@ -55,12 +52,10 @@ export default {
     this.process = this.$refs.process;
     var _this = this;
 
-
     this.thunk.onmousedown = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
 
-      
       document.onmousemove = function(e) {
         // value, left, width
         // 当value变化的时候，会通过计算属性修改left，width
@@ -73,49 +68,43 @@ export default {
         _this.per = Math.max(_this.per, _this.min);
         _this.per = Math.min(_this.per, _this.max);
 
-        
         //console.log("滑动事件"+_this.per)
-        _this.$emit('getSlideFlag',false);
-
-        
+        _this.$emit("getSlideFlag", false);
       };
       document.onmouseup = function() {
         //console.log("鼠标抬起")
-        _this.$emit('getSlideFlag',true);
-        _this.$emit('getSlide',_this.per);
+        _this.$emit("getSlideFlag", true);
+        _this.$emit("getSlide", _this.per);
         document.onmousemove = document.onmouseup = null;
       };
-      
+
       return false;
     };
 
-    this.process.onclick = function(e){
+    this.process.onclick = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-248;
+      var newWidth = e.clientX - 248;
       //console.log("process点击到边框的距离"+e.clientX)
       //console.log("process点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
 
-      var scale = newWidth / _this.slider.offsetWidth;;
+      var scale = newWidth / _this.slider.offsetWidth;
       //console.log(scale)
       //console.log(Math.ceil((_this.max - _this.min)*scale));
       _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-    
-     _this.$emit('getSlide',_this.per);
+      _this.$emit("getSlide", _this.per);
+    };
 
-
-    }
-
-    this.slider.onclick = function(e){
+    this.slider.onclick = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-248;
+      var newWidth = e.clientX - 248;
       //console.log("slider点击到边框的距离"+e.clientX)
       //console.log("slider点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -127,11 +116,8 @@ export default {
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-
-      _this.$emit('getSlide',_this.per);
-      
-    }
-
+      _this.$emit("getSlide", _this.per);
+    };
   },
   computed: {
     // 设置一个百分比，提供计算slider进度宽度和trunk的left值
@@ -176,9 +162,9 @@ export default {
   margin: 20px 0;
   width: 377px;
   height: 4px;
-  background:#454546;
+  background: #454546;
   border-radius: 5px;
-  cursor:default;
+  cursor: default;
 }
 .slider .process {
   position: absolute;
@@ -200,10 +186,9 @@ export default {
   height: 14px;
   border-radius: 50%;
   border: 5px solid #ffffff;
-  background:#b82525;
+  background: #b82525;
 
-  cursor:pointer;
-
+  cursor: pointer;
 }
 .slider .tips {
   position: absolute;

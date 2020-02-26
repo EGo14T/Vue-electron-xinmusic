@@ -3,9 +3,7 @@
     <div>
       <h1>关于我</h1>
       <ul>
-        <li v-for="user in users" :key="user.index">
-          {{ user }}
-        </li>
+        <li v-for="user in users" :key="user.index">{{ user }}</li>
       </ul>
     </div>
   </myScroll>

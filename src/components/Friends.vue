@@ -25,7 +25,7 @@
 
         <div class="row justify-content-between" style="color: #4e4e52;">
           <div class="col-4">
-            <p>{{ item.date }}</p>
+            <p>{{ item.replyComments.createTime }}</p>
           </div>
           <div class="col-4" align="right">
             <span class="comments-func" @click="toLike()">点赞({{ item.replyComments.like }})</span>|
@@ -56,12 +56,12 @@
       <emoji-panel @emojiClick="appendEmoji" v-if="isShowEmojiPanel"></emoji-panel>
       <!-- @ -->
       <svg class="icon svg-icon commentsbtn" aria-hidden="true">
-          <use xlink:href="#icon-icon-at" />
-        </svg>
+        <use xlink:href="#icon-icon-at" />
+      </svg>
       <!-- # -->
       <svg class="icon svg-icon commentsbtn" aria-hidden="true">
-          <use xlink:href="#icon-jinghao" />
-        </svg>
+        <use xlink:href="#icon-jinghao" />
+      </svg>
 
       <span :class="['wordNum',isOver?'wordLimit':'']">{{wordNumber}}</span>
 

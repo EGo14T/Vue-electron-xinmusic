@@ -22,31 +22,28 @@ export default {
     return {
       volSlider: null, //滚动条DOM元素
       thunk: null, //拖拽DOM元素
-      volProcess:null,
+      volProcess: null,
       per: this.value, //当前值
-      slide: ''
+      slide: ""
     };
   },
 
   watch: {
-	    per : {
-	      handler (newVal) {
-          this.$emit('input', newVal);
-        },
-        deep:true,
-	      immediate: true,
+    per: {
+      handler(newVal) {
+        this.$emit("input", newVal);
       },
-        value : {
-	      handler (newVal) {
-          this.per = newVal;       
-        },
-        deep:true,
-	      immediate: true,
-      },
-      
-
+      deep: true,
+      immediate: true
     },
-
+    value: {
+      handler(newVal) {
+        this.per = newVal;
+      },
+      deep: true,
+      immediate: true
+    }
+  },
 
   //渲染到页面的时候
   mounted() {
@@ -55,12 +52,10 @@ export default {
     this.volProcess = this.$refs.volProcess;
     var _this = this;
 
-
     this.thunk.onmousedown = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
 
-      
       document.onmousemove = function(e) {
         // value, left, width
         // 当value变化的时候，会通过计算属性修改left，width
@@ -73,24 +68,24 @@ export default {
         _this.per = Math.max(_this.per, _this.min);
         _this.per = Math.min(_this.per, _this.max);
 
-        _this.$emit('getVolume',_this.per);
-  
+        _this.$emit("getVolume", _this.per);
+
         //console.log("滑动事件"+_this.per)
       };
       document.onmouseup = function() {
-          _this.$emit('getVolume',_this.per);
+        _this.$emit("getVolume", _this.per);
         //console.log("鼠标抬起")
         document.onmousemove = document.onmouseup = null;
       };
-      
+
       return false;
     };
 
-    this.volProcess.onclick = function(e){
+    this.volProcess.onclick = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-705;
+      var newWidth = e.clientX - 705;
       //console.log("volProcess点击到边框的距离"+e.clientX)
       //console.log("volProcess点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -102,15 +97,14 @@ export default {
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-      _this.$emit('getVolume',_this.per);
+      _this.$emit("getVolume", _this.per);
+    };
 
-    }
-
-    this.volSlider.onclick = function(e){
+    this.volSlider.onclick = function(e) {
       var width = parseInt(_this.width);
       var disX = e.clientX;
       e.cancelBubble = true;
-      var newWidth = e.clientX-705;
+      var newWidth = e.clientX - 705;
       //console.log("volSlider点击到边框的距离"+e.clientX)
       //console.log("volSlider点击到dom的距离"+e.offsetX)
       //console.log(newWidth);
@@ -122,10 +116,8 @@ export default {
       _this.per = Math.max(_this.per, _this.min);
       _this.per = Math.min(_this.per, _this.max);
 
-      _this.$emit('getVolume',_this.per);
-      
-    }
-
+      _this.$emit("getVolume", _this.per);
+    };
   },
   computed: {
     // 设置一个百分比，提供计算volSlider进度宽度和volTrunk的left值
@@ -145,7 +137,8 @@ export default {
       if (this.volSlider) {
         return (
           this.volSlider.offsetWidth * this.scale -
-          this.thunk.offsetWidth / 2 + 1 +
+          this.thunk.offsetWidth / 2 +
+          1 +
           "px"
         );
       } else {
@@ -172,9 +165,9 @@ export default {
   margin: 20px 0;
   width: 100px;
   height: 4px;
-  background:#171719;
+  background: #171719;
   border-radius: 5px;
-  cursor:default;
+  cursor: default;
 }
 
 .volSlider .volProcess {
@@ -195,24 +188,22 @@ export default {
   z-index: -99999;
 }
 
-.volSlider:hover  .thunk{
-    z-index: 10;  
+.volSlider:hover .thunk {
+  z-index: 10;
 }
 
-.volSlider:active .thunk{
-    z-index: 10;  
+.volSlider:active .thunk {
+  z-index: 10;
 }
-
 
 .volSlider .volBlock {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   border: 4px solid #ffffff;
-  background:#b82525;
+  background: #b82525;
 
-  cursor:pointer;
-
+  cursor: pointer;
 }
 .volSlider .tips {
   position: absolute;
