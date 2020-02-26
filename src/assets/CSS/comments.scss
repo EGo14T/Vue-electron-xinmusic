@@ -1,0 +1,153 @@
+.container {
+    color: #dcdde4;
+    padding: 30px;
+    .media {
+        width: 600px;
+        margin: 10px;
+        font-size: 12.5px;
+    }
+    .fromName {
+        color: #2e6bb0;
+        &:hover{
+            text-decoration: none;
+            color: #2e80dd;
+        }
+    }
+
+    .reply {
+        margin: 5px 0 5px 1px;
+        padding: 8px;
+        background-color: #1c1e23;
+    }
+}
+
+.content {
+    user-select: text;
+}
+
+.comments-func:hover {
+    color: #828385;
+}
+
+
+/*
+* 评论弹框样式
+*/
+
+::v-deep .dialogStyle {
+    background-color: #2d2f33;
+    .el-dialog__title {
+        font-size: 16px;
+        color: #adafb2;
+    }
+    .el-dialog__header {
+        padding: 10px 0 0 15px;
+    }
+    .el-dialog__headerbtn {
+        top: 10px;
+        right: 10px;
+    }
+    .el-dialog__body {
+        padding: 20px 20px 15px 20px;
+    }
+    .el-dialog__footer {
+        background-color: #292b2f;
+        padding: 15px 20px 15px 20px;
+    }
+    .el-textarea{
+        .el-input__count {
+            color: #727275;
+            background: none;
+            bottom: -20px;
+        }
+    } 
+    .el-textarea__inner{
+        cursor: default;
+        resize: none;
+        background-color: #292b2f;
+        border: 1px solid #3b3a3d;
+
+        &:hover {
+        border: 1px solid #3b3a3d;
+        }
+        &:focus {
+            border: 1px solid #3b3a3d;
+            box-shadow: none;
+        }
+    }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    /*定义滚动条的轨道，内阴影及圆角*/
+    ::-webkit-scrollbar-track {
+        border-radius: 0px;
+        background-color: #292b2f;
+    }
+     /*定义滑块，内阴影及圆角*/
+    ::-webkit-scrollbar-thumb {
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        background-color: #3d3f43;
+        &:hover{
+            background-color: #484a4e;
+        }
+    }
+  }
+/*
+**textarea内文字 颜色 placeholder
+*/
+::v-deep textarea::-webkit-input-placeholder {
+    color: #5f5f63;
+}
+
+/*
+*泡泡框样式
+*/
+.el-popover_self {
+    background: #2d2f33 !important;
+    box-shadow: 0px #000;
+}
+  
+.el-popper[x-placement^="bottom"] .popper__arrow::after {
+    border-bottom-color: #2d2f33 !important;
+}
+  
+.popper__arrow {
+    border-bottom-color: #212326 !important;
+}
+
+.wordNum {
+    position: relative;
+    left: 412px;
+    top: 2px;
+}
+
+.wordLimit {
+    color: #c51919ee;
+}
+
+/* 更改element-UI按钮样式 */
+.el-button--primary {
+    color: #fff;
+    font-size: 16px;
+    background-color: #2e4e7e;
+    border-color: #2e4e7e;
+  
+    padding: 6px 18px 6px 18px;
+    &:hover {
+        background-color: #3a6098;
+        border-color: #3a6098;
+    }
+    &:focus {
+        background-color: #3a6098;
+        border-color: #3a6098;
+    }
+}
+
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:hover {
+    color: #667180;
+    background-color: #26354b;
+    border-color: #26354b;
+}

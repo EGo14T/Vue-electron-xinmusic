@@ -20,6 +20,7 @@
     height: 18px;
     width: 18px;
     color:#7a7a7c;
+    cursor: pointer;
 }
 
 .volbtn:hover {
@@ -90,6 +91,7 @@
     width: 16px;
     height: 16px;
     color:#7a7a7c;
+    cursor: pointer;
 
     position: relative;
     left: 120px;

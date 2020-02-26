@@ -51,9 +51,9 @@
       </svg>
     </div>
 
-    <div class="volumebarbtn">
-      <svg class="icon svg-icon playStatus" aria-hidden="true" @click="next()">
-        <use xlink:href="#icon-suiji" />
+    <div class="volumebarbtn" :title="tStatus">
+      <svg class="icon svg-icon playStatus" aria-hidden="true" @click="changePlayStatus()">
+        <use :xlink:href="pStatus" />
       </svg>
     </div>
 
@@ -86,7 +86,9 @@ export default {
       nowTime: "",
       secondNum: "",
       audioFlag: "false",
-      slideFlag: "true"
+      slideFlag: "true",
+
+      playStatus: 0
     };
   },
   computed: {
@@ -110,6 +112,22 @@ export default {
 
     isMute: function() {
       return this.vol === 0;
+    },
+
+    pStatus:function() {
+      switch(this.playStatus){
+        case 0: return "#icon-danquxunhuan";break;
+        case 1: return "#icon-liebiaoxunhuan";break;
+        case 2: return "#icon-suiji";break;
+      }
+    },
+
+    tStatus:function() {
+      switch(this.playStatus){
+        case 0: return "单曲循环";break;
+        case 1: return "列表循环";break;
+        case 2: return "随机播放";break;
+      }
     }
   },
   methods: {
@@ -172,6 +190,19 @@ export default {
         this.vol = 0;
       } else {
         this.vol = this.currentVol;
+      }
+    },
+
+    changePlayStatus(){
+      if(this.playStatus==0){
+        this.playStatus = 1;
+        
+      }else if(this.playStatus==1){
+        this.playStatus = 2;
+        
+      }else{
+        this.playStatus = 0;
+        
       }
     }
   },

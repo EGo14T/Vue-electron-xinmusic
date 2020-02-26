@@ -1,0 +1,37 @@
+// 注意 这里因为v-html的原因 不能使用scoped 不然样式不能失效
+.emoji-item-common {
+  background: url("../assets/img/emoji_sprite.png");
+  display: inline-block;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.emoji-size-small {
+  // 表情大小
+  zoom: 0.3;
+}
+
+.emoji-size-large {
+  zoom: 0.4; // emojipanel表情大小
+  margin: 4px;
+}
+.comments-list {
+  margin-top: 20px;
+  .comments-list-item {
+    margin-bottom: 20px;
+    .comments-list-item-heading {
+      display: inline-block;
+      img {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+      .comments-list-item-username {
+        margin-left: 5px;
+        font-weight: bold;
+      }
+    }
+  }
+}
