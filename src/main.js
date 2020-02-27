@@ -4,7 +4,7 @@ import router from './router'
 import store from './store/store'
 
 
-import {getRequest ,postRequest} from './api/api'
+import {getRequest ,postRequest, oauthRequest} from './api/api'
 
 import vuescroll from 'vuescroll'
 
@@ -16,6 +16,8 @@ import './assets/iconfont/icon.css'
 
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
+Vue.prototype.oauthRequest = oauthRequest;
+
 
 Vue.use(vuescroll, {
   //滚动条设置

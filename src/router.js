@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home'
 import MyMusic from './components/MyMusic'
-import Friends from './components/Friends'
+import Comments from './components/Comments'
 import Users from './components/Users'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -24,7 +24,7 @@ export default new Router({
   routes: [
     {path:'/',component:Users},
     {path:'/My',component:MyMusic},
-    {path:'/friends',component:Friends},
+    {path:'/comment', name:"comment",component:Comments},
     {path:'/about',component:Users},
     {path:'/login',component:Login},
     {path:'/register',component:Register},

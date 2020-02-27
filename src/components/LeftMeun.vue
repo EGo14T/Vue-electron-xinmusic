@@ -15,7 +15,7 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-pengyou" />
             </svg>
-            <span class="navtext" @click="toComponents('/friends')">朋友</span>
+            <span class="navtext" @click="toComponents('comment')">朋友</span>
           </div>
         </li>
       </ul>
@@ -51,11 +51,12 @@
             </svg>
           </div>
 
-          <div class="nav-citem" v-for="item in showCreateList" @click="toMusciList(item.musicListID)">
-            <svg
-              class="icon svg-icon leftbtn"
-              aria-hidden="true"
-            >
+          <div
+            class="nav-citem"
+            v-for="item in showCreateList"
+            @click="toMusciList(item.musicListID)"
+          >
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
             </svg>
             <span class="navitem">{{item.musicListName}}</span>
@@ -70,11 +71,12 @@
             </svg>
           </div>
 
-          <div class="nav-citem" v-for="item in showCollectionList" @click="toMusciList(item.musicListID)">
-            <svg
-              class="icon svg-icon leftbtn"
-              aria-hidden="true"
-            >
+          <div
+            class="nav-citem"
+            v-for="item in showCollectionList"
+            @click="toMusciList(item.musicListID)"
+          >
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
             </svg>
             <span class="navitem">{{item.musicListName}}//{{item.musicListID}}</span>
@@ -255,7 +257,7 @@ export default {
   },
   methods: {
     toMusciList(musicListID) {
-     this.toComponents('musicList',musicListID);
+      this.toComponents("musicList", musicListID);
     },
     addclass(i) {
       switch (i) {
@@ -272,8 +274,8 @@ export default {
       alert(123);
     },
 
-    toComponents(pathUrl,params) {
-      this.$router.push({ name: pathUrl, params:{id: params}});
+    toComponents(pathUrl, params) {
+      this.$router.push({ name: pathUrl, params: { id: params } });
     }
   }
 };

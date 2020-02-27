@@ -20,7 +20,9 @@
         </div>
         <div v-else>
           <a href class="fromName">{{ item.replyComments.name }}：</a>
-          <span class="content">{{ item.replyComments.content }}</span>
+          <span class="content" v-html="ccc">
+
+          </span>
         </div>
 
         <div class="row justify-content-between" style="color: #4e4e52;">
@@ -28,7 +30,10 @@
             <p>{{ item.replyComments.createTime }}</p>
           </div>
           <div class="col-4" align="right">
-            <span class="comments-func" @click="toLike(item.replyComments.id)">点赞({{ item.replyComments.like }})</span>|
+            <span
+              class="comments-func"
+              @click="toLike(item.replyComments.id)"
+            >点赞({{ item.replyComments.like }})</span>|
             <span class="comments-func" @click="toShare(item.replyComments.id)">分享</span> |
             <span class="comments-func" @click="toComments(item.replyComments.id)">回复</span>
           </div>
@@ -66,7 +71,7 @@
       <span :class="['wordNum',isOver?'wordLimit':'']">{{wordNumber}}</span>
 
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" :disabled.sync="isTextNull" @click="comment">评论</el-button>
+        <el-button type="primary" :disabled.sync="isTextNull" @click="postComment">评论</el-button>
       </span>
     </el-dialog>
   </div>
@@ -78,49 +83,8 @@ import EmojiPanel from "../components/emoji/EmojiPanel";
 export default {
   data() {
     return {
-      comments: [
-    {
-        "replyComments": {
-            "id": "1582258303193590109",
-            "showId": "123456789",
-            "fromId": "2",
-            "toId": "1582258270980870153",
-            "content": "测试歌曲评论回复功能",
-            "like": 222,
-            "state": 1,
-            "createTime": "2020-02-21 12:11:43",
-            "avatar": "https://cdn.ego1st.cn/avatar/猴.jpg",
-            "name": "昕哥二号迷妹"
-        },
-        "originComments": {
-            "id": "1582258270980870153",
-            "showId": "123456789",
-            "fromId": "1",
-            "toId": "",
-            "content": "测试歌曲评论功能",
-            "like": 111,
-            "state": 1,
-            "createTime": "2020-02-21 12:11:11",
-            "avatar": "https://cdn.ego1st.cn/avatar/昕.jpg",
-            "name": "昕哥一号迷妹"
-        }
-    },
-    {
-        "replyComments": {
-            "id": "1582258270980870153",
-            "showId": "123456789",
-            "fromId": "1",
-            "toId": "",
-            "content": "测试歌曲评论功能",
-            "like": 111,
-            "state": 1,
-            "createTime": "2020-02-21 12:11:11",
-            "avatar": "https://cdn.ego1st.cn/avatar/昕.jpg",
-            "name": "昕哥一号迷妹"
-        },
-        "originComments": null
-    }
-],
+      comments: [], //评论
+
       commentsTitle: "歌曲：", //评论抬头  歌曲名称
 
       currentId: "", //当前操作的id
@@ -131,12 +95,18 @@ export default {
 
       wordNumber: 140, //字数
 
-      isShowEmojiPanel: false //显示emoji表情框
+      isShowEmojiPanel: false, //显示emoji表情框
+
+      ccc:"<span class='emoji-item-common emoji-joy emoji-size-small'></span>"
     };
   },
 
   components: {
     EmojiPanel
+  },
+
+  created() {
+    this.getComments();
   },
 
   computed: {
@@ -151,17 +121,17 @@ export default {
 
   methods: {
     //点赞是一种美德
-    toLike() {
-
-    },
+    toLike() {},
 
     toComments(id) {
       this.currentId = id;
       this.dialogVisible = true;
     },
 
+    //评论框关闭 初始化数据
     handleClose() {
       this.textarea = "";
+      this.wordNumber = 140;
       this.dialogVisible = false;
     },
 
@@ -179,10 +149,29 @@ export default {
       this.descInput();
     },
 
-    //提交评论
-    comment() {
-      console.log(this.currentId)
+    //获取评论
+    getComments() {
+      this.getRequest("/comments/getComments/123456789/1/10").then(resp => {
+        //console.log(resp.data);
+        this.comments = resp.data;
+      });
+    },
 
+    //提交评论
+    postComment() {
+      //console.log(this.currentId)
+      let commentJson = {
+        showId: "123456789",
+        fromId: "1",
+        toId: this.currentId,
+        content: this.textarea
+      };
+
+      this.postRequest("/comments/saveComments", commentJson).then(resp => {
+        //console.log(resp.data.replyComments);
+        this.comments.unshift(resp.data);
+        this.dialogVisible = false;
+      });
     }
   }
 };

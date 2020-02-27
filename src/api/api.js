@@ -1,7 +1,5 @@
 import axios from 'axios'
-
-
-
+import qs from "qs";
 
 //get方法
 export const getRequest = (url) => {
@@ -11,8 +9,21 @@ export const getRequest = (url) => {
     });
 };
 
-//post
+
+//post方法
 export const postRequest = (url, params) => {
+  return axios({
+    method: 'post',
+    url: url,
+    data: JSON.stringify(params),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
+//post for oauth
+export const oauthRequest = (url, params) => {
     return axios({
       method: 'post',
       url: url,

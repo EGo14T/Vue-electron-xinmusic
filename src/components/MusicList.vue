@@ -59,7 +59,6 @@ export default {
     },
 
     post() {
-      var qs = require("qs");
       let json = {
         grant_type: "password",
         username: "test",
