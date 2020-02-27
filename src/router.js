@@ -29,7 +29,7 @@ export default new Router({
     {path:'/login',component:Login},
     {path:'/register',component:Register},
     {path:'/home',component:Home},
-    {path:'/musicList',component:MusicList},
+    {path:'/musicList/:id' ,name:"musicList",component:MusicList},
     {path:'*',redirect:'/'}
 
   ]

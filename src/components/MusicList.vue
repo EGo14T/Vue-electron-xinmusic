@@ -7,7 +7,7 @@
       </div>
       <div class="music-list-info">
         <div class="line1">
-          <span class="font-line1">歌单</span>
+          <span class="font-line1">歌单{{musicListId}}</span>
           <span class="musiclist-title">{{musicTitle}}</span>
           <p class="musiclist-num" @click="post()">{{user}}</p>
         </div>
@@ -29,7 +29,10 @@ export default {
   components: {},
   data() {
     return {
+      musicListId: "",
+
       imgSrc: "https://ego1st.cn/images/EGo1ST.jpg",
+
       musicTitle: "我喜欢的音乐"
     };
   },
@@ -38,6 +41,16 @@ export default {
       return this.$store.state.user;
     }
   },
+  created() {
+    this.musicListId = this.$route.params.id;
+  },
+  
+  watch:{
+    '$route'(){
+        this.musicListId = this.$route.params.id;
+    }
+  },
+
   methods: {
     get() {
       this.getRequest("http://127.0.0.1:8033").then(resp => {

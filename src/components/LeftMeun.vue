@@ -8,7 +8,7 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-ic_addmusic" />
             </svg>
-            <span class="navtext" @click="toComponents('/MusicList')">发现音乐</span>
+            <span class="navtext">发现音乐</span>
           </div>
 
           <div class="nav-citem">
@@ -46,16 +46,15 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
               <use xlink:href="#icon-jia" />
             </svg>
-            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'" />
             </svg>
           </div>
 
-          <div class="nav-citem" v-for="item in showCreateList">
+          <div class="nav-citem" v-for="item in showCreateList" @click="toMusciList(item.musicListID)">
             <svg
               class="icon svg-icon leftbtn"
               aria-hidden="true"
-              @click="toMusciList(item.musicListID)"
             >
               <use :xlink:href="addclass(item.status)" />
             </svg>
@@ -66,20 +65,19 @@
         <li class="nav-item">
           <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
             <span style="margin-right:97px">收藏的歌单</span>
-            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
+            <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'" />
             </svg>
           </div>
 
-          <div class="nav-citem" v-for="item in showCollectionList">
+          <div class="nav-citem" v-for="item in showCollectionList" @click="toMusciList(item.musicListID)">
             <svg
               class="icon svg-icon leftbtn"
               aria-hidden="true"
-              @click="toMusciList(item.musicListID)"
             >
               <use :xlink:href="addclass(item.status)" />
             </svg>
-            <span class="navitem">{{item.musicListName}}</span>
+            <span class="navitem">{{item.musicListName}}//{{item.musicListID}}</span>
           </div>
         </li>
       </ul>
@@ -257,8 +255,7 @@ export default {
   },
   methods: {
     toMusciList(musicListID) {
-      //alert(musicListID)
-      toURL();
+     this.toComponents('musicList',musicListID);
     },
     addclass(i) {
       switch (i) {
@@ -275,8 +272,8 @@ export default {
       alert(123);
     },
 
-    toComponents(pathUrl) {
-      this.$router.push({ path: pathUrl });
+    toComponents(pathUrl,params) {
+      this.$router.push({ name: pathUrl, params:{id: params}});
     }
   }
 };

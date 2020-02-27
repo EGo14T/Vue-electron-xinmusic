@@ -28,9 +28,9 @@
             <p>{{ item.replyComments.createTime }}</p>
           </div>
           <div class="col-4" align="right">
-            <span class="comments-func" @click="toLike()">点赞({{ item.replyComments.like }})</span>|
-            <span class="comments-func" @click="test()">分享</span> |
-            <span class="comments-func" @click="toComments()">回复</span>
+            <span class="comments-func" @click="toLike(item.replyComments.id)">点赞({{ item.replyComments.like }})</span>|
+            <span class="comments-func" @click="toShare(item.replyComments.id)">分享</span> |
+            <span class="comments-func" @click="toComments(item.replyComments.id)">回复</span>
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
       :title="commentsTitle"
       :visible.sync="dialogVisible"
       width="477px"
-      :before-close="handleClose"
+      @closed="handleClose"
       :close-on-click-modal="false"
       custom-class="dialogStyle"
     >
@@ -66,7 +66,7 @@
       <span :class="['wordNum',isOver?'wordLimit':'']">{{wordNumber}}</span>
 
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" :disabled.sync="isTextNull">评论</el-button>
+        <el-button type="primary" :disabled.sync="isTextNull" @click="comment">评论</el-button>
       </span>
     </el-dialog>
   </div>
@@ -79,49 +79,51 @@ export default {
   data() {
     return {
       comments: [
-        {
-          replyComments: {
-            id: "1581758854743154730",
-            showId: "11231231412",
-            fromId: "2",
-            toId: "1581673273524334290",
-            content: "这只是一个测",
-            like: 999,
-            state: 1,
-            createTime: "2020-02-15 17:27:35",
-            avatar: "https://cdn.ego1st.cn/avatar/昕.jpg",
-            name: "昕哥"
-          },
-          originComments: {
-            id: "1581673273524334290",
-            showId: "11231231412",
-            fromId: "1",
-            toId: "",
-            content: "这只是一个测试的评论",
-            like: 666,
-            state: 1,
-            createTime: "2020-02-14 17:41:14",
-            avatar: "https://cdn.ego1st.cn/avatar/猴.jpg",
-            name: "egoist"
-          }
+    {
+        "replyComments": {
+            "id": "1582258303193590109",
+            "showId": "123456789",
+            "fromId": "2",
+            "toId": "1582258270980870153",
+            "content": "测试歌曲评论回复功能",
+            "like": 222,
+            "state": 1,
+            "createTime": "2020-02-21 12:11:43",
+            "avatar": "https://cdn.ego1st.cn/avatar/猴.jpg",
+            "name": "昕哥二号迷妹"
         },
-        {
-          replyComments: {
-            id: "1581673273524334290",
-            showId: "11231231412",
-            fromId: "1",
-            toId: "",
-            content: "这只是一个测试的评论",
-            like: 666,
-            state: 1,
-            createTime: "2020-02-14 17:41:14",
-            avatar: "https://cdn.ego1st.cn/avatar/猴.jpg",
-            name: "egoist"
-          },
-          originComments: null
+        "originComments": {
+            "id": "1582258270980870153",
+            "showId": "123456789",
+            "fromId": "1",
+            "toId": "",
+            "content": "测试歌曲评论功能",
+            "like": 111,
+            "state": 1,
+            "createTime": "2020-02-21 12:11:11",
+            "avatar": "https://cdn.ego1st.cn/avatar/昕.jpg",
+            "name": "昕哥一号迷妹"
         }
-      ],
+    },
+    {
+        "replyComments": {
+            "id": "1582258270980870153",
+            "showId": "123456789",
+            "fromId": "1",
+            "toId": "",
+            "content": "测试歌曲评论功能",
+            "like": 111,
+            "state": 1,
+            "createTime": "2020-02-21 12:11:11",
+            "avatar": "https://cdn.ego1st.cn/avatar/昕.jpg",
+            "name": "昕哥一号迷妹"
+        },
+        "originComments": null
+    }
+],
       commentsTitle: "歌曲：", //评论抬头  歌曲名称
+
+      currentId: "", //当前操作的id
 
       textarea: "", //评论内容
 
@@ -150,14 +152,16 @@ export default {
   methods: {
     //点赞是一种美德
     toLike() {
-      alert("点赞成功");
+
     },
 
-    toComments() {
+    toComments(id) {
+      this.currentId = id;
       this.dialogVisible = true;
     },
 
     handleClose() {
+      this.textarea = "";
       this.dialogVisible = false;
     },
 
@@ -173,6 +177,12 @@ export default {
       let emoji = "[" + text + "]";
       this.textarea = this.textarea + emoji;
       this.descInput();
+    },
+
+    //提交评论
+    comment() {
+      console.log(this.currentId)
+
     }
   }
 };

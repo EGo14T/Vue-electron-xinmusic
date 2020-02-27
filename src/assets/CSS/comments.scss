@@ -25,8 +25,11 @@
     user-select: text;
 }
 
-.comments-func:hover {
-    color: #828385;
+.comments-func {
+    cursor: pointer;
+    &:hover{
+        color: #828385;
+    }
 }
 
 
