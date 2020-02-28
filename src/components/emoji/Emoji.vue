@@ -15,7 +15,7 @@ export default {
   methods: {
     emojiClick() {
       console.log(this.EN);
-      this.$emit("onClick", this.CN);
+      this.$emit("onClick", this.CN,this.EN);
     }
   }
 };

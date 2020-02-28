@@ -5,6 +5,7 @@ import store from './store/store'
 
 
 import {getRequest ,postRequest, oauthRequest} from './api/api'
+import {getDataName} from './utils/utils'
 
 import vuescroll from 'vuescroll'
 
@@ -17,6 +18,8 @@ import './assets/iconfont/icon.css'
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.oauthRequest = oauthRequest;
+
+Vue.prototype.getDataName = getDataName;
 
 
 Vue.use(vuescroll, {

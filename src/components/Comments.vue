@@ -20,7 +20,7 @@
         </div>
         <div v-else>
           <a href class="fromName">{{ item.replyComments.name }}：</a>
-          <span class="content" v-html="ccc">
+          <span class="content" v-html="item.replyComments.content">
 
           </span>
         </div>
@@ -97,7 +97,52 @@ export default {
 
       isShowEmojiPanel: false, //显示emoji表情框
 
-      ccc:"<span class='emoji-item-common emoji-joy emoji-size-small'></span>"
+      ccc:"<span class='emoji-item-common emoji-joy emoji-size-small'></span>",
+
+      emojis: [
+        { EN: "smile", CN: "微笑" },
+        { EN: "blush", CN: "可爱" },
+        { EN: "relaed", CN: "憨笑" },
+        { EN: "heart_eyes", CN: "色" },
+        { EN: "kissing_heart", CN: "亲亲" },
+        { EN: "scream", CN: "惊恐" },
+        { EN: "sob", CN: "大哭" },
+        { EN: "kissing_closed_eyes", CN: "亲" },
+        { EN: "flushed", CN: "呆" },
+        { EN: "unamused", CN: "无趣" },
+        { EN: "angry", CN: "生气" },
+        { EN: "sweat", CN: "汗" },
+        { EN: "confounded", CN: "痛苦" },
+        { EN: "cold_sweat", CN: "冷汗" },
+        { EN: "fearful", CN: "恐惧" },
+        { EN: "mask", CN: "生病" },
+        { EN: "joy", CN: "大笑" },
+        { EN: "astonished", CN: "吃惊" },
+        { EN: "stuck_out_tongue_winking_eye", CN: "鬼脸" },
+        { EN: "triumph", CN: "抱怨" },
+        { EN: "tired_face", CN: "疲倦" },
+        { EN: "grin", CN: "呲牙" },
+        { EN: "anger", CN: "生气的" },
+        { EN: "heart", CN: "心" },
+        { EN: "broken_heart", CN: "心碎" },
+        { EN: "cow", CN: "牛" },
+        { EN: "beers", CN: "啤酒" },
+        { EN: "baby_chick", CN: "小鸡" },
+        { EN: "dog", CN: "狗" },
+        { EN: "birthday", CN: "蛋糕" },
+        { EN: "clapx", CN: "鼓掌" },
+        { EN: "pray", CN: "拍手" },
+        { EN: "thumbsupx", CN: "强" },
+        { EN: "thumbsdown", CN: "弱" },
+        { EN: "100", CN: "100" },
+        { EN: "lemon", CN: "柠檬" },
+        { EN: "peach", CN: "桃" },
+        { EN: "ghost", CN: "幽灵" },
+        { EN: "eyes", CN: "眼睛" },
+        { EN: "underage", CN: "18" },
+        { EN: "accept", CN: "可" },
+        { EN: "ok_hand", CN: "OK" }
+      ]
     };
   },
 
@@ -143,11 +188,22 @@ export default {
     showEmojiPanel() {
       this.isShowEmojiPanel = !this.isShowEmojiPanel;
     },
-    appendEmoji(text) {
-      let emoji = "[" + text + "]";
+
+    emoji(word) {
+      console.log(word+"123")
+      // 生成html
+      var type = word.substring(1, word.length - 1);
+      type = this.getDataName(this.emojis,"CN","EN",type);
+      return `<span class="emoji-item-common emoji-${type} emoji-size-small" ></span>`;
+    },
+
+    appendEmoji(CN,EN) {
+      let emoji = "[" + CN + "]";
       this.textarea = this.textarea + emoji;
       this.descInput();
     },
+
+    
 
     //获取评论
     getComments() {
@@ -168,7 +224,9 @@ export default {
       };
 
       this.postRequest("/comments/saveComments", commentJson).then(resp => {
-        //console.log(resp.data.replyComments);
+        //this.comments.push(this.content.replace(/:.*?:/g, this.emoji)); // 替换":"符号包含的字符串,通过emoji方法生成表情<span></span>
+        //console.log(resp.data.replyComments.content);
+        resp.data.replyComments.content = resp.data.replyComments.content.replace(/\[.*?\]/g, this.emoji)
         this.comments.unshift(resp.data);
         this.dialogVisible = false;
       });
