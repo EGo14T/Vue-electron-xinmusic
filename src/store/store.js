@@ -8,7 +8,7 @@ import * as types from './types'
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        user: 1111,
+        user: '',
         token: null,
         title: ''
     },

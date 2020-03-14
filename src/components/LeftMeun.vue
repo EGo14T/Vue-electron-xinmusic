@@ -79,7 +79,7 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
             </svg>
-            <span class="navitem">{{item.musicListName}}//{{item.musicListID}}</span>
+            <span class="navitem">{{item.musicListName}}</span>
           </div>
         </li>
       </ul>
