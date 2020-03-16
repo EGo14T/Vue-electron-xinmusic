@@ -56,7 +56,7 @@ export default {
   left: 200px;
   background: rgb(22, 24, 28);
   
-  width: calc(100% - 200px);;
+  width: calc(100% - 200px);
   height: calc(100% - 99px);
 
 }

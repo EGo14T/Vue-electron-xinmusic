@@ -1,0 +1,77 @@
+.container {
+  margin: 0;
+  padding: 0;
+  color: white;
+  .musicListInfo {
+    height: 265px;
+    margin: 30px;
+    .musicListImg {
+      padding: 0;
+    }
+    .listInfo {
+      .listInfoUp {
+        .createInfo{
+          margin-left: 20px;
+          .listTitle{
+            font-size: 15px;
+            color: #e03f40;
+            border: 1px solid #e03f40;
+            padding-left: 3px;
+            padding-right: 3px;
+          }
+          .musiclist-title {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 22px;
+            margin: 5px;
+            position: relative;
+            top: 1px;
+          }
+        }
+  
+        .musicNum {
+         position: relative;
+         left: 215px;
+         top: 4px;
+  
+         color: #58585c;
+         font-size: 13px;
+         text-align: right;
+         .separator {
+           &:after{
+            position: absolute;
+            top: 0.1em;
+            height: 38px;
+            left: 50px;
+            content: "";
+            width: 0;
+            border-left: solid#23262c 2px;
+           }
+          }
+        }
+  
+      }
+
+    }
+
+    .listInfoCenter {
+      color: #5c5c60;
+      margin: 10px 0 10px 20px;
+      .createUser {
+        color: #828385;
+        &:hover{
+            text-decoration: none;
+            color: #dcdde4;
+        }
+      }
+      .createTime {
+        font-size: 12px;
+        margin-left: 15px;
+      }
+    }
+
+    .listInfoDown {
+      color: red;
+    }
+
+  }
+}
