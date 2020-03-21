@@ -3,16 +3,16 @@
   padding: 0;
   color: white;
   .musicListInfo {
-    height: 265px;
-    margin: 30px;
+    margin: 0 30px 0 30px;
+    padding-top: 30px;
     .musicListImg {
       padding: 0;
     }
     .listInfo {
       .listInfoUp {
-        .createInfo{
+        .createInfo {
           margin-left: 20px;
-          .listTitle{
+          .listTitle {
             font-size: 15px;
             color: #e03f40;
             border: 1px solid #e03f40;
@@ -27,40 +27,38 @@
             top: 1px;
           }
         }
-  
+
         .musicNum {
-         position: relative;
-         left: 215px;
-         top: 4px;
-  
-         color: #58585c;
-         font-size: 13px;
-         text-align: right;
-         .separator {
-           &:after{
-            position: absolute;
-            top: 0.1em;
-            height: 38px;
-            left: 50px;
-            content: "";
-            width: 0;
-            border-left: solid#23262c 2px;
-           }
+          position: relative;
+          left: 210px;
+          top: 4px;
+
+          color: #58585c;
+          font-size: 13px;
+          text-align: right;
+          .separator {
+            &:after {
+              position: absolute;
+              top: 0.1em;
+              height: 38px;
+              left: 50px;
+              content: "";
+              width: 0;
+              border-left: solid #23262c 2px;
+            }
           }
         }
-  
       }
-
     }
 
     .listInfoCenter {
       color: #5c5c60;
-      margin: 10px 0 10px 20px;
+      margin: 5px 0 5px 20px;
       .createUser {
         color: #828385;
-        &:hover{
-            text-decoration: none;
-            color: #dcdde4;
+        &:hover {
+          text-decoration: none;
+          color: #dcdde4;
         }
       }
       .createTime {
@@ -70,8 +68,61 @@
     }
 
     .listInfoDown {
-      color: red;
-    }
+      padding: 10px 0 0 20px;
+      .bofang {
+        font-size: 12px;
+        border-radius: 8px 0 0 8px;
+        padding: 6px 7px 3px 10px;
+        background-color: #b82525;
+        border: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.5);
+        color: white;
+      }
+      .addToList {
+        border-radius: 0 8px 8px 0;
+        margin: 0;
+        padding: 5px 9px 4px 3px;
+        background-color: #b82525;
+        border: 0;
+        color: white;
+      }
 
+      .listFunc {
+        font-size: 12px;
+        border-radius: 8px;
+        padding: 6px 8px 3px 8px;
+        background-color: #25272b;
+        border: 0;
+        color: white;
+      }
+
+      .tag {
+        margin: 10px 0 0 0;
+        color: #dcdde4;
+        font-size: 13px;
+        .tagLink {
+          color: #2c7ad1;
+        }
+      }
+
+      .description {
+        width: 500px;
+        margin: 10px 0 0 0;
+        color: #dcdde4;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .musiclist {
+    background-color: #141414;
+    .musiclistHeader {
+      background-color: rgb(22, 24, 28);
+      margin: 0;
+      padding: 15px 0 2px 0;
+      .tabsBtn {
+        margin: 0 25px 5px 25px;
+      }
+    }
   }
 }

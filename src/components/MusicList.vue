@@ -5,12 +5,11 @@
       <div class="musicListImg col-auto">
         <img :src="musicListInfo.musiclistImg" width="199px" height="199px" draggable="false" />
       </div>
-
       <div class="listInfo col-auto">
         <div class="listInfoUp row">
           <div class="createInfo col-auto">
             <span class="listTitle">歌单</span>
-            <span class="musiclist-title">{{musicListInfo.musiclistName}}</span>
+            <span class="musiclist-title">{{musicListInfo.musiclistName}}{{musicListId}}</span>
           </div>
           <div class="musicNum col-auto row" align="right">
             <div class="col-md-auto separator" style=" margin: 0 12px 0 12px;">
@@ -35,20 +34,80 @@
           <span class="createTime">{{musicListInfo.createTime}}创建</span>
         </div>
         <div class="listInfoDown">
-          <el-button>
-            播放全部  
+          <el-button class="bofang">
+            <svg
+              class="icon svg-icon"
+              style="height:17px;width:17px;color:white"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-bofangbtn-copy" />
+            </svg>
+            播放全部
           </el-button>
-          <el-button>
-            收藏  
+          <el-button class="addToList">
+            <svg
+              class="icon svg-icon"
+              style="height:17px;width:17px;color:white"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-plus" />
+            </svg>
           </el-button>
-          <el-button>
-            分享  
+
+          <el-button class="listFunc">
+            <svg
+              class="icon svg-icon"
+              style="height:17px;width:17px;color:white"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-xinjianwenjian" />
+            </svg>
+            收藏 (999)
           </el-button>
-          <el-button>
-            下载全部  
+
+          <el-button class="listFunc">
+            <svg
+              class="icon svg-icon"
+              style="height:17px;width:17px;color:white"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-fenxiang" />
+            </svg>
+            分享 (2333)
           </el-button>
+
+          <el-button class="listFunc">
+            <svg
+              class="icon svg-icon"
+              style="height:17px;width:17px;color:white"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-xiazai" />
+            </svg>
+            下载全部
+          </el-button>
+
+          <div class="tag">
+            <span>标签：</span>
+            <a class="tagLink" href>日系</a>/
+            <a class="tagLink" href>开口跪</a>/
+            <a class="tagLink" href>电子</a>
+          </div>
+
+          <div class="description">
+            <span>简介：昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了</span>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="musiclist">
+      <div class="musiclistHeader row">
+        <div class="col-row" style="margin: 0 25px 5px 100px" @click.prevent="comName='login'">歌曲列表</div>
+        <div class="col-row tabsBtn" @click.prevent="comName='home'">评论</div>
+        <div class="col-row tabsBtn">收藏者</div>
+      </div>
+      <component :is="comName" :musicList="this.musicListId"></component>
     </div>
   </div>
 
@@ -68,10 +127,19 @@
 import * as types from "../store/types";
 import qs from "qs";
 
+import Home from './Home'
+import Login from './Login'
+
 export default {
-  components: {},
+  components: {
+    'home':Home,
+    'login':Login
+  },
   data() {
     return {
+
+      comName:'login',
+
       musicListId: "",
 
       musicListInfo: {
@@ -124,6 +192,10 @@ export default {
         console.log(resp.data.user);
         this.$store.commit(types.LOGIN, resp.data.user);
       });
+    },
+
+    test(pathUrl, params) {
+      this.$router.push({ name: pathUrl, params: { id: params } });
     }
   }
 };

@@ -10,7 +10,7 @@
 
     <div class="main">
       <myScroll>
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </myScroll>
     </div>
     <div class="footer">
