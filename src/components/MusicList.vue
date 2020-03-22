@@ -105,7 +105,7 @@
       <div class="musiclistHeader row">
         <div class="col-row" style="margin: 0 25px 5px 100px" @click.prevent="comName='login'">歌曲列表</div>
         <div class="col-row tabsBtn" @click.prevent="comName='home'">评论</div>
-        <div class="col-row tabsBtn">收藏者</div>
+        <div class="col-row tabsBtn" @click.prevent="post()">收藏者</div>
       </div>
       <component :is="comName" :musicList="this.musicListId"></component>
     </div>
@@ -189,8 +189,8 @@ export default {
         client_secret: "secret"
       };
       this.oauthRequest("/oauth/token", json).then(resp => {
-        console.log(resp.data.user);
-        this.$store.commit(types.LOGIN, resp.data.user);
+        console.log(resp.data);
+        this.$store.commit(types.LOGIN, resp.data);
       });
     },
 

@@ -9,13 +9,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: '',
-        token: null,
+        accessToken: null,
+        refreshToken: null,
         title: ''
     },
     mutations: {
         [types.LOGIN]: (state, data) => {
-            localStorage.user = data;
-            state.user = data;
+            localStorage.user = data.user;
+            localStorage.accessToken = data.access_token;
+            localStorage.refreshToken = data.refresh_token;
+            
+            state.user = data.user;
+            state.accessToken = data.access_token;
+            state.refreshToken = data.refresh_token;
+            
         },
         [types.LOGOUT]: (state) => {
             localStorage.removeItem('token');
