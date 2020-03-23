@@ -4,7 +4,7 @@ import router from './router'
 import store from './store/store'
 
 
-import {getRequest ,postRequest, oauthRequest} from './api/api'
+// import {getRequest ,postRequest, oauthRequest} from './api/api'
 import {getDataName} from './utils/utils'
 
 import vuescroll from 'vuescroll'
@@ -15,9 +15,9 @@ import './plugins/element.js'
 
 import './assets/iconfont/icon.css'
 
-Vue.prototype.getRequest = getRequest;
-Vue.prototype.postRequest = postRequest;
-Vue.prototype.oauthRequest = oauthRequest;
+
+
+import axiosplugin from './api/AxiosPlugin'
 
 Vue.prototype.getDataName = getDataName;
 
@@ -41,7 +41,7 @@ Vue.use(vuescroll, {
     }
   },
   name: 'myScroll' // 在这里自定义组件名字，默认是vueScroll
-});
+}).use(axiosplugin);
 
 Vue.config.productionTip = false
 

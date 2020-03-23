@@ -104,8 +104,9 @@
     <div class="musiclist">
       <div class="musiclistHeader row">
         <div class="col-row" style="margin: 0 25px 5px 100px" @click.prevent="comName='login'">歌曲列表</div>
-        <div class="col-row tabsBtn" @click.prevent="comName='home'">评论</div>
-        <div class="col-row tabsBtn" @click.prevent="post()">收藏者</div>
+        <div class="col-row tabsBtn" @click.prevent="get()">GET</div>
+        <div class="col-row tabsBtn" @click.prevent="post()">POST</div>
+        <div class="col-row tabsBtn" @click.prevent="oauth()">Oauth</div>
       </div>
       <component :is="comName" :musicList="this.musicListId"></component>
     </div>
@@ -174,12 +175,27 @@ export default {
 
   methods: {
     get() {
-      this.getRequest("http://127.0.0.1:8033").then(resp => {
-        console.log(123);
+      this.getRequest("/my/musiclist/1").then(resp => {
+        console.log(resp.data);
       });
     },
 
     post() {
+      let json = {
+        grant_type: "password",
+        username: "test",
+        password: "test",
+        //scope:all
+        client_id: "client",
+        client_secret: "secret"
+      };
+      this.postRequest("http://rap2.taobao.org:38080/app/mock/248213/postJson",json).then(resp => {
+        console.log(resp.data)
+      })
+    },
+
+
+    oauth() {
       let json = {
         grant_type: "password",
         username: "test",
