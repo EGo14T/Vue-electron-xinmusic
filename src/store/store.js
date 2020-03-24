@@ -15,7 +15,9 @@ export default new Vuex.Store({
     },
     mutations: {
         [types.LOGIN]: (state, data) => {
-            localStorage.user = data.user;
+            
+            localStorage.user = JSON.stringify(data.user);
+
             localStorage.accessToken = data.access_token;
             localStorage.refreshToken = data.refresh_token;
             

@@ -237,14 +237,14 @@ export default {
     getComments() {
       this.getRequest("/comments/getComments/123456789/1/10").then(resp => {
         //console.log(resp.data);
-        for (const iterator of resp.data) {
+        for (const iterator of resp.data.data) {
           //console.log(iterator.replyComments.content)
           iterator.replyComments.content = iterator.replyComments.content.replace(/\[.*?\]/g, this.emoji);
           if(iterator.originComments!==null){
              iterator.originComments.content = iterator.originComments.content.replace(/\[.*?\]/g, this.emoji);
           }
         }
-        this.comments = resp.data;
+        this.comments = resp.data.data;
       });
     },
 
@@ -263,9 +263,9 @@ export default {
           this.postRequest("/comments/saveComments", commentJson).then(resp => {
           //this.comments.push(this.content.replace(/:.*?:/g, this.emoji)); // 替换":"符号包含的字符串,通过emoji方法生成表情<span></span>
           //console.log(resp.data.replyComments.content);
-          resp.data.replyComments.content = resp.data.replyComments.content.replace(/\[.*?\]/g, this.emoji);
-          this.comments.unshift(resp.data);
-          console.log(resp.data.replyComments)
+          resp.data.data.replyComments.content = resp.data.data.replyComments.content.replace(/\[.*?\]/g, this.emoji);
+          this.comments.unshift(resp.data.data);
+          console.log(resp.data.data.replyComments)
           this.dialogVisible = false;
           });
       }

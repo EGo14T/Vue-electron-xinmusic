@@ -99,21 +99,9 @@ export default {
           isCollecting: 0
         },
         {
-          musicListID: 5,
-          musicListName: "ONE AND ROCK",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 6,
-          musicListName: "Miku",
-          status: 1,
-          isCollecting: 0
-        },
-        {
           musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
+          musicListName: "音乐",
+          status: 0,
           isCollecting: 0
         }
       ],
@@ -124,116 +112,23 @@ export default {
           musicListName: "我喜欢的音乐",
           status: 0,
           isCollecting: 0
-        },
-        {
-          musicListID: 5,
-          musicListName: "ONE AND ROCK",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 6,
-          musicListName: "Miku",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
-        },
-        {
-          musicListID: 8,
-          musicListName: "我喜欢的音乐",
-          status: 0,
-          isCollecting: 0
-        },
-        {
-          musicListID: 5,
-          musicListName: "ONE AND ROCK",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 6,
-          musicListName: "Miku",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
-        },
-        {
-          musicListID: 8,
-          musicListName: "我喜欢的音乐",
-          status: 0,
-          isCollecting: 0
-        },
-        {
-          musicListID: 5,
-          musicListName: "ONE AND ROCK",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 6,
-          musicListName: "Miku",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
-        },
-        {
-          musicListID: 8,
-          musicListName: "我喜欢的音乐",
-          status: 0,
-          isCollecting: 0
-        },
-        {
-          musicListID: 5,
-          musicListName: "ONE AND ROCK",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 6,
-          musicListName: "Miku",
-          status: 1,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "Reona",
-          status: 2,
-          isCollecting: 0
         }
       ],
 
       showAllCr: false,
       showAllCo: false,
-      skin: ""
+      skin: "",
+      userID: '', //用户ID
     };
   },
+
+
+  created(){
+    //获取歌单列表
+    this.getMusicList();
+  },
+
+
   computed: {
     showCreateList: function() {
       if (this.showAllCr == false) {
@@ -259,6 +154,17 @@ export default {
     toMusciList(musicListID) {
       this.toComponents("musicList", musicListID);
     },
+
+    //获取歌单列表
+    getMusicList() {
+      if(localStorage.user){
+      this.userID = JSON.parse(localStorage.getItem("user")).id;
+      alert(this.userID)
+      }else{
+        alert()
+      }
+    },
+    
     addclass(i) {
       switch (i) {
         case 0:
@@ -268,10 +174,6 @@ export default {
         case 2:
           return "#icon-lock";
       }
-    },
-
-    addmusic() {
-      alert(123);
     },
 
     toComponents(pathUrl, params) {

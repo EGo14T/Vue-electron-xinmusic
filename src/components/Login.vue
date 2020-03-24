@@ -1,6 +1,6 @@
 <template>
   <div style="padding:30px">
-    歌曲列表--------歌单ID：{{musicList}}  {{ad}}
+    歌曲列表--------歌单ID：{{musicList}}----{{ad}}
   </div>
 </template>
 
@@ -19,7 +19,9 @@ export default {
     methods: {
       test(){
         //alert(this.musicList)
-        this.ad = localStorage.accessToken;
+        if(localStorage.user){
+          this.ad = JSON.parse(localStorage.getItem("user")).id;
+        }
       }
     }
 

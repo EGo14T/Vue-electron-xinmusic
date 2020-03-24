@@ -23,6 +23,10 @@
       </svg>
     </div>
 
+    <div class="col-auto userInfo">
+      <div @click="login()">登录</div>
+    </div>
+
     <div class="col-auto tools row">
       <div class="col-auto" title="最小化窗口" @click="minwindow()">
         <svg class="icon svg-icon toolBtn" aria-hidden="true">
@@ -49,19 +53,36 @@
 import { ipcRenderer } from "electron";
 import { Minimatch } from "minimatch";
 
+import * as types from "../store/types";
+
 export default {
   methods: {
     closewindow() {
       ipcRenderer.send("close");
     },
 
-    minwindow() {
+    minwindow() {3
       ipcRenderer.send("minwindow");
     },
 
     minToTask() {
       ipcRenderer.send("minToTask");
-    }
+    },
+
+    login() {
+      let json = {
+        grant_type: "password",
+        username: "test",
+        password: "test",
+        //scope:all
+        client_id: "client",
+        client_secret: "secret"
+      };
+      this.oauthRequest("/oauth/token", json).then(resp => {
+        console.log(resp.data);
+        this.$store.commit(types.LOGIN, resp.data);
+      });
+    },
   }
 };
 </script>
