@@ -157,12 +157,16 @@ export default {
 
     //获取歌单列表
     getMusicList() {
-      if(localStorage.user){
-      this.userID = JSON.parse(localStorage.getItem("user")).id;
-      alert(this.userID)
-      }else{
-        alert()
-      }
+      // if(localStorage.user){
+      // this.userID = JSON.parse(localStorage.getItem("user")).id;
+      // alert(this.userID)
+      // }else{
+      //   alert()
+      // }
+      this.getRequest("/my/musiclist/1").then(resp => {
+        console.log(resp.data);
+      });
+
     },
     
     addclass(i) {

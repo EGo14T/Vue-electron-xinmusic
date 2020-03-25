@@ -175,7 +175,7 @@ export default {
 
   methods: {
     get() {
-      this.getRequest("/my/musiclist/1").then(resp => {
+      this.getRequest("/my/musiclist/1","23").then(resp => {
         console.log(resp.data);
       });
     },
@@ -193,7 +193,6 @@ export default {
         console.log(resp.data)
       })
     },
-
 
     oauth() {
       let json = {

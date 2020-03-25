@@ -5,9 +5,10 @@ const Axios = axios.create({
 })
 
 Axios.interceptors.request.use(config => {
-    if(localStorage.accessToken) {
-        config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
-    }
+    // if(localStorage.accessToken) {
+    //     config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
+    // }
+    alert(config.isToken)
     return config
 })
 
@@ -21,10 +22,11 @@ export default {
 }
 
 //get方法
-const getRequest = (url) => {
+const getRequest = (url,istoken) => {
     return Axios({
         method: 'get',
-        url: url
+        url: url,
+        isToken: istoken
     });
 };
 
