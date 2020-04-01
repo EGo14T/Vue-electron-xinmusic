@@ -8,7 +8,9 @@ Axios.interceptors.request.use(config => {
     // if(localStorage.accessToken) {
     //     config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
     // }
-    alert(config.isToken)
+    if(config.isToken){
+        config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
+    }
     return config
 })
 
@@ -18,6 +20,7 @@ export default {
         Object.defineProperty(Vue.prototype, 'getRequest', { value: getRequest })
         Object.defineProperty(Vue.prototype, 'postRequest', { value: postRequest })
         Object.defineProperty(Vue.prototype, 'oauthRequest', { value: oauthRequest })
+        Object.defineProperty(Vue.prototype, '$http', {value: axios})
     }
 }
 

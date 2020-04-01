@@ -54,12 +54,12 @@
           <div
             class="nav-citem"
             v-for="item in showCreateList"
-            @click="toMusciList(item.musicListID)"
+            @click="toMusciList(item.musiclistid)"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
             </svg>
-            <span class="navitem">{{item.musicListName}}</span>
+            <span class="navitem">{{item.musiclistName}}</span>
           </div>
         </li>
 
@@ -74,12 +74,12 @@
           <div
             class="nav-citem"
             v-for="item in showCollectionList"
-            @click="toMusciList(item.musicListID)"
+            @click="toMusciList(item.musiclistid)"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
             </svg>
-            <span class="navitem">{{item.musicListName}}</span>
+            <span class="navitem">{{item.musiclistName}}</span>
           </div>
         </li>
       </ul>
@@ -91,43 +91,27 @@
 export default {
   data() {
     return {
-      CreateMusicListInfo: [
-        {
-          musicListID: 8,
-          musicListName: "我喜欢的音乐",
-          status: 0,
-          isCollecting: 0
-        },
-        {
-          musicListID: 7,
-          musicListName: "音乐",
-          status: 0,
-          isCollecting: 0
-        }
-      ],
+      CreateMusicListInfo: [],
 
-      CollectionMusicListInfo: [
-        {
-          musicListID: 8,
-          musicListName: "我喜欢的音乐",
-          status: 0,
-          isCollecting: 0
-        }
-      ],
+      CollectionMusicListInfo: [],
 
       showAllCr: false,
       showAllCo: false,
       skin: "",
-      userID: '', //用户ID
+      userID: "" //用户ID
     };
   },
 
-
-  created(){
+  created() {
     //获取歌单列表
     this.getMusicList();
   },
 
+  watch: {
+    '$store.state.user' : function(){
+        this.getMusicList();
+    }
+  },
 
   computed: {
     showCreateList: function() {
@@ -151,24 +135,23 @@ export default {
     }
   },
   methods: {
-    toMusciList(musicListID) {
-      this.toComponents("musicList", musicListID);
+    toMusciList(musiclistid) {
+      this.toComponents("musicList", musiclistid);
     },
 
-    //获取歌单列表
+    //获取创建歌单列表
     getMusicList() {
-      // if(localStorage.user){
-      // this.userID = JSON.parse(localStorage.getItem("user")).id;
-      // alert(this.userID)
-      // }else{
-      //   alert()
-      // }
-      this.getRequest("/my/musiclist/1").then(resp => {
-        console.log(resp.data);
-      });
-
+      if (localStorage.user) {
+        this.$http.all([
+          this.getRequest("/my/create/musiclist/1", true),
+          this.getRequest("/my/collect/musiclist/1", true)
+        ]).then(this.$http.spread((createResp,collectResp) => {
+            this.CreateMusicListInfo = createResp.data.data;
+            this.CollectionMusicListInfo = collectResp.data.data;
+          }))
+      }
     },
-    
+
     addclass(i) {
       switch (i) {
         case 0:

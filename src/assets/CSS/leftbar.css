@@ -11,6 +11,12 @@
     font-size: 14px;
     padding-top: 1px;
     padding-bottom: 1px;
+
+    display:block;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    width: 187px;
 }
 
 .nav-citem:hover .navitem,

@@ -9,9 +9,9 @@
         <div class="listInfoUp row">
           <div class="createInfo col-auto">
             <span class="listTitle">歌单</span>
-            <span class="musiclist-title">{{musicListInfo.musiclistName}}{{musicListId}}</span>
+            <span class="musiclist-title">{{musicListInfo.musiclistName}}</span>
           </div>
-          <div class="musicNum col-auto row" align="right">
+          <div class="musicNum row" align="right">
             <div class="col-md-auto separator" style=" margin: 0 12px 0 12px;">
               <div>歌曲数</div>
               <div>123</div>
@@ -26,7 +26,7 @@
           <img
             class="align-self-start mr-3"
             style="border-radius: 50%;"
-            :src="musicListInfo.musiclistImg"
+            :src="musicListInfo.avatar"
             width="32"
             height="32"
           />
@@ -95,7 +95,7 @@
           </div>
 
           <div class="description">
-            <span>简介：昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了昕哥牛逼就完事儿了</span>
+            <span>简介：</span><span class="des">{{musicListInfo.description}}</span>
           </div>
         </div>
       </div>
@@ -128,34 +128,21 @@
 import * as types from "../store/types";
 import qs from "qs";
 
-import Home from './Home'
-import Login from './Login'
+import Home from "./Home";
+import Login from "./Login";
 
 export default {
   components: {
-    'home':Home,
-    'login':Login
+    home: Home,
+    login: Login
   },
   data() {
     return {
-
-      comName:'login',
+      comName: "login",
 
       musicListId: "",
 
-      musicListInfo: {
-        userid: "1",
-        musiclistid: "3",
-        musiclistName: "我喜欢的音乐",
-        createTime: "2020-02-02",
-        tags: "日系",
-        description: "日系",
-        musiclistImg: "https://cdn.ego1st.cn/avatar/昕.jpg",
-        status: 1,
-        iscollecting: 1,
-        username: "egoist",
-        avatar: "https://cdn.ego1st.cn/avatar/昕.jpg"
-      }
+      musicListInfo: {}
     };
   },
   computed: {
@@ -165,17 +152,17 @@ export default {
   },
   created() {
     this.musicListId = this.$route.params.id;
+    this.getMusicListInfo();
+
   },
 
   watch: {
-    $route() {
-      this.musicListId = this.$route.params.id;
-    }
+
   },
 
   methods: {
     get() {
-      this.getRequest("/my/musiclist/1","23").then(resp => {
+      this.getRequest("/my/musiclist/1", true).then(resp => {
         console.log(resp.data);
       });
     },
@@ -189,9 +176,12 @@ export default {
         client_id: "client",
         client_secret: "secret"
       };
-      this.postRequest("http://rap2.taobao.org:38080/app/mock/248213/postJson",json).then(resp => {
-        console.log(resp.data)
-      })
+      this.postRequest(
+        "http://rap2.taobao.org:38080/app/mock/248213/postJson",
+        json
+      ).then(resp => {
+        console.log(resp.data);
+      });
     },
 
     oauth() {
@@ -209,8 +199,12 @@ export default {
       });
     },
 
-    test(pathUrl, params) {
-      this.$router.push({ name: pathUrl, params: { id: params } });
+    //获取歌单信息
+    getMusicListInfo(){
+      this.getRequest("/my/musiclistinfo/"+this.musicListId).then(resp => {
+        //console.log(resp.data.data)
+        this.musicListInfo = resp.data.data;
+      })
     }
   }
 };

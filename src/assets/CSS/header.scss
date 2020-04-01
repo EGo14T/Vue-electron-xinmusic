@@ -59,9 +59,19 @@
   }
 
   .userInfo {
+    -webkit-app-region: no-drag;
     position: absolute;
-    left: 80%;
-    padding: 11px 0 0 0;
+    left: 70%;
+    padding: 13px 0 0 0;
+    font-size: 12px;
+    .userName {
+      -webkit-app-region: no-drag;
+      color: #adafb2;
+      &:hover{
+        text-decoration: none;
+        color: #a5a7a8;
+    }
+    }
   }
 
   .tools {

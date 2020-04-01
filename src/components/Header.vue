@@ -23,8 +23,19 @@
       </svg>
     </div>
 
-    <div class="col-auto userInfo">
-      <div @click="login()">登录</div>
+    <div class="col-auto userInfo" v-if="islogin">
+      <img
+        style="border-radius: 50%;margin-right:10px"
+        :src="this.$store.state.user.avatar"
+        width="24"
+        height="24"
+        @click="oauthLogin()"
+      />
+      <a href class="userName">{{this.$store.state.user.name}}</a>
+    </div>
+
+    <div class="col-auto userInfo" v-if="!islogin">
+      <div @click="login()">未登录</div>
     </div>
 
     <div class="col-auto tools row">
@@ -56,12 +67,44 @@ import { Minimatch } from "minimatch";
 import * as types from "../store/types";
 
 export default {
+  data() {
+    return {
+      islogin: false //是否登录
+    };
+  },
+
+  created() {
+    this.oauthLogin();
+  },
+
   methods: {
+    //验证登录，若没登录则使用refrsh token刷新登录，若第一次登录，则弹窗登录
+    oauthLogin() {
+      if (localStorage.refreshToken) {
+        console.log(localStorage.refreshToken)
+        let json = {
+          grant_type: "refresh_token",
+          client_id: "client",
+          client_secret: "secret",
+          refresh_token: localStorage.refreshToken
+        };
+        this.oauthRequest("/oauth/token", json).then(resp => {
+          //console.log(resp.data.user);
+          this.$store.commit(types.LOGIN, resp.data);
+          this.islogin = true;
+        });
+        console.log(123321)
+      } else {
+        this.islogin = false;
+      }
+    },
+
     closewindow() {
       ipcRenderer.send("close");
     },
 
-    minwindow() {3
+    minwindow() {
+      3;
       ipcRenderer.send("minwindow");
     },
 
@@ -81,8 +124,9 @@ export default {
       this.oauthRequest("/oauth/token", json).then(resp => {
         console.log(resp.data);
         this.$store.commit(types.LOGIN, resp.data);
+        this.islogin = !this.islogin;
       });
-    },
+    }
   }
 };
 </script>
