@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h5>听友评论</h5>
+    <div>最新评论</div>
     <div class="media" v-for="item in comments">
       <img
         class="align-self-start mr-3"
@@ -153,6 +153,7 @@ export default {
 
   mounted(){
     document.addEventListener('click',e => { 
+      //console.log(e.target.className)
       if(e.target.className.indexOf("emoji-item-common")==-1
       &&e.target.className.indexOf("emoji-panel-wrap")==-1){
         this.isShowEmojiPanel = false;

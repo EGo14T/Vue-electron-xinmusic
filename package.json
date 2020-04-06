@@ -17,6 +17,8 @@
     "electron": "5.0.12",
     "element-ui": "^2.4.5",
     "hls.js": "^0.12.4",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
     "node-sass": "^4.13.1",
     "qs": "^6.9.1",
     "sass-loader": "^8.0.2",

@@ -6,6 +6,7 @@ import Comments from './components/Comments'
 import Users from './components/Users'
 import Login from './components/Login'
 import Register from './components/Register'
+import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
 
 
@@ -29,7 +30,8 @@ export default new Router({
     {path:'/login',component:Login},
     {path:'/register',component:Register},
     {path:'/home',component:Home},
-    {path:'/musicList/:id' ,name:"musicList",component:MusicList},
+    {path:'/musiclstinfo/:id' ,name:"musiclstinfo",component:MusicListinfo},
+    {path:'/musiclist',component:MusicList},
     {path:'*',redirect:'/'}
 
   ]

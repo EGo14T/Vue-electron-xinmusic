@@ -54,7 +54,7 @@
           <div
             class="nav-citem"
             v-for="item in showCreateList"
-            @click="toMusciList(item.musiclistid)"
+            @click.stop="toMusciList(item.musiclistid)"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     toMusciList(musiclistid) {
-      this.toComponents("musicList", musiclistid);
+      this.toComponents("musiclstinfo", musiclistid);
     },
 
     //获取创建歌单列表
