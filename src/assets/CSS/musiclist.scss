@@ -1,0 +1,67 @@
+.container {
+  background-color: #16181c;
+  .music-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #828385;
+    .custom-th {
+      border-left: 0;
+    }
+
+    th {
+      border-left: solid 1px #23262c;
+      border-bottom: solid 1px #23262c;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 350;
+    }
+
+    .custom-tr {
+      &:hover {
+        background-color: #232529;
+        .td-singer {
+          color: #dcdde4;
+        }
+
+        .td-album {
+          color: #dcdde4;
+        }
+      }
+      &:nth-child(odd) {
+        /* 匹配奇数行 */
+        background-color: #1a1c20;
+        &:hover {
+          background-color: #232529;
+        }
+      }
+    }
+
+    td {
+      color: #d3dbcc;
+      font-size: 12px;
+      font-weight: 450;
+      padding: 4px 10px;
+    }
+
+    .td-number {
+      color: #828385;
+      width: 50px;
+    }
+    
+    .td-operate {
+        width: 60px;
+    }
+
+    .td-singer {
+      color: #828385;
+    }
+
+    .td-album {
+      color: #828385;
+    }
+
+    .td-length {
+      color: #828385;
+    }
+  }
+}

@@ -103,7 +103,7 @@
       <div class="musiclistHeader row">
         <div
           :class="['col-row',comName=='musiclist'?'tabsBtn':'']"
-          style="margin: 0 25px 0 100px"
+          style="margin: 0 25px 0 70px"
           @click.prevent="comName='musiclist'"
         >歌曲列表</div>
 
@@ -145,7 +145,7 @@ export default {
   },
   data() {
     return {
-      comName: "comment",
+      comName: "musiclist",
 
       musicListId: "",
 

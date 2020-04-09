@@ -98,8 +98,6 @@ export default {
 
       isShowEmojiPanel: false, //显示emoji表情框
 
-      ccc:"<span class='emoji-item-common emoji-smile emoji-size-small'></span>",
-
       emojis: [
         { EN: "smile", CN: "微笑" },
         { EN: "blush", CN: "可爱" },
@@ -265,8 +263,9 @@ export default {
           //this.comments.push(this.content.replace(/:.*?:/g, this.emoji)); // 替换":"符号包含的字符串,通过emoji方法生成表情<span></span>
           //console.log(resp.data.replyComments.content);
           resp.data.data.replyComments.content = resp.data.data.replyComments.content.replace(/\[.*?\]/g, this.emoji);
+          resp.data.data.originComments.content = resp.data.data.originComments.content.replace(/\[.*?\]/g, this.emoji);
           this.comments.unshift(resp.data.data);
-          console.log(resp.data.data.replyComments)
+          //console.log(resp.data.data.replyComments)
           this.dialogVisible = false;
           });
       }
