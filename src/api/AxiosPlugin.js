@@ -1,8 +1,11 @@
 import axios from 'axios'
 
+axios.defaults.baseURL = "http://localhost:8091"
+
 const Axios = axios.create({
     timeout: 5000,
 })
+
 
 Axios.interceptors.request.use(config => {
     // if(localStorage.accessToken) {

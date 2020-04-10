@@ -101,7 +101,7 @@ app.on('ready', async () => {
     // }
 
   }
-  tray = new Tray('./src/assets/bitbug_favicon.ico')
+  tray = new Tray(`${__static}/bitbug_favicon.ico`);
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Item1', type: 'radio' },
     { label: 'Item2', type: 'radio' },
@@ -114,7 +114,6 @@ app.on('ready', async () => {
   tray.on('click', function (Event) {
     win.show() // 显示窗口
      // 是否最小到托盘
-
 })
 
   createWindow()
