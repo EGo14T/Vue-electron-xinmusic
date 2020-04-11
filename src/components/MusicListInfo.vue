@@ -110,7 +110,7 @@
         <div :class="['col-row',comName=='comment'?'tabsBtn':'']" @click.prevent="comName='comment'">评论</div>
         <div :class="['col-row',comName=='collector'?'tabsBtn':'']" @click.prevent="comName='collector'">收藏</div>
       </div>
-      <component :is="comName" :musicList="this.musicListId"></component>
+      <component :is="comName" :musicListid="this.musicListId"></component>
     </div>
   </div>
 
@@ -165,9 +165,6 @@ export default {
   watch: {},
 
   methods: {
-
-
-
 
     get() {
       this.getRequest("/my/musiclist/1", true).then(resp => {

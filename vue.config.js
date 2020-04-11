@@ -21,4 +21,11 @@ module.exports = {
             }
         },
     },
+
+    pluginOptions: {
+        electronBuilder: {
+          customFileProtocol: 'xinmusic://./',
+          externals: ['xinmusic'],
+        }
+    }
 }

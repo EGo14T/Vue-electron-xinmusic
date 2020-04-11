@@ -46,22 +46,42 @@
     .td-number {
       color: #828385;
       width: 50px;
+      text-align: right;
     }
-    
+
     .td-operate {
-        width: 60px;
+      width: 60px;
+      .icon-1 {
+        margin-left: 4px;
+        color: rgb(184, 37, 37);
+        cursor: pointer;
+        &:hover {
+          color: rgb(205, 41, 41);
+        }
+      }
+      .icon-2 {
+        margin-left: 4px;
+        color: rgb(71, 73, 76);
+        cursor: pointer;
+        &:hover {
+          color: rgb(144, 145, 147);
+        }
+      }
     }
 
     .td-singer {
       color: #828385;
+      width: 185px;
     }
 
     .td-album {
       color: #828385;
+      width: 175px;
     }
 
     .td-length {
       color: #828385;
+      width: 80px;
     }
   }
 }
