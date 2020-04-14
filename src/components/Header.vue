@@ -51,7 +51,7 @@
         </svg>
       </div>
 
-      <div class="col-auto" title="最小化到任务栏" @click="minToTask()">
+      <div class="col-auto" title="最小化到任务栏" @click="closewindow()">
         <svg class="icon svg-icon toolBtn" aria-hidden="true">
           <use xlink:href="#icon-close" />
         </svg>

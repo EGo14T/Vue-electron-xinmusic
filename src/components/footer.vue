@@ -5,14 +5,27 @@
       <svg class="icon svg-icon footerbtn" aria-hidden="true" @click="last()">
         <use xlink:href="#icon-shangyishou" />
       </svg>
+
       <svg
         class="icon svg-icon footerbtn"
         style="height:37px;width:37px"
         aria-hidden="true"
-        @click="playAudio(audioFlag)"
+        @click="pause()"
+        v-show="!isPause"
       >
-        <use :xlink:href="audioFlag?'#icon-bofang':'#icon-zanting'" />
+        <use xlink:href="#icon-zanting" />
       </svg>
+
+      <svg
+        class="icon svg-icon footerbtn"
+        style="height:37px;width:37px"
+        aria-hidden="true"
+        @click="play()"
+        v-show="isPause"
+      >
+        <use xlink:href="#icon-bofang" />
+      </svg>
+
       <svg class="icon svg-icon footerbtn" aria-hidden="true" @click="next()">
         <use xlink:href="#icon-xiayishou" />
       </svg>
@@ -37,7 +50,6 @@
         v-model:value="vol"
         @getVolume="getVolumeValue"
       ></volumebar>
-
     </div>
 
     <!--当前音乐时间-->
@@ -86,8 +98,8 @@ export default {
       slide: "",
       nowTime: "",
       secondNum: "",
-      audioFlag: "false",
-      slideFlag: "true",
+      isPause: true,
+      slideFlag: true,
 
       playStatus: 0
     };
@@ -144,14 +156,31 @@ export default {
     }
   },
   methods: {
-    playAudio(flag) {
-      if (flag) {
-        this.$refs.audio.play();
-        this.audioFlag = !this.audioFlag;
-      } else {
-        this.$refs.audio.pause();
-        this.audioFlag = !this.audioFlag;
-      }
+    //播放音乐
+    play() {
+      console.log("播放");
+      this.$refs.audio.play();
+      this.isPause = !this.isPause;
+    },
+
+    //暂停音乐
+    pause() {
+      console.log("暂停");
+      this.$refs.audio.pause();
+      this.isPause = !this.isPause;
+    },
+
+    //上一首
+    last(){
+      console.log("上一首")
+    },
+
+    //下一首
+    
+    next() {
+      this.$refs.audio.src = "https://ego1st.cn/2.mp3";
+      this.isPause = false;
+      this.$refs.audio.play();
     },
 
     test() {
@@ -190,12 +219,6 @@ export default {
     getVolumeValue(data) {
       this.currentVol = data;
       this.$refs.audio.volume = data / 100;
-    },
-
-    next() {
-      this.$refs.audio.src = "https://ego1st.cn/2.mp3";
-      this.audioFlag = false;
-      this.$refs.audio.play();
     },
 
     mute() {

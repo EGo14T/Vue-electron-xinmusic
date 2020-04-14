@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-//axios.defaults.baseURL = "http://localhost:8091"
+//axios.defaults.baseURL = "http://frp.ego1st.cn"
 
 const Axios = axios.create({
-    timeout: 5000,
+    //timeout: 5000,
 })
 
 

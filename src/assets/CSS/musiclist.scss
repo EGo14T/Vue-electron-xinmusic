@@ -22,7 +22,6 @@
         .td-singer {
           color: #dcdde4;
         }
-
         .td-album {
           color: #dcdde4;
         }
@@ -36,6 +35,8 @@
       }
     }
 
+    
+
     td {
       color: #d3dbcc;
       font-size: 12px;
@@ -44,8 +45,8 @@
     }
 
     .td-number {
-      color: #828385;
       width: 50px;
+      color: #828385;
       text-align: right;
     }
 
@@ -61,12 +62,16 @@
       }
       .icon-2 {
         margin-left: 4px;
-        color: rgb(71, 73, 76);
+        color: rgb(140, 145, 153);
         cursor: pointer;
         &:hover {
           color: rgb(144, 145, 147);
         }
       }
+    }
+
+    .td-name {
+      width: 260px;
     }
 
     .td-singer {
@@ -76,12 +81,18 @@
 
     .td-album {
       color: #828385;
-      width: 175px;
+      width: 160px;
+      display: block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      padding-right: 0 !important;
     }
 
     .td-length {
       color: #828385;
-      width: 80px;
+      width: 100px;
     }
   }
 }

@@ -26,7 +26,8 @@ function createWindow () {
     frame: true,
     backgroundColor: '#2e2c29',
     webPreferences: {
-    nodeIntegration: true
+    nodeIntegration: true,
+    webSecurity: false
   } })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
