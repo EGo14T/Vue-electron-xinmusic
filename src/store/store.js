@@ -14,9 +14,13 @@ export default new Vuex.Store({
 
 //--------------------------------------------------------
 
-        musiclist: [],         //音乐列表
+        showMusicList: [],     //展示的歌单，没有点击
 
-        currentPlay: {}        //当前正在播放
+        curMusicList: [],      //当前播放的音乐列表  点击歌单里的歌曲
+
+        randomlist: [],        //随机播放列表
+
+        curIndex: -1        //当前正在播放
 
 
     },
@@ -41,13 +45,21 @@ export default new Vuex.Store({
 
         //载入歌单
         [types.LOADLIST]: (state,data) => {
-            state.musiclist = data;
+            state.curMusicList = data;
+            
+        },
+
+        //载入当前歌单
+        [types.LOADLIST]: (state,data) => {
+            state.curMusicList = data;
         },
 
         //载入当前歌曲
         [types.LOADMUSIC]: (state,data) => {
-            state.currentPlay = data;
+            state.curIndex = data;
         }
+
+
 
 
     }

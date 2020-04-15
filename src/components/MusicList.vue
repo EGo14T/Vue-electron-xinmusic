@@ -9,7 +9,7 @@
         <th>专辑</th>
         <th>时长</th>
       </tr>
-      <tr class="custom-tr" v-for="(item,index) in musiclist" @dblclick="playMusic(item.id)">
+      <tr class="custom-tr" v-for="(item,index) in musiclist" @dblclick="playMusic(index)">
         <td class="td-number">{{index | musicIndex}}</td>
         <td class="td-operate">
           <svg class="icon svg-icon icon-1" aria-hidden="true" style="width:16px;height:16px" @click="dislike(index)" v-show="item.collection==1">
@@ -48,7 +48,7 @@ export default {
 
   filters: {
     musicIndex:function(value){
-      if(value<10){
+      if(value<9){
         return '0'+(value+1).toString();
       }else{
         return (value+1).toString();
@@ -70,7 +70,6 @@ export default {
           true
         ).then(resp => {
           this.musiclist = resp.data.data;
-          this.$store.commit(types.LOADLIST, resp.data.data);
         });
       } else {
         this.getRequest("/my/musiclist/" + this.musicListid).then(resp => {
@@ -80,19 +79,18 @@ export default {
     },
 
     //双击播放音乐
-    playMusic(id){
-      console.log("正在播放"+id)
+    playMusic(index){
+      this.$store.commit(types.LOADLIST,this.musiclist)
+      this.$store.commit(types.LOADMUSIC,index)
     },
 
     //收藏音乐
     like(index){
-      console.log("喜欢")
       this.musiclist[index].collection = 1;
     },
 
     //取消收藏音乐
     dislike(index){
-      console.log("不喜欢"+index)
       this.musiclist[index].collection = 0;
     }
   }

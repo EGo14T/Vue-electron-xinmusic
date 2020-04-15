@@ -21,14 +21,24 @@ function createWindow () {
   win = new BrowserWindow({ 
     width: 1060, 
     height: 670, 
-    resizable: true,
+    resizable: false,
     skipTaskbar: false,
-    frame: true,
+    frame: false,
     backgroundColor: '#2e2c29',
     webPreferences: {
     nodeIntegration: true,
     webSecurity: false
   } })
+
+
+  //禁用状态栏右键菜单
+  win.hookWindowMessage(278, function(e){
+    win.setEnabled(false);//窗口禁用
+    setTimeout(() => {
+    win.setEnabled(true);//窗口启用
+    }, 10);//延时太快会立刻启用，太慢会妨碍窗口其他操作，可自行测试最佳时间
+    return true;
+    })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

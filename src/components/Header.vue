@@ -81,7 +81,7 @@ export default {
     //验证登录，若没登录则使用refrsh token刷新登录，若第一次登录，则弹窗登录
     oauthLogin() {
       if (localStorage.refreshToken) {
-        console.log(localStorage.refreshToken)
+        //console.log(localStorage.refreshToken)
         let json = {
           grant_type: "refresh_token",
           client_id: "client",
@@ -93,7 +93,6 @@ export default {
           this.$store.commit(types.LOGIN, resp.data);
           this.islogin = true;
         });
-        console.log(123321)
       } else {
         this.islogin = false;
       }

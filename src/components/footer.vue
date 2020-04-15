@@ -72,10 +72,11 @@
 
     <audio
       preload="auto"
-      src="https://ego1st.cn/1.mp3"
+      :src="musicURL"
       @canplay="canplay"
       @timeupdate="updatetime"
-      autobuffer
+      @ended="next()"
+      autoplay
       ref="audio"
     ></audio>
   </div>
@@ -101,7 +102,13 @@ export default {
       isPause: true,
       slideFlag: true,
 
-      playStatus: 0
+      playStatus: 0,
+
+      musicURL: "", //播放地址
+
+      curIndex: -1,  //当前下标
+
+      loadFinish: false //是否加载完成
     };
   },
   computed: {
@@ -158,29 +165,35 @@ export default {
   methods: {
     //播放音乐
     play() {
-      console.log("播放");
+      //console.log("播放"); 
       this.$refs.audio.play();
       this.isPause = !this.isPause;
     },
 
     //暂停音乐
     pause() {
-      console.log("暂停");
+      //console.log("暂停");
       this.$refs.audio.pause();
       this.isPause = !this.isPause;
     },
 
     //上一首
     last(){
-      console.log("上一首")
+      let len = this.$store.state.curMusicList.length;
+      this.curIndex ==0 ? this.curIndex = --len : this.curIndex--;
+      // this.curIndex--;
+      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;;
+      this.isPause = false;
+      //this.$refs.audio.play();
     },
 
     //下一首
-    
     next() {
-      this.$refs.audio.src = "https://ego1st.cn/2.mp3";
+      let len = this.$store.state.curMusicList.length;
+      this.curIndex ==len-1 ? this.curIndex = 0 : this.curIndex++;
+      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;;
       this.isPause = false;
-      this.$refs.audio.play();
+      //this.$refs.audio.play();
     },
 
     test() {
@@ -195,6 +208,7 @@ export default {
 
     canplay() {
       this.secondNum = this.$refs.audio.duration;
+      this.loadFinish = true;
     },
 
     updatetime(e) {
@@ -244,6 +258,14 @@ export default {
     per: function() {
       this.nowTime = (this.secondNum * this.per) / 1000;
       //console.log("当前时间"+this.nowTime);
+    },
+
+    '$store.state.curIndex':function(){
+      this.curIndex = this.$store.state.curIndex;
+      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;
+      this.isPause = false;
+      //this.$refs.audio.play();
+
     }
   },
 
