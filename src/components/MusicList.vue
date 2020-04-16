@@ -10,13 +10,35 @@
         <th>时长</th>
       </tr>
       <tr class="custom-tr" v-for="(item,index) in musiclist" @dblclick="playMusic(index)">
-        <td class="td-number">{{index | musicIndex}}</td>
+        <td class="td-number">
+          {{ item.id === $store.getters.cur_playing_id ? "none": index | musicIndex}}
+          <svg
+            class="icon svg-icon icon-2"
+            aria-hidden="true"
+            style="width:16px;height:16px"
+            v-show="item.id === $store.getters.cur_playing_id"
+          >
+            <use xlink:href="#icon-shengyinwu-copy" />
+          </svg>
+        </td>
         <td class="td-operate">
-          <svg class="icon svg-icon icon-1" aria-hidden="true" style="width:16px;height:16px" @click="dislike(index)" v-show="item.collection==1">
+          <svg
+            class="icon svg-icon icon-1"
+            aria-hidden="true"
+            style="width:16px;height:16px"
+            @click="dislike(index)"
+            v-show="item.collection==1"
+          >
             <use xlink:href="#icon-xihuan1-copy" />
           </svg>
 
-          <svg class="icon svg-icon icon-2" aria-hidden="true" style="width:16px;height:16px" @click="like(index)" v-show="!item.collection==1">
+          <svg
+            class="icon svg-icon icon-2"
+            aria-hidden="true"
+            style="width:16px;height:16px"
+            @click="like(index)"
+            v-show="!item.collection==1"
+          >
             <use xlink:href="#icon-xihuan" />
           </svg>
 
@@ -34,26 +56,37 @@
 </template>
 
 <script>
-
 import * as types from "../store/types";
 
 export default {
   props: ["musicListid"],
 
+  watch: {
+    "$store.state.curIndex": function() {
+      this.m_cur_play = this.$store.state.curIndex;
+      console.log(this.m_cur_play)
+    }
+  },
+
   data() {
     return {
-      musiclist: [] //歌曲列表
+      musiclist: [], //歌曲列表
+
+      m_cur_play: -1 //当前下标
     };
   },
 
   filters: {
-    musicIndex:function(value){
-      if(value<9){
-        return '0'+(value+1).toString();
-      }else{
-        return (value+1).toString();
+    musicIndex: function(value) {
+      if(value == 'none'){
+        return ''
+      }else if (value < 9) {
+          return "0" + (value + 1).toString();
+          //return "<svg class='icon svg-icon icon-2' aria-hidden='true' style='width:16px;height:16px'><use xlink:href='#icon-xiazai'/></svg>"
+        } else {
+          return (value + 1).toString();
+        }
       }
-    }
   },
 
   created() {
@@ -70,27 +103,28 @@ export default {
           true
         ).then(resp => {
           this.musiclist = resp.data.data;
+          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
         });
       } else {
         this.getRequest("/my/musiclist/" + this.musicListid).then(resp => {
           this.musiclist = resp.data.data;
+          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
         });
       }
     },
 
     //双击播放音乐
-    playMusic(index){
-      this.$store.commit(types.LOADLIST,this.musiclist)
-      this.$store.commit(types.LOADMUSIC,index)
+    playMusic(index) {
+      this.$store.commit(types.LOAD_LIST,index);
     },
 
     //收藏音乐
-    like(index){
+    like(index) {
       this.musiclist[index].collection = 1;
     },
 
     //取消收藏音乐
-    dislike(index){
+    dislike(index) {
       this.musiclist[index].collection = 0;
     }
   }

@@ -206,7 +206,7 @@ export default {
 
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest("/my/musiclistinfo/" + this.musicListId).then(resp => {
+      this.getRequest("/my/musiclistinfo/" + this.musicListId,false).then(resp => {
         //console.log(resp.data.data)
         this.musicListInfo = resp.data.data;
       });

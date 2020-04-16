@@ -72,7 +72,6 @@
 
     <audio
       preload="auto"
-      :src="musicURL"
       @canplay="canplay"
       @timeupdate="updatetime"
       @ended="next()"
@@ -83,8 +82,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import timebar from "../components/timebar";
 import volumebar from "../components/VolumeProgress";
+
+import * as types from "../store/types";
 
 export default {
   components: {
@@ -102,16 +105,18 @@ export default {
       isPause: true,
       slideFlag: true,
 
-      playStatus: 0,
-
-      musicURL: "", //播放地址
-
-      curIndex: -1,  //当前下标
+      curIndex: -1, //当前下标
 
       loadFinish: false //是否加载完成
     };
   },
   computed: {
+    ...mapGetters({
+      playStatus : 'cur_play_status',
+      musicURL: 'cur_music_url',
+      playURL : 'cur_play_url',
+    }),
+
     //总长
     ntimeMinutes: function() {
       return (this.secondNum / 60) | 0;
@@ -162,10 +167,36 @@ export default {
       }
     }
   },
+
+    watch: {
+    per: function() {
+      this.nowTime = (this.secondNum * this.per) / 1000;
+      //console.log("当前时间"+this.nowTime);
+    },
+
+    "$store.state.curMusicId": function() {
+      this.$refs.audio.src = this.playURL;
+      this.isPause = false;
+      //this.$refs.audio.play();
+    }
+  },
+
+  //过滤器，小于10的补0
+  filters: {
+    addZero: function(value) {
+      if (value < 10) {
+        return "0" + value;
+      } else {
+        return value;
+      }
+    }
+  },
+
+
   methods: {
     //播放音乐
     play() {
-      //console.log("播放"); 
+      //console.log("播放");
       this.$refs.audio.play();
       this.isPause = !this.isPause;
     },
@@ -178,22 +209,15 @@ export default {
     },
 
     //上一首
-    last(){
-      let len = this.$store.state.curMusicList.length;
-      this.curIndex ==0 ? this.curIndex = --len : this.curIndex--;
-      // this.curIndex--;
-      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;;
+    last() {
+      this.$store.commit(types.CHANGE_MUSIC,0);
       this.isPause = false;
-      //this.$refs.audio.play();
     },
 
     //下一首
     next() {
-      let len = this.$store.state.curMusicList.length;
-      this.curIndex ==len-1 ? this.curIndex = 0 : this.curIndex++;
-      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;;
+      this.$store.commit(types.CHANGE_MUSIC,1);
       this.isPause = false;
-      //this.$refs.audio.play();
     },
 
     test() {
@@ -245,37 +269,17 @@ export default {
 
     changePlayStatus() {
       if (this.playStatus == 0) {
-        this.playStatus = 1;
+        this.$store.commit(types.CHANGE_PLAY_STATUS,1)
+        this.$refs.audio.loop = false;
+        //console.log("当前是列表循环");
       } else if (this.playStatus == 1) {
-        this.playStatus = 2;
+        this.$store.commit(types.CHANGE_PLAY_STATUS,2)
+        this.$refs.audio.loop = false;
+        //console.log("当前是随机播放");
       } else {
-        this.playStatus = 0;
-      }
-    }
-  },
-
-  watch: {
-    per: function() {
-      this.nowTime = (this.secondNum * this.per) / 1000;
-      //console.log("当前时间"+this.nowTime);
-    },
-
-    '$store.state.curIndex':function(){
-      this.curIndex = this.$store.state.curIndex;
-      this.$refs.audio.src = this.$store.state.curMusicList[this.curIndex].url;
-      this.isPause = false;
-      //this.$refs.audio.play();
-
-    }
-  },
-
-  //过滤器，小于10的补0
-  filters: {
-    addZero: function(value) {
-      if (value < 10) {
-        return "0" + value;
-      } else {
-        return value;
+        this.$store.commit(types.CHANGE_PLAY_STATUS,0)
+        //console.log("当前是单曲循环");
+        this.$refs.audio.loop = true;
       }
     }
   }
