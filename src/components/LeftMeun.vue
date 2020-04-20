@@ -88,6 +88,9 @@
 </template>
 
 <script>
+
+import * as types from "../store/types";
+
 export default {
   data() {
     return {
@@ -143,11 +146,12 @@ export default {
     getMusicList() {
       if (localStorage.user) {
         this.$http.all([
-          this.getRequest("/my/create/musiclist/1", true),
-          this.getRequest("/my/collect/musiclist/1", true)
+          this.getRequest("/my/create/musiclist/"+this.$store.state.user.id, true),
+          this.getRequest("/my/collect/musiclist/"+this.$store.state.user.id, true)
         ]).then(this.$http.spread((createResp,collectResp) => {
-            this.CreateMusicListInfo = createResp.data.data;
-            this.CollectionMusicListInfo = collectResp.data.data;
+          this.CreateMusicListInfo = createResp.data.data;
+          this.CollectionMusicListInfo = collectResp.data.data;
+          this.$store.commit(types.SET_DEFAULT_LIST_ID,createResp.data.data[0]?.musiclistid)
           }))
       }
     },

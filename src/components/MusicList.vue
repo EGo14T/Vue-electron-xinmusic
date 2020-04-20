@@ -64,7 +64,7 @@ export default {
   watch: {
     "$store.state.curIndex": function() {
       this.m_cur_play = this.$store.state.curIndex;
-      console.log(this.m_cur_play)
+      console.log(this.m_cur_play);
     }
   },
 
@@ -78,15 +78,15 @@ export default {
 
   filters: {
     musicIndex: function(value) {
-      if(value == 'none'){
-        return ''
-      }else if (value < 9) {
-          return "0" + (value + 1).toString();
-          //return "<svg class='icon svg-icon icon-2' aria-hidden='true' style='width:16px;height:16px'><use xlink:href='#icon-xiazai'/></svg>"
-        } else {
-          return (value + 1).toString();
-        }
+      if (value == "none") {
+        return "";
+      } else if (value < 9) {
+        return "0" + (value + 1).toString();
+        //return "<svg class='icon svg-icon icon-2' aria-hidden='true' style='width:16px;height:16px'><use xlink:href='#icon-xiazai'/></svg>"
+      } else {
+        return (value + 1).toString();
       }
+    }
   },
 
   created() {
@@ -115,17 +115,35 @@ export default {
 
     //双击播放音乐
     playMusic(index) {
-      this.$store.commit(types.LOAD_LIST,index);
+      this.$store.commit(types.LOAD_LIST, index);
     },
 
     //收藏音乐
     like(index) {
       this.musiclist[index].collection = 1;
+      this.postRequest(
+        "/my/song/" +
+          localStorage.defaultMusicListID +
+          "/" +
+          this.musiclist[index].id,
+        true
+      ).then(resp => {
+        
+      });
     },
 
     //取消收藏音乐
     dislike(index) {
       this.musiclist[index].collection = 0;
+      this.delRequest(
+        "/my/song/" +
+          localStorage.defaultMusicListID +
+          "/" +
+          this.musiclist[index].id,
+        true
+      ).then(resp => {
+        this.musiclist.splice(index,1);
+      });
     }
   }
 };

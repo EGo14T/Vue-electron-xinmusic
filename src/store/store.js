@@ -16,6 +16,8 @@ export default new Vuex.Store({
 
         //--------------------------------------------------------
 
+        defaultMusicListID: "",  //用户默认歌单的ID （“我喜欢的音乐”的ID）
+
         showMusicList: [],     //展示的歌单，没有点击
 
         curMusicList: [],      //当前播放的音乐列表  点击歌单里的歌曲
@@ -47,6 +49,11 @@ export default new Vuex.Store({
         [types.LOGOUT]: (state) => {
             localStorage.removeItem('token');
             state.token = null
+        },
+
+        [types.SET_DEFAULT_LIST_ID]:(state,data) => {
+            state.defaultMusicListID = data;
+            localStorage.defaultMusicListID = data;
         },
 
         //载入歌单

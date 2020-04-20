@@ -22,6 +22,7 @@ export default {
     install(Vue) {
         Object.defineProperty(Vue.prototype, 'getRequest', { value: getRequest })
         Object.defineProperty(Vue.prototype, 'postRequest', { value: postRequest })
+        Object.defineProperty(Vue.prototype, 'delRequest', { value: delRequest })
         Object.defineProperty(Vue.prototype, 'oauthRequest', { value: oauthRequest })
         Object.defineProperty(Vue.prototype, '$http', {value: axios})
     }
@@ -37,18 +38,30 @@ const getRequest = (url,istoken) => {
 };
 
 //post方法
-const postRequest = (url, params) => {
+const postRequest = (url, istoken ,params) => {
     return Axios({
         method: 'post',
         url: url,
+        isToken: istoken,
         data: params,
         headers: {
             'Content-Type': 'application/json'
         }
     });
-}
+};
 
 //delete
+const delRequest = (url, istoken ,params) => {
+    return Axios({
+        method: 'delete',
+        url: url,
+        isToken: istoken,
+        data: params,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+};
 //patch
 
 //post for oauth
