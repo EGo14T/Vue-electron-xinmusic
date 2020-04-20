@@ -1,23 +1,23 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store/store'
+import App from './render/App.vue'
+import router from './render/router'
+import store from './render/store/store'
 
 
 // import {getRequest ,postRequest, oauthRequest} from './api/api'
-import {getDataName} from './utils/utils'
+import {getDataName} from './render/utils/utils'
 
 import vuescroll from 'vuescroll'
 
 import 'hls.js'
 
-import './plugins/element.js'
+import './render/plugins/element.js'
 
-import './assets/iconfont/icon.css'
+import './render/assets/iconfont/icon.css'
 
 
 
-import axiosplugin from './api/AxiosPlugin'
+import axiosplugin from './render/api/AxiosPlugin'
 
 Vue.prototype.getDataName = getDataName;
 
