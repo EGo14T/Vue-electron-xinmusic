@@ -173,7 +173,6 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-@import url("../assets/css/leftbar.css");
+<style lang="scss" scoped>
+@import "../assets/css/leftbar.scss";
 </style>

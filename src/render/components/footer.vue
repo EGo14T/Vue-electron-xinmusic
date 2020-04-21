@@ -286,6 +286,6 @@ export default {
 };
 </script>
 
-<style scoped>
-@import url("../assets/css/footer.css");
-</style>>
+<style lang="scss" scoped>
+@import "../assets/css/footer.scss";
+</style>
