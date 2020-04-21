@@ -3,8 +3,9 @@ import App from './render/App.vue'
 import router from './render/router'
 import store from './render/store/store'
 
+import contentmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/index.css'
 
-// import {getRequest ,postRequest, oauthRequest} from './api/api'
 import {getDataName} from './render/utils/utils'
 
 import vuescroll from 'vuescroll'
@@ -41,7 +42,9 @@ Vue.use(vuescroll, {
     }
   },
   name: 'myScroll' // 在这里自定义组件名字，默认是vueScroll
-}).use(axiosplugin);
+})
+.use(axiosplugin)
+.use(contentmenu);
 
 Vue.config.productionTip = false
 

@@ -3,13 +3,19 @@
     <table class="music-table" width="100%">
       <tr>
         <th class="custom-th"></th>
-        <th>操作</th>
-        <th>音乐标题</th>
-        <th>歌手</th>
+        <th class="td-operate">操作</th>
+        <th class="td-name">音乐标题</th>
+        <th class="td-singer">歌手</th>
         <th>专辑</th>
-        <th>时长</th>
+        <th class="td-length">时长</th>
       </tr>
-      <tr class="custom-tr" v-for="(item,index) in musiclist" @dblclick="playMusic(index)">
+      <tr
+        class="custom-tr"
+        v-for="(item,index) in musiclist"
+        @dblclick="playMusic(index)"
+        v-contextmenu:contextmenu
+        :contextindex="index"
+      >
         <td class="td-number">
           {{ item.id === $store.getters.cur_playing_id ? "none": index | musicIndex}}
           <svg
@@ -52,11 +58,43 @@
         <td class="td-length">{{item.length}}</td>
       </tr>
     </table>
+
+    <v-contextmenu ref="contextmenu" @contextmenu="menu" :autoPlacement="false">
+      <v-contextmenu-item @click="contextPlay">播放</v-contextmenu-item>
+      <v-contextmenu-submenu title="收藏到歌单">
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item >查找</v-contextmenu-item>
+      </v-contextmenu-submenu>
+    </v-contextmenu>
   </div>
 </template>
 
 <script>
 import * as types from "../store/types";
+import { mapGetters } from "vuex";
 
 export default {
   props: ["musicListid"],
@@ -72,8 +110,16 @@ export default {
     return {
       musiclist: [], //歌曲列表
 
-      m_cur_play: -1 //当前下标
+      m_cur_play: -1, //当前下标
+
+      contextMenuIndex: 0 //右键下标
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      musicInfo: "cur_context_menu_music"
+    })
   },
 
   filters: {
@@ -94,6 +140,16 @@ export default {
   },
 
   methods: {
+    menu(vnode) {
+      let index = vnode.data.attrs.contextindex;
+      this.contextMenuIndex = index;
+      this.$store.commit(types.SET_CONTEXT_MENU, index);
+    },
+
+    contextPlay() {
+      this.playMusic(this.contextMenuIndex);
+    },
+
     //获取歌单中的音乐列表
     getMusicInList() {
       if (localStorage.user) {
@@ -127,9 +183,7 @@ export default {
           "/" +
           this.musiclist[index].id,
         true
-      ).then(resp => {
-        
-      });
+      ).then(resp => {});
     },
 
     //取消收藏音乐
@@ -142,7 +196,7 @@ export default {
           this.musiclist[index].id,
         true
       ).then(resp => {
-        this.musiclist.splice(index,1);
+        this.musiclist.splice(index, 1);
       });
     }
   }

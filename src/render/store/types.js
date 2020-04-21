@@ -17,3 +17,5 @@ export const CHANGE_MUSIC = "changeMusic"  //切歌
 
 export const CHANGE_PLAY_STATUS = "changePlayStatus"  //切换播放状态
 
+export const SET_CONTEXT_MENU = "setContextMenu"   //设置右键选中的index  musiclist
+

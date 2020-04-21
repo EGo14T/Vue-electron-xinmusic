@@ -8,7 +8,7 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-ic_addmusic" />
             </svg>
-            <span class="navtext">发现音乐</span>
+            <span class="navtext" @click="toComponents('user')">发现音乐</span>
           </div>
 
           <div class="nav-citem">

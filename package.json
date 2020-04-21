@@ -23,10 +23,13 @@
     "qs": "^6.9.3",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4",
+    "v-contextmenu": "^2.9.0",
     "vue": "^2.6.10",
     "vue-aplayer": "^1.6.1",
     "vue-axios": "^2.1.5",
+    "vue-easycm": "^1.0.4",
     "vue-router": "^3.1.6",
+    "vue-runtime-helpers": "^1.1.2",
     "vuescroll": "^4.15.0",
     "vuex": "^3.2.0"
   },

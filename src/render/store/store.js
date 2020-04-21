@@ -20,6 +20,8 @@ export default new Vuex.Store({
 
         showMusicList: [],     //展示的歌单，没有点击
 
+        contextMenuIndex: 0,   //右键菜单
+
         curMusicList: [],      //当前播放的音乐列表  点击歌单里的歌曲
 
         randomlist: [],        //随机播放列表
@@ -69,6 +71,11 @@ export default new Vuex.Store({
             state.randomlist = shuffle(state.curMusicList)
         },
 
+        //右键菜单
+        [types.SET_CONTEXT_MENU]: (state,data) => {
+            state.contextMenuIndex = data;
+        },
+
         //切歌
         [types.CHANGE_MUSIC]: (state, data) => {
             let len = state.curMusicList.length;
@@ -116,6 +123,11 @@ export default new Vuex.Store({
             return state.curMusicId;
         },
 
+        //获取当前右键选中歌曲的信息
+        cur_context_menu_music: state => {
+            return state.showMusicList[state.contextMenuIndex]
+        },
+
         cur_play_status: state => {
             return state.curPlayStatus;
         },
@@ -128,6 +140,7 @@ export default new Vuex.Store({
                 return state.randomlist[state.curIndex].url;
             }
         },
+
 
     }
 })
