@@ -10,13 +10,13 @@
           <span class="listTitle">歌单</span>
           <div class="musiclist-title">{{musicListInfo.musiclistName}}</div>
           <div class="musicNum row" align="right">
-            <div class="col-md-auto separator" style=" margin: 0 12px 0 12px;">
+            <div class="col-md-auto separator" style=" margin: 0 10px; padding:0;">
               <div>歌曲数</div>
-              <div>123</div>
+              <div>{{lenOfList}}</div>
             </div>
-            <div class="col-md-auto" style=" margin: 0 12px 0 12px;">
+            <div class="col-md-auto" style=" margin: 0 10px; padding:0;">
               <div>播放数</div>
-              <div>456</div>
+              <div>999</div>
             </div>
           </div>
         </div>
@@ -107,8 +107,14 @@
           @click.prevent="comName='musiclist'"
         >歌曲列表</div>
 
-        <div :class="['col-row',comName=='comment'?'tabsBtn':'']" @click.prevent="comName='comment'">评论</div>
-        <div :class="['col-row',comName=='collector'?'tabsBtn':'']" @click.prevent="comName='collector'">收藏</div>
+        <div
+          :class="['col-row',comName=='comment'?'tabsBtn':'']"
+          @click.prevent="comName='comment'"
+        >评论</div>
+        <div
+          :class="['col-row',comName=='collector'?'tabsBtn':'']"
+          @click.prevent="comName='collector'"
+        >收藏</div>
       </div>
       <component :is="comName" :musicListid="this.musicListId"></component>
     </div>
@@ -130,10 +136,12 @@
 import * as types from "../store/types";
 import qs from "qs";
 
+import { mapGetters } from "vuex";
+
 import Comments from "./Comments";
 import MusicList from "./MusicList";
 import Collector from "./Collector";
-import Spread from "./Spread/spread"
+import Spread from "./Spread/spread";
 
 export default {
   components: {
@@ -141,7 +149,6 @@ export default {
     musiclist: MusicList,
     collector: Collector,
     spread: Spread
-    //musiclist :
   },
   data() {
     return {
@@ -155,7 +162,10 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
-    }
+    },
+    ...mapGetters({
+      lenOfList: "show_list_len"
+    })
   },
   created() {
     this.musicListId = this.$route.params.id;
@@ -165,7 +175,6 @@ export default {
   watch: {},
 
   methods: {
-
     get() {
       this.getRequest("/my/musiclist/1", true).then(resp => {
         console.log(resp.data);
@@ -206,10 +215,12 @@ export default {
 
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest("/my/musiclistinfo/" + this.musicListId,false).then(resp => {
-        //console.log(resp.data.data)
-        this.musicListInfo = resp.data.data;
-      });
+      this.getRequest("/my/musiclistinfo/" + this.musicListId, false).then(
+        resp => {
+          //console.log(resp.data.data)
+          this.musicListInfo = resp.data.data;
+        }
+      );
     }
   }
 };

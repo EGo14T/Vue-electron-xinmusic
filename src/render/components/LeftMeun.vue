@@ -151,7 +151,7 @@ export default {
         ]).then(this.$http.spread((createResp,collectResp) => {
           this.CreateMusicListInfo = createResp.data.data;
           this.CollectionMusicListInfo = collectResp.data.data;
-          this.$store.commit(types.SET_DEFAULT_LIST_ID,createResp.data.data[0]?.musiclistid)
+          this.$store.commit(types.SET_DEFAULT_LIST_ID,createResp.data.data)
           }))
       }
     },

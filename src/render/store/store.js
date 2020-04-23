@@ -53,9 +53,10 @@ export default new Vuex.Store({
             state.token = null
         },
 
-        [types.SET_DEFAULT_LIST_ID]:(state,data) => {
-            state.defaultMusicListID = data;
-            localStorage.defaultMusicListID = data;
+        //获取用户默认歌单ID （我喜欢的音乐 的 歌单ID）
+        [types.SET_DEFAULT_LIST_ID]: (state, data) => {
+            state.defaultMusicListID = data[0]?.musiclistid;
+            localStorage.defaultMusicListID = state.defaultMusicListID;
         },
 
         //载入歌单
@@ -72,7 +73,7 @@ export default new Vuex.Store({
         },
 
         //右键菜单
-        [types.SET_CONTEXT_MENU]: (state,data) => {
+        [types.SET_CONTEXT_MENU]: (state, data) => {
             state.contextMenuIndex = data;
         },
 
@@ -89,7 +90,7 @@ export default new Vuex.Store({
                     state.curIndex == len - 1 ? state.curIndex = 0 : state.curIndex++;
                     state.curMusicId = state.curMusicList[state.curIndex].id
                 }
-            } 
+            }
             //随机播放
             else {
                 if (data == 0) {
@@ -106,13 +107,13 @@ export default new Vuex.Store({
         [types.CHANGE_PLAY_STATUS]: (state, data) => {
             state.curPlayStatus = data
             //列表循环
-             if(data == 1 || data ==0 ){
+            if (data == 1 || data == 0) {
                 state.curIndex = state.curMusicList.map(item => item.id).indexOf(state.curMusicId);
             }
             //随机播放
-            else if(data == 2) {
+            else if (data == 2) {
                 state.curIndex = state.randomlist.map(item => item.id).indexOf(state.curMusicId);
-            }     
+            }
         }
     },
 
@@ -136,10 +137,15 @@ export default new Vuex.Store({
         cur_play_url: state => {
             if (state.curPlayStatus == 1 || state.curPlayStatus == 0) {
                 return state.curMusicList[state.curIndex].url;
-            }else{
+            } else {
                 return state.randomlist[state.curIndex].url;
             }
         },
+
+        //获取展示歌单的歌曲数
+        show_list_len : state => {
+            return state.showMusicList.length;
+        }
 
 
     }

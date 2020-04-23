@@ -46,10 +46,6 @@ export default {
 </script>
 
 <style>
-li {
-  color: salmon;
-}
-
 h1 {
   color: skyblue;
 }

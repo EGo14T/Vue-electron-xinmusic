@@ -59,33 +59,10 @@
       </tr>
     </table>
 
-    <v-contextmenu ref="contextmenu" @contextmenu="menu" :autoPlacement="false">
+    <v-contextmenu ref="contextmenu" @contextmenu="menu">
       <v-contextmenu-item @click="contextPlay">播放</v-contextmenu-item>
+      <v-contextmenu-item @click="" >分享</v-contextmenu-item>
       <v-contextmenu-submenu title="收藏到歌单">
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
-        <v-contextmenu-item >查找</v-contextmenu-item>
         <v-contextmenu-item >查找</v-contextmenu-item>
       </v-contextmenu-submenu>
     </v-contextmenu>
@@ -118,7 +95,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      musicInfo: "cur_context_menu_music"
+      musicInfo: "cur_context_menu_music",
     })
   },
 
@@ -196,7 +173,9 @@ export default {
           this.musiclist[index].id,
         true
       ).then(resp => {
-        this.musiclist.splice(index, 1);
+        if(this.musicListid == localStorage.defaultMusicListID){
+          this.musiclist.splice(index, 1);
+        }
       });
     }
   }
@@ -205,4 +184,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/musiclist.scss";
+</style>
+
+<style lang="scss">
+@import "../assets/css/contextMenu.scss";
 </style>
