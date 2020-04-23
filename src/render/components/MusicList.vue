@@ -15,6 +15,7 @@
         @dblclick="playMusic(index)"
         v-contextmenu:contextmenu
         :contextindex="index"
+        :contextId="item.id"
       >
         <td class="td-number">
           {{ item.id === $store.getters.cur_playing_id ? "none": index | musicIndex}}
@@ -61,9 +62,13 @@
 
     <v-contextmenu ref="contextmenu" @contextmenu="menu">
       <v-contextmenu-item @click="contextPlay">播放</v-contextmenu-item>
-      <v-contextmenu-item @click="" >分享</v-contextmenu-item>
+      <v-contextmenu-item @click>分享</v-contextmenu-item>
       <v-contextmenu-submenu title="收藏到歌单">
-        <v-contextmenu-item >查找</v-contextmenu-item>
+        <v-contextmenu-item
+          v-for="item in createList"
+          :key="item.id"
+          @click="collectMusicToList(item.musiclistid)"
+        >{{item.musiclistName | overWordNum}}</v-contextmenu-item>
       </v-contextmenu-submenu>
     </v-contextmenu>
   </div>
@@ -89,13 +94,16 @@ export default {
 
       m_cur_play: -1, //当前下标
 
-      contextMenuIndex: 0 //右键下标
+      contextMenuIndex: 0, //右键下标
+
+      contextId: 0 //右键ID
     };
   },
 
   computed: {
     ...mapGetters({
       musicInfo: "cur_context_menu_music",
+      createList: "get_create_list"
     })
   },
 
@@ -109,6 +117,14 @@ export default {
       } else {
         return (value + 1).toString();
       }
+    },
+
+    overWordNum: function(value) {
+      if (!value) return "";
+      if (value.length > 15) {
+        return value.slice(0, 15) + "...";
+      }
+      return value;
     }
   },
 
@@ -119,12 +135,24 @@ export default {
   methods: {
     menu(vnode) {
       let index = vnode.data.attrs.contextindex;
+      this.contextId = vnode.data.attrs.contextId;
       this.contextMenuIndex = index;
       this.$store.commit(types.SET_CONTEXT_MENU, index);
     },
 
     contextPlay() {
       this.playMusic(this.contextMenuIndex);
+    },
+
+    collectMusicToList(listId) {
+      //console.log(listId + "============" + this.contextId);
+      this.postRequest(
+        "/my/song/" +
+          listId +
+          "/" +
+          this.contextId,
+        true
+      ).then(resp => {});
     },
 
     //获取歌单中的音乐列表
@@ -173,7 +201,7 @@ export default {
           this.musiclist[index].id,
         true
       ).then(resp => {
-        if(this.musicListid == localStorage.defaultMusicListID){
+        if (this.musicListid == localStorage.defaultMusicListID) {
           this.musiclist.splice(index, 1);
         }
       });

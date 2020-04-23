@@ -11,8 +11,11 @@
   .v-contextmenu-submenu {
     & > .v-contextmenu {
       max-height: 310px;
-      width: 200px;
-      overflow-x: auto;
+      overflow-y: auto;
+      width: 250px;
+      overflow-x: hidden;
+
+
     }
   }
   &::-webkit-scrollbar {
