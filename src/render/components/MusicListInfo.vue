@@ -116,19 +116,9 @@
           @click.prevent="comName='collector'"
         >收藏</div>
       </div>
-      <component :is="comName" :musicListid="this.musicListId"></component>
+      <component :is="comName" :musicListid="this.musicListId" :isCreated="this.isCreated"></component>
     </div>
   </div>
-
-  <!-- <img
-            class="align-self-start mr-3"
-            style="border-radius: 50%;"
-            :src="musicListInfo.musiclistImg"
-            width="32"
-            height="32"
-           />
-            <span>123</span>
-  <span>456</span>-->
 </template>
 
 <script>
@@ -156,6 +146,8 @@ export default {
 
       musicListId: "",
 
+      isCreated: "",
+
       musicListInfo: {}
     };
   },
@@ -169,6 +161,7 @@ export default {
   },
   created() {
     this.musicListId = this.$route.params.id;
+    this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
   },
 
@@ -208,7 +201,6 @@ export default {
         client_secret: "secret"
       };
       this.oauthRequest("/oauth/token", json).then(resp => {
-        console.log(resp.data);
         this.$store.commit(types.LOGIN, resp.data);
       });
     },

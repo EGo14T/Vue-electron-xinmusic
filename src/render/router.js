@@ -30,7 +30,7 @@ export default new Router({
     {path:'/login',component:Login},
     {path:'/register',component:Register},
     {path:'/home',component:Home},
-    {path:'/musiclstinfo/:id' ,name:"musiclstinfo",component:MusicListinfo},
+    {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},
     {path:'/musiclist',component:MusicList},
     {path:'*',redirect:'/'}
 

@@ -54,7 +54,7 @@
           <div
             class="nav-citem"
             v-for="item in showCreateList"
-            @click.stop="toMusciList(item.musiclistid)"
+            @click.stop="toMusciList(item.musiclistid,'created')"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
@@ -74,7 +74,7 @@
           <div
             class="nav-citem"
             v-for="item in showCollectionList"
-            @click="toMusciList(item.musiclistid)"
+            @click="toMusciList(item.musiclistid,'collected')"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
@@ -138,8 +138,8 @@ export default {
     }
   },
   methods: {
-    toMusciList(musiclistid) {
-      this.toComponents("musiclstinfo", musiclistid);
+    toMusciList(musiclistid,isCreated) {
+      this.toComponents("musiclstinfo", {isCreated:isCreated,id:musiclistid});
     },
 
     //获取创建歌单列表
@@ -168,7 +168,7 @@ export default {
     },
 
     toComponents(pathUrl, params) {
-      this.$router.push({ name: pathUrl, params: { id: params } });
+      this.$router.push({ name: pathUrl, params: { id: params.id,isCreated: params.isCreated } });
     }
   }
 };

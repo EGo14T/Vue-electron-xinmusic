@@ -57,6 +57,13 @@
         </svg>
       </div>
     </div>
+
+    <el-dialog
+  width="30%">
+  <span>这是一段信息1111111111111111111111111111111111111111111</span>
+  <span slot="footer" class="dialog-footer">
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -121,7 +128,7 @@ export default {
         client_secret: "secret"
       };
       this.oauthRequest("/oauth/token", json).then(resp => {
-        console.log(resp.data);
+        //console.log(resp.data);
         this.$store.commit(types.LOGIN, resp.data);
         this.islogin = !this.islogin;
       });

@@ -61,15 +61,36 @@
     </table>
 
     <v-contextmenu ref="contextmenu" @contextmenu="menu">
-      <v-contextmenu-item @click="contextPlay">播放</v-contextmenu-item>
-      <v-contextmenu-item @click>分享</v-contextmenu-item>
-      <v-contextmenu-submenu title="收藏到歌单">
+      <v-contextmenu-item @click="contextPlay">
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-bofangbtn-copy" />
+        </svg>
+        播放
+      </v-contextmenu-item>
+      <v-contextmenu-item @click>
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-fenxiang" />
+        </svg>
+        分享
+      </v-contextmenu-item>
+      <v-contextmenu-submenu>
+        <span slot="title">
+          <svg class="icon svg-icon contextBtn" aria-hidden="true">
+            <use xlink:href="#icon-xinjianwenjian" />
+          </svg>
+          收藏到歌单
+        </span>
         <v-contextmenu-item
           v-for="item in createList"
           :key="item.id"
           @click="collectMusicToList(item.musiclistid)"
         >{{item.musiclistName | overWordNum}}</v-contextmenu-item>
       </v-contextmenu-submenu>
+      <v-contextmenu-item v-if="isCreated=='created'" @click="delMusicFromList()">
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-lajitong" />
+        </svg>从歌单中删除
+      </v-contextmenu-item>
     </v-contextmenu>
   </div>
 </template>
@@ -79,12 +100,12 @@ import * as types from "../store/types";
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["musicListid"],
+  props: ["musicListid", "isCreated"],
 
   watch: {
     "$store.state.curIndex": function() {
       this.m_cur_play = this.$store.state.curIndex;
-      console.log(this.m_cur_play);
+      //console.log(this.m_cur_play);
     }
   },
 
@@ -144,15 +165,23 @@ export default {
       this.playMusic(this.contextMenuIndex);
     },
 
+    //收藏歌曲
     collectMusicToList(listId) {
       //console.log(listId + "============" + this.contextId);
       this.postRequest(
-        "/my/song/" +
-          listId +
-          "/" +
-          this.contextId,
+        "/my/song/" + listId + "/" + this.contextId,
         true
       ).then(resp => {});
+    },
+
+    //从歌单中删除歌曲
+    delMusicFromList() {
+      this.delRequest(
+        "/my/song/" + this.musicListid + "/" + this.contextId,
+        true
+      ).then(resp => {
+        this.musiclist.splice(this.contextMenuIndex, 1);
+      });
     },
 
     //获取歌单中的音乐列表

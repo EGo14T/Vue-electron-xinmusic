@@ -59,7 +59,7 @@ export default new Vuex.Store({
         [types.SET_DEFAULT_LIST]: (state, data) => {
             state.defaultMusicListID = data[0]?.musiclistid;
             state.createMusicList = data;
-            console.log(state.createMusicList)
+            //console.log(state.createMusicList)
             localStorage.defaultMusicListID = state.defaultMusicListID;
         },
 
