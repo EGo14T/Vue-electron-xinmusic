@@ -4,7 +4,6 @@ import Home from './components/Home'
 import MyMusic from './components/MyMusic'
 import Comments from './components/Comments'
 import Users from './components/Users'
-import Login from './components/Login'
 import Register from './components/Register'
 import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
@@ -27,7 +26,6 @@ export default new Router({
     {path:'/My',component:MyMusic},
     {path:'/comment', name:"comment",component:Comments},
     {path:'/about',component:Users},
-    {path:'/login',component:Login},
     {path:'/register',component:Register},
     {path:'/home',component:Home},
     {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},

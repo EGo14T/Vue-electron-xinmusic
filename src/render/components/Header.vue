@@ -35,7 +35,7 @@
     </div>
 
     <div class="col-auto userInfo" v-if="!islogin">
-      <div @click="login()">未登录</div>
+      <div @click="openLogin()">未登录</div>
     </div>
 
     <div class="col-auto tools row">
@@ -57,13 +57,9 @@
         </svg>
       </div>
     </div>
-
-    <el-dialog
-  width="30%">
-  <span>这是一段信息1111111111111111111111111111111111111111111</span>
-  <span slot="footer" class="dialog-footer">
-  </span>
-</el-dialog>
+    <div class="login">
+      <login :visible.sync="dialogVisible"></login>
+    </div>
   </div>
 </template>
 
@@ -73,10 +69,24 @@ import { Minimatch } from "minimatch";
 
 import * as types from "../store/types";
 
+import Login from "./Login";
+
+import { mapGetters } from "vuex";
+
 export default {
+  components: {
+    login: Login
+  },
+
+  computed: {
+    ...mapGetters({
+      islogin: "get_isLogin"
+    })
+  },
+
   data() {
     return {
-      islogin: false //是否登录
+      dialogVisible: true
     };
   },
 
@@ -98,11 +108,14 @@ export default {
         this.oauthRequest("/oauth/token", json).then(resp => {
           //console.log(resp.data.user);
           this.$store.commit(types.LOGIN, resp.data);
-          this.islogin = true;
         });
       } else {
-        this.islogin = false;
+
       }
+    },
+
+    openLogin(){
+      this.dialogVisible = !this.dialogVisible;
     },
 
     closewindow() {
@@ -117,22 +130,6 @@ export default {
     minToTask() {
       ipcRenderer.send("minToTask");
     },
-
-    login() {
-      let json = {
-        grant_type: "password",
-        username: "test",
-        password: "test",
-        //scope:all
-        client_id: "client",
-        client_secret: "secret"
-      };
-      this.oauthRequest("/oauth/token", json).then(resp => {
-        //console.log(resp.data);
-        this.$store.commit(types.LOGIN, resp.data);
-        this.islogin = !this.islogin;
-      });
-    }
   }
 };
 </script>

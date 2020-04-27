@@ -10,6 +10,7 @@ import { shuffle } from '../utils/shuffle'
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
+        islogin: false,       //是否登录
         user: '',             //用户信息
         accessToken: null,    //令牌
         refreshToken: null,   //刷新令牌
@@ -41,10 +42,10 @@ export default new Vuex.Store({
         [types.LOGIN]: (state, data) => {
 
             localStorage.user = JSON.stringify(data.user);
-
             localStorage.accessToken = data.access_token;
             localStorage.refreshToken = data.refresh_token;
 
+            state.islogin = true;
             state.user = data.user;
             state.accessToken = data.access_token;
             state.refreshToken = data.refresh_token;
@@ -123,6 +124,12 @@ export default new Vuex.Store({
 
 
     getters: {
+        //是否登录
+        get_isLogin: state => {
+            return state.islogin;
+        },
+
+
         //获取当前播放歌曲的ID
         cur_playing_id: state => {
             return state.curMusicId;
@@ -147,12 +154,12 @@ export default new Vuex.Store({
         },
 
         //获取展示歌单的歌曲数
-        show_list_len : state => {
+        show_list_len: state => {
             return state.showMusicList.length;
         },
 
         //获取创建歌单列表
-        get_create_list : state => {
+        get_create_list: state => {
             return state.createMusicList;
         }
 
