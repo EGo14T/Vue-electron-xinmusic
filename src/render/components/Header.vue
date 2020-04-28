@@ -57,9 +57,7 @@
         </svg>
       </div>
     </div>
-    <div class="login">
-      <login :visible.sync="dialogVisible"></login>
-    </div>
+    <login :visible.sync="dialogVisible"></login>
   </div>
 </template>
 
@@ -110,11 +108,10 @@ export default {
           this.$store.commit(types.LOGIN, resp.data);
         });
       } else {
-
       }
     },
 
-    openLogin(){
+    openLogin() {
       this.dialogVisible = !this.dialogVisible;
     },
 
@@ -129,7 +126,7 @@ export default {
 
     minToTask() {
       ipcRenderer.send("minToTask");
-    },
+    }
   }
 };
 </script>

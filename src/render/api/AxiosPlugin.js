@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Message} from 'element-ui'
 
 //axios.defaults.baseURL = "http://frp.ego1st.cn"
 
@@ -7,6 +8,7 @@ const Axios = axios.create({
 })
 
 
+//请求拦截器
 Axios.interceptors.request.use(config => {
     // if(localStorage.accessToken) {
     //     config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
@@ -16,6 +18,22 @@ Axios.interceptors.request.use(config => {
     }
     return config
 })
+
+Axios.interceptors.response.use(data => {
+    return data;
+  }, err => {
+    if (err.response.status == 504 || err.response.status == 503) {
+        Message.error("服务器异常，请联系管理员！");
+    }else if(err.response.status == 401){
+        Message("请先登录~");
+    }else if(err.response.status == 400){
+        Message.error(err.response.data.error_description);
+    }else {
+        Message.error("服务器异常，请联系管理员！");
+    }
+    // return Promise.resolve(err);
+    
+  })
 
 
 export default {

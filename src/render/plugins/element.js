@@ -1,5 +1,12 @@
 import Vue from 'vue'
-import { Dialog ,Input, Button , ButtonGroup, Popover, Tabs, TabPane} from 'element-ui'
+import {
+   Dialog,
+   Input,
+   Button,
+   ButtonGroup,
+   Popover,
+   Message,
+} from 'element-ui'
 
 
 Vue.use(Dialog)
@@ -7,5 +14,5 @@ Vue.use(Dialog)
    .use(Button)
    .use(ButtonGroup)
    .use(Popover)
-   .use(Tabs)
-   .use(TabPane)
+
+Vue.prototype.$message = Message;
