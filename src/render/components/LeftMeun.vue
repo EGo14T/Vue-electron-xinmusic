@@ -138,8 +138,15 @@ export default {
     }
   },
   methods: {
+
+    //跳转到歌单
     toMusciList(musiclistid,isCreated) {
       this.toComponents("musiclstinfo", {isCreated:isCreated,id:musiclistid});
+    },
+
+    //跳转其他模块
+    toComponents(pathUrl, params) {
+      this.$router.push({ name: pathUrl});
     },
 
     //获取创建歌单列表
@@ -166,10 +173,6 @@ export default {
           return "#icon-lock";
       }
     },
-
-    toComponents(pathUrl, params) {
-      this.$router.push({ name: pathUrl, params: { id: params.id,isCreated: params.isCreated } });
-    }
   }
 };
 </script>

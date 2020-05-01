@@ -66,8 +66,8 @@ export default {
     //关闭窗口
     close() {
       this.$emit("update:visible", false);
-      this.account = "";
-      this.password = "";
+      this.login = {};
+      this.register = {};
     },
 
     userLogin() {
@@ -89,10 +89,8 @@ export default {
 
     change() {
       this.changePanel = !this.changePanel;
-      this.login.password = "";
-      this.register.account = "";
-      this.register.password = "";
-      this.register.repassword = "";
+      this.login = {};
+      this.register = {};
     }
   }
 };
