@@ -96,6 +96,9 @@
 import EmojiPanel from "../components/emoji/EmojiPanel";
 
 export default {
+
+  props:['musicListid'],
+
   data() {
     return {
       comments: [], //评论
@@ -165,8 +168,8 @@ export default {
 
   mounted() {
     document.addEventListener("click", e => {
-      //console.log(e.target.className)
       if (
+        typeof(e.target.className)=='string'&&
         e.target.className.indexOf("emoji-item-common") == -1 &&
         e.target.className.indexOf("emoji-panel-wrap") == -1
       ) {

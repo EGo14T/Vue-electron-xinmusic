@@ -19,18 +19,18 @@
     width: 187px;
 
     .navtext {
-        cursor: Pointer;
-        color: #adafb2;
-        font-size: 14px;
-        text-decoration: none;
-      }
+      cursor: Pointer;
+      color: #adafb2;
+      font-size: 14px;
+      text-decoration: none;
+    }
   }
 
   .leftbtn {
     color: #adafb2;
     width: 16px;
     height: 16px;
-    margin-right: 6px;
+    margin-right: 7px;
   }
 
   .nav-citem:hover .navitem,
@@ -46,11 +46,112 @@
     padding: 5px;
 
     .span-right {
-        margin-right: 75px;
-      }
+      margin-right: 75px;
+    }
   }
 
   .__bar-is-vertical:hover {
     background: #3b3c40 !important;
+  }
+}
+
+.pop_input {
+  width: 228px;
+  height: 30px;
+  outline: none;
+  border: none;
+  background: none;
+  color: #dcdde4;
+  background-color: #3a3c40;
+
+  padding: 0 10px;
+
+  margin: 20px 0 10px 10px;
+  &::placeholder {
+    color: #5f5f63;
+    font-size: 13px;
+  }
+}
+
+.sub_block {
+  display: flex;
+  justify-content: center;
+  .sub_btn {
+    width: 80px;
+    height: 28px;
+    outline: none;
+    border: 0;
+    border-radius: 6px;
+    letter-spacing: 5px;
+    color: #fff;
+    cursor: pointer;
+
+    margin: 10px;
+    &.create {
+      background: #2e4e7e;
+      &:disabled{
+        background-color: #26354b;
+        cursor: default;
+        &:hover {
+          background-color: #26354b;
+        }
+      }
+      &:hover {
+        background: #3a6098;
+      }
+    }
+
+    &.cancle {
+      background: #3b3d41;
+      &:hover {
+        background: #414346;
+      }
+    }
+  }
+}
+
+.overWord {
+  color: #b82525;
+  margin: 0 0 4px 10px;
+  font-size: 12px;
+}
+
+.el-checkbox {
+  color: #dcdde4;
+  margin-left: 10px;
+  cursor: default;
+  ::v-deep .el-checkbox__inner {
+    background-color: #2d2f33;
+  }
+  ::v-deep .el-checkbox__label {
+    position: relative;
+    top: 1px;
+  }
+}
+
+::v-deep .el-checkbox__input {
+  cursor: default;
+  &.is-checked + {
+    .el-checkbox__label {
+      color: #dcdde4;
+    }
+  }
+  &.is-focus {
+    .el-checkbox__inner {
+      border-color: #414347;
+    }
+  }
+}
+
+::v-deep .el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #2d2f33;
+  border-color: #414347;
+}
+
+::v-deep .el-checkbox__inner {
+  border: 1px solid #414347;
+  &:hover {
+    border: 1px solid #414347;
   }
 }

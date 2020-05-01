@@ -43,9 +43,32 @@
         <li class="nav-item">
           <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
             <span class="span-right">创建的歌单</span>
-            <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop="addmusic()">
-              <use xlink:href="#icon-jia" />
-            </svg>
+            <el-popover
+              placement="right"
+              width="270"
+              trigger="click"
+              popper-class="createList"
+              @hide="destroyPop"
+              v-model="visible "
+            >
+              <div style="margin-left:10px;font-size:16px">新建歌单</div>
+              <input type="text" class="pop_input" placeholder="请输入新歌单标题" v-model="new_title" />
+              <div class="overWord" v-show="isOverWord">歌单名不能超过40个字符，20个汉字</div>
+              <el-checkbox v-model="ishide">设置为隐私歌单</el-checkbox>
+              <div class="sub_block">
+                <input
+                  class="sub_btn create"
+                  type="button"
+                  value="创建"
+                  @click="createMusicList()"
+                  :disabled="isInput"
+                />
+                <input class="sub_btn cancle" type="button" value="取消" @click />
+              </div>
+              <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop slot="reference">
+                <use xlink:href="#icon-jia" />
+              </svg>
+            </el-popover>
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'" />
             </svg>
@@ -65,7 +88,7 @@
 
         <li class="nav-item">
           <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
-            <span style="margin-right:97px">收藏的歌单</span>
+            <span style="margin-right:98px">收藏的歌单</span>
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'" />
             </svg>
@@ -88,7 +111,6 @@
 </template>
 
 <script>
-
 import * as types from "../store/types";
 
 export default {
@@ -101,7 +123,11 @@ export default {
       showAllCr: false,
       showAllCo: false,
       skin: "",
-      userID: "" //用户ID
+      userID: "", //用户ID
+
+      visible: false,
+      ishide: false, //是否创建隐私歌单
+      new_title: "" //新建歌单名
     };
   },
 
@@ -111,8 +137,8 @@ export default {
   },
 
   watch: {
-    '$store.state.user' : function(){
-        this.getMusicList();
+    "$store.state.user": function() {
+      this.getMusicList();
     }
   },
 
@@ -135,31 +161,90 @@ export default {
       } else {
         return this.CollectionMusicListInfo;
       }
+    },
+
+    isInput: function() {
+      let len = this.getByteLen(this.new_title);
+      if (len > 0 && len < 40) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    isOverWord: {
+      get: function() {
+        let len = this.getByteLen(this.new_title);
+        if (len > 40) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+
+      set: function() {
+        return false;
+      }
     }
   },
   methods: {
-
     //跳转到歌单
-    toMusciList(musiclistid,isCreated) {
-      this.toComponents("musiclstinfo", {isCreated:isCreated,id:musiclistid});
+    toMusciList(musiclistid, isCreated) {
+      this.$router.push({
+        name: "musiclstinfo",
+        params: { isCreated: isCreated, id: musiclistid }
+      });
     },
 
     //跳转其他模块
     toComponents(pathUrl, params) {
-      this.$router.push({ name: pathUrl});
+      this.$router.push({ name: pathUrl });
+    },
+
+    createMusicList() {
+      //是否是隐私歌单
+      let ishide = this.ishide? 2:1;
+      
+      let json = {
+        userid: JSON.parse(localStorage.user).id,
+        musiclistName: this.new_title,
+        status: ishide
+      }
+
+      this.postRequest("/my/musiclist",true,json).then(resp =>{
+        let newList = {
+          musiclistid: resp.data.data,
+          musiclistName: this.new_title,
+          status: ishide
+        }
+        this.CreateMusicListInfo.splice(1,0,newList);
+
+        this.visible = false;
+      })
+      
     },
 
     //获取创建歌单列表
     getMusicList() {
       if (localStorage.user) {
-        this.$http.all([
-          this.getRequest("/my/create/musiclist/"+this.$store.state.user.id, true),
-          this.getRequest("/my/collect/musiclist/"+this.$store.state.user.id, true)
-        ]).then(this.$http.spread((createResp,collectResp) => {
-          this.CreateMusicListInfo = createResp.data.data;
-          this.CollectionMusicListInfo = collectResp.data.data;
-          this.$store.commit(types.SET_DEFAULT_LIST,createResp.data.data)
-          }))
+        this.$http
+          .all([
+            this.getRequest(
+              "/my/create/musiclist/" + this.$store.state.user.id,
+              true
+            ),
+            this.getRequest(
+              "/my/collect/musiclist/" + this.$store.state.user.id,
+              true
+            )
+          ])
+          .then(
+            this.$http.spread((createResp, collectResp) => {
+              this.CreateMusicListInfo = createResp.data.data;
+              this.CollectionMusicListInfo = collectResp.data.data;
+              this.$store.commit(types.SET_DEFAULT_LIST, createResp.data.data);
+            })
+          );
       }
     },
 
@@ -173,9 +258,47 @@ export default {
           return "#icon-lock";
       }
     },
+
+    //初始化泡泡框
+    destroyPop() {
+      this.ishide = false;
+      this.new_title = "";
+    },
+
+    //获取字符数  汉字算两个
+    getByteLen(val) {
+      var len = 0;
+      for (var i = 0; i < val.length; i++) {
+        var a = val.charAt(i);
+        if (a.match(/[^\x00-\xff]/gi) != null) {
+          len += 2;
+        } else {
+          len += 1;
+        }
+      }
+      return len;
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../assets/css/leftbar.scss";
 </style>
+
+<style>
+.createList {
+  background: #2d2f33 !important;
+  border: 1px solid #2d2f33 !important;
+  color: #dcdde4 !important;
+}
+
+.el-popper[x-placement^="right"] .popper__arrow::after {
+  border-right-color: #2d2f33 !important;
+}
+
+.el-popper[x-placement^="right"] .popper__arrow {
+  border-right-color: #2d2f33 !important;
+}
+</style>
+
+
