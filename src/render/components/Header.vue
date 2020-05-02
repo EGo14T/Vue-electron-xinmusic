@@ -29,7 +29,7 @@
         :src="this.$store.state.user.avatar"
         width="24"
         height="24"
-        @click="oauthLogin()"
+        @click="toComponents('user')"
       />
       <a href class="userName">{{this.$store.state.user.name}}</a>
     </div>
@@ -113,6 +113,10 @@ export default {
 
     openLogin() {
       this.dialogVisible = !this.dialogVisible;
+    },
+
+    toComponents(pathUrl, params) {
+      this.$router.push({ name: pathUrl });
     },
 
     closewindow() {
