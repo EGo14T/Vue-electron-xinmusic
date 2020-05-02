@@ -6,7 +6,8 @@
     margin: 5px 0 3px 0;
   }
   .nav-citem {
-    margin: 1px 0 1px 8px;
+    margin: 3px 0 3px 0;
+    padding-left: 15px;
     color: #adafb2;
     font-size: 14px;
     padding-top: 1px;
@@ -16,7 +17,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    width: 187px;
+    width: 193px;
 
     .navtext {
       cursor: Pointer;
@@ -24,6 +25,23 @@
       font-size: 14px;
       text-decoration: none;
     }
+  }
+
+  .nav-active {
+    background: #26282c;
+    color: #dcdde3 !important;
+    padding-left: 11px !important;
+    &:hover .navitem,
+    &:hover .leftbtn,
+    &:hover .navtext {
+      color: #dcdde3 !important;
+    }
+    .leftbtn {
+      color: #dcdde3;
+    }
+
+    border-left: solid #cc2a2a 4px;
+    box-sizing: border-box;
   }
 
   .leftbtn {
@@ -89,7 +107,7 @@
     margin: 10px;
     &.create {
       background: #2e4e7e;
-      &:disabled{
+      &:disabled {
         background-color: #26354b;
         cursor: default;
         &:hover {
@@ -120,10 +138,13 @@
   color: #dcdde4;
   margin-left: 10px;
   cursor: default;
+
+  font-weight: 100;
   ::v-deep .el-checkbox__inner {
     background-color: #2d2f33;
   }
   ::v-deep .el-checkbox__label {
+    font-size: 12px;
     position: relative;
     top: 1px;
   }

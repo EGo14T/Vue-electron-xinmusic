@@ -52,15 +52,15 @@
             </svg>
           </el-button>
 
-          <el-button class="listFunc">
+          <el-button class="listFunc" :disabled="isCreated=='created'" @click="collectMusicList()">
             <svg
               class="icon svg-icon"
-              style="height:17px;width:17px;color:white"
+              style="height:17px;width:17px;"
               aria-hidden="true"
             >
               <use xlink:href="#icon-xinjianwenjian" />
             </svg>
-            收藏 (999)
+            {{collection}}
           </el-button>
 
           <el-button class="listFunc">
@@ -72,17 +72,6 @@
               <use xlink:href="#icon-fenxiang" />
             </svg>
             分享 (2333)
-          </el-button>
-
-          <el-button class="listFunc">
-            <svg
-              class="icon svg-icon"
-              style="height:17px;width:17px;color:white"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-xiazai" />
-            </svg>
-            下载全部
           </el-button>
 
           <div class="tag">
@@ -157,7 +146,15 @@ export default {
     },
     ...mapGetters({
       lenOfList: "show_list_len"
-    })
+    }),
+
+    collection() {
+      if(this.isCreated=='collected'){
+        return "已收藏"
+      }else {
+        return "收藏  "
+      }
+    }
   },
   created() {
     this.musicListId = this.$route.params.id;
@@ -168,43 +165,10 @@ export default {
   watch: {},
 
   methods: {
-    get() {
-      this.getRequest("/my/musiclist/1", true).then(resp => {
-        console.log(resp.data);
-      });
+    //收藏歌单
+    collectMusicList() {
+      
     },
-
-    post() {
-      let json = {
-        grant_type: "password",
-        username: "test",
-        password: "test",
-        //scope:all
-        client_id: "client",
-        client_secret: "secret"
-      };
-      this.postRequest(
-        "http://rap2.taobao.org:38080/app/mock/248213/postJson",
-        json
-      ).then(resp => {
-        console.log(resp.data);
-      });
-    },
-
-    oauth() {
-      let json = {
-        grant_type: "password",
-        username: "test",
-        password: "test",
-        //scope:all
-        client_id: "client",
-        client_secret: "secret"
-      };
-      this.oauthRequest("/oauth/token", json).then(resp => {
-        this.$store.commit(types.LOGIN, resp.data);
-      });
-    },
-
     //获取歌单信息
     getMusicListInfo() {
       this.getRequest("/my/musiclistinfo/" + this.musicListId, false).then(

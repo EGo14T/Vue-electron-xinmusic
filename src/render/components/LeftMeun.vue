@@ -44,8 +44,9 @@
           <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
             <span class="span-right">创建的歌单</span>
             <el-popover
-              placement="right"
+              placement="right-start"
               width="270"
+              :offset= "-10"
               trigger="click"
               popper-class="createList"
               @hide="destroyPop"
@@ -75,7 +76,7 @@
           </div>
 
           <div
-            class="nav-citem"
+            :class="['nav-citem' ,curListId==item.musiclistid?'nav-active':'']"
             v-for="item in showCreateList"
             @click.stop="toMusciList(item.musiclistid,'created')"
           >
@@ -95,7 +96,7 @@
           </div>
 
           <div
-            class="nav-citem"
+            :class="['nav-citem' ,curListId==item.musiclistid?'nav-active':'']"
             v-for="item in showCollectionList"
             @click="toMusciList(item.musiclistid,'collected')"
           >
@@ -119,6 +120,8 @@ export default {
       CreateMusicListInfo: [],
 
       CollectionMusicListInfo: [],
+
+      curListId: "", //当前点击的歌单ID
 
       showAllCr: false,
       showAllCo: false,
@@ -190,6 +193,7 @@ export default {
   methods: {
     //跳转到歌单
     toMusciList(musiclistid, isCreated) {
+      this.curListId = musiclistid;
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }

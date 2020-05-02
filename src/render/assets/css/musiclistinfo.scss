@@ -94,6 +94,15 @@
         background-color: #25272b;
         border: 0;
         color: white;
+
+        &.is-disabled {
+          background-color: #25272b;
+          color: #5c5d62;
+
+          .svg-icon {
+            color: #5c5d62;
+          }
+        }
       }
 
       .tag {
