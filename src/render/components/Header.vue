@@ -8,10 +8,10 @@
     </div>
 
     <div class="col-auto history">
-      <svg class="icon svg-icon historyBtn" aria-hidden="true">
+      <svg class="icon svg-icon historyBtn" aria-hidden="true" @click="history(-1)">
         <use xlink:href="#icon-Group-" />
       </svg>
-      <svg class="icon svg-icon historyBtn" aria-hidden="true">
+      <svg class="icon svg-icon historyBtn" aria-hidden="true" @click="history(1)">
         <use xlink:href="#icon-Group-2" />
       </svg>
     </div>
@@ -93,6 +93,9 @@ export default {
   },
 
   methods: {
+    history(val){
+      this.$router.go(val);
+    },
     //验证登录，若没登录则使用refrsh token刷新登录，若第一次登录，则弹窗登录
     oauthLogin() {
       if (localStorage.refreshToken) {

@@ -46,7 +46,7 @@
             <el-popover
               placement="right-start"
               width="270"
-              :offset= "-10"
+              :offset="-10"
               trigger="click"
               popper-class="createList"
               @hide="destroyPop"
@@ -207,25 +207,24 @@ export default {
 
     createMusicList() {
       //是否是隐私歌单
-      let ishide = this.ishide? 2:1;
-      
+      let ishide = this.ishide ? 2 : 1;
+
       let json = {
         userid: JSON.parse(localStorage.user).id,
         musiclistName: this.new_title,
         status: ishide
-      }
+      };
 
-      this.postRequest("/my/musiclist",true,json).then(resp =>{
+      this.postRequest("/my/musiclist", true, json).then(resp => {
         let newList = {
           musiclistid: resp.data.data,
           musiclistName: this.new_title,
           status: ishide
-        }
-        this.CreateMusicListInfo.splice(1,0,newList);
+        };
+        this.CreateMusicListInfo.splice(1, 0, newList);
 
         this.visible = false;
-      })
-      
+      });
     },
 
     //获取创建歌单列表
@@ -246,7 +245,10 @@ export default {
             this.$http.spread((createResp, collectResp) => {
               this.CreateMusicListInfo = createResp.data.data;
               this.CollectionMusicListInfo = collectResp.data.data;
-              this.$store.commit(types.SET_DEFAULT_LIST, createResp.data.data);
+              this.$store.commit(types.SET_DEFAULT_LIST, {
+                create: createResp.data.data,
+                collect: collectResp.data.data
+              });
             })
           );
       }

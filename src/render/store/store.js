@@ -21,6 +21,8 @@ export default new Vuex.Store({
 
         createMusicList: [],   //用户创建的歌单列表
 
+        collectMusicList: [],  //用户收藏歌单列表
+
         showMusicList: [],     //展示的歌单，没有点击
 
         contextMenuIndex: 0,   //右键菜单
@@ -58,8 +60,10 @@ export default new Vuex.Store({
 
         //获取用户默认歌单ID （我喜欢的音乐 的 歌单ID）
         [types.SET_DEFAULT_LIST]: (state, data) => {
-            state.defaultMusicListID = data[0]?.musiclistid;
-            state.createMusicList = data;
+            state.defaultMusicListID = data.create[0]?.musiclistid;
+            state.createMusicList = data.create;
+            state.collectMusicList = data.collect;
+
             //console.log(state.createMusicList)
             localStorage.defaultMusicListID = state.defaultMusicListID;
         },
@@ -161,6 +165,11 @@ export default new Vuex.Store({
         //获取创建歌单列表
         get_create_list: state => {
             return state.createMusicList;
+        },
+
+        //获取收藏歌单列表
+        get_collect_list: state => {
+            return state.collectMusicList;
         }
 
 
