@@ -4,18 +4,18 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <div class="navtitle">推荐</div>
-          <div class="nav-citem">
+          <div :class="['nav-citem' ,menuId=='discover'?'nav-active':'']">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-ic_addmusic" />
             </svg>
-            <span class="navtext" @click="toComponents('user')">发现音乐</span>
+            <span class="navtext" @click="toComponents('user','discover')">发现音乐</span>
           </div>
 
-          <div class="nav-citem">
+          <div :class="['nav-citem' ,menuId=='friends'?'nav-active':'']">
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-pengyou" />
             </svg>
-            <span class="navtext" @click="toComponents('comment')">朋友</span>
+            <span class="navtext" @click="toComponents('comment','friends')">朋友</span>
           </div>
         </li>
       </ul>
@@ -76,7 +76,7 @@
           </div>
 
           <div
-            :class="['nav-citem' ,curListId==item.musiclistid?'nav-active':'']"
+            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
             v-for="item in showCreateList"
             @click.stop="toMusciList(item.musiclistid,'created')"
           >
@@ -96,7 +96,7 @@
           </div>
 
           <div
-            :class="['nav-citem' ,curListId==item.musiclistid?'nav-active':'']"
+            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
             v-for="item in showCollectionList"
             @click="toMusciList(item.musiclistid,'collected')"
           >
@@ -114,14 +114,14 @@
 <script>
 import * as types from "../store/types";
 
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       CreateMusicListInfo: [],
 
       CollectionMusicListInfo: [],
-
-      curListId: "", //当前点击的歌单ID
 
       showAllCr: false,
       showAllCo: false,
@@ -146,6 +146,11 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      menuId: "cur_menu_id"
+    }),
+
+
     showCreateList: function() {
       if (this.showAllCr == false) {
         //当数据不需要完全显示的时候
@@ -193,7 +198,6 @@ export default {
   methods: {
     //跳转到歌单
     toMusciList(musiclistid, isCreated) {
-      this.curListId = musiclistid;
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }
@@ -202,6 +206,7 @@ export default {
 
     //跳转其他模块
     toComponents(pathUrl, params) {
+      this.$store.commit(types.LOAD_Menu_ID,params);
       this.$router.push({ name: pathUrl });
     },
 

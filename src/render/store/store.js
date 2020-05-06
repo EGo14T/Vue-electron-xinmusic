@@ -25,6 +25,8 @@ export default new Vuex.Store({
 
         showMusicList: [],     //展示的歌单，没有点击
 
+        menuId: "",            //leftmenu菜单ID
+
         contextMenuIndex: 0,   //右键菜单
 
         curMusicList: [],      //当前播放的音乐列表  点击歌单里的歌曲
@@ -66,6 +68,10 @@ export default new Vuex.Store({
 
             //console.log(state.createMusicList)
             localStorage.defaultMusicListID = state.defaultMusicListID;
+        },
+
+        [types.LOAD_Menu_ID]: (state,data) => {
+            state.menuId = data;
         },
 
         //载入歌单
@@ -131,6 +137,11 @@ export default new Vuex.Store({
         //是否登录
         get_isLogin: state => {
             return state.islogin;
+        },
+
+        //获取右键菜单ID
+        cur_menu_id: state => {
+            return state.menuId;
         },
 
 

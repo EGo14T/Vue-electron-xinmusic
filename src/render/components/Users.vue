@@ -7,7 +7,7 @@
 
       <div class="info">
         <div class="userName">
-          <h2>Z_ce</h2>
+          <h2>{{userInfo.name}}</h2>
         </div>
         <div class="userInfo">
           <div class="lable">
@@ -16,9 +16,9 @@
             <div>个人介绍:</div>
           </div>
           <div class="content">
-            <div>2月9日</div>
-            <div>河南省郑州市</div>
-            <div>带帅比</div>
+            <div>{{userInfo.birth}}</div>
+            <div>{{userInfo.area}}</div>
+            <div>{{userInfo.introduce}}</div>
           </div>
         </div>
       </div>
@@ -61,10 +61,27 @@ export default {
     })
   },
 
+  created(){
+    this.getUserInfo();
+  },
+
   data() {
     return {
-      imgsrc: "https://cdn.ego1st.cn/xinmusic/useravatar/1.jpg"
+      imgsrc: "https://cdn.ego1st.cn/xinmusic/useravatar/1.jpg",
+
+      userInfo: {}         //用户信息
     };
+  },
+
+  methods: {
+    
+    getUserInfo(){
+      let userId = JSON.parse(localStorage.user).id
+
+      this.getRequest("/users/getUserInfo/"+userId,true).then(resp => {
+        this.userInfo = resp.data.data;
+      })
+    }
   }
 };
 </script>
@@ -83,6 +100,7 @@ export default {
     grid-template-columns: 1fr 3fr;
     grid-gap: 25px;
     .avatar {
+
     }
 
     .info {

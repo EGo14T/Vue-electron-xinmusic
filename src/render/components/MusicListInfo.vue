@@ -157,9 +157,11 @@ export default {
     }
   },
   created() {
-    this.musicListId = this.$route.params.id;
+    let musiclistId = this.$route.params.id
+    this.musicListId = musiclistId;
     this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
+    this.$store.commit(types.LOAD_Menu_ID,musiclistId);
   },
 
   watch: {},
