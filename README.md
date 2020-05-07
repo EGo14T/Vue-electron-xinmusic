@@ -1,30 +1,14 @@
-# xinmusicweb
+# 剩余开发任务
+## 2020.5.6
+1. 编辑用户信息页
+2. 修改密码功能
+3. 注册功能
+4. 搜索页及搜索功能
+5. 歌曲页&歌词（选做
+6. 上传音乐页
+7. 朋友圈功能
+8. 消息提醒
+9. ......
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-yarn electron:serve      
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 2020.5.7
+1. 编辑用户信息页（剩地区选择 接口

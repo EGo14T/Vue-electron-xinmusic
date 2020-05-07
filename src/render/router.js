@@ -4,6 +4,7 @@ import Home from './components/Home'
 import MyMusic from './components/MyMusic'
 import Comments from './components/Comments'
 import Users from './components/Users'
+import EditUsers from './components/EditUserInfo'
 import Register from './components/Register'
 import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
@@ -23,6 +24,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {path:'/',component:Users,name:"user"},
+    {path:'/editUsers',component:EditUsers,name:"editUsers"},
     {path:'/My',component:MyMusic},
     {path:'/comment', name:"comment",component:Comments},
     {path:'/about',component:Users},
