@@ -37,7 +37,7 @@
               <myScroll>
                 <div class="selectOptions">
                   <div v-for="item in year">
-                    <div class="option" @click="setDate('y',item.value)">{{item.label}}</div>
+                    <div class="option" @click="setValue('y',item.value)">{{item.label}}</div>
                   </div>
                 </div>
               </myScroll>
@@ -49,7 +49,7 @@
               <myScroll>
                 <div class="selectOptions">
                   <div v-for="item in month">
-                    <div class="option" @click="setDate('m',item.value)">{{item.label}}</div>
+                    <div class="option" @click="setValue('m',item.value)">{{item.label}}</div>
                   </div>
                 </div>
               </myScroll>
@@ -62,7 +62,7 @@
               <myScroll>
                 <div class="selectOptions">
                   <div v-for="item in day">
-                    <div class="option" @click="setDate('d',item.value)">{{item.label}}</div>
+                    <div class="option" @click="setValue('d',item.value)">{{item.label}}</div>
                   </div>
                 </div>
               </myScroll>
@@ -70,14 +70,62 @@
           </div>
         </div>
         <div>地区：</div>
+        <div class="area_select">
+          <div class="Select">
+            <div class="Label province" @click="showSelect('p')">{{u_province}}</div>
+            <div class="optionSelect province" v-show="showProvince">
+              <myScroll>
+                <div class="selectOptions">
+                  <div v-for="item in province">
+                    <div class="option" @click="setValue('p',item.value)">{{item.label}}</div>
+                  </div>
+                </div>
+              </myScroll>
+            </div>
+          </div>
+          <div class="Select">
+            <div class="Label city" @click="showSelect('c')">{{u_city}}</div>
+            <div class="optionSelect city" v-show="showCity">
+              <myScroll>
+                <div class="selectOptions">
+                  <div v-for="item in city">
+                    <div class="option" @click="setValue('c',item.value)">{{item.label}}</div>
+                  </div>
+                </div>
+              </myScroll>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="avatar"></div>
+      <div class="avatar">
+        <img :src="src" width="177px" height="177px" draggable="false" />
+        <div class="upload">
+          <el-upload
+            action
+            :limit="1"
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="upload"
+          >
+            <button class="loadAvatar">修改头像</button>
+          </el-upload>
+        </div>
+      </div>
     </div>
+    <uploadAvatar :visible.sync="dialogVisible" :img="img"></uploadAvatar>
   </div>
 </template>
 
 <script>
+import province from "../utils/country-level2-data";
+
+import UploadAvatar from "./UploadAvatar";
+
 export default {
+
+  components: {
+    uploadAvatar: UploadAvatar
+  },
 
   mounted() {
     document.addEventListener("click", e => {
@@ -88,6 +136,7 @@ export default {
         this.showYear = false;
         this.showMonth = false;
         this.showDay = false;
+        this.showProvince = false;
       }
     });
   },
@@ -119,55 +168,126 @@ export default {
 
     day: function() {
       var dayList = [];
-      for (var i = 1; i <= 30; i++) {
+      var j = new Date(this.u_year, this.u_month, 0).getDate();
+      for (var i = 1; i <= j; i++) {
         var dayItem = {};
         dayItem.value = i;
         dayItem.label = i + "日";
         dayList.push(dayItem);
       }
       return dayList;
+    },
+
+    province: function() {
+      return province;
+    },
+
+    city: function() {
+      var city = this.getDataName(
+        province,
+        "value",
+        "children",
+        this.u_province
+      );
+      this.u_city = city[0]["value"];
+      return city;
     }
   },
   data() {
     return {
+      src: "https://cdn.ego1st.cn/xinmusic/useravatar/1.jpg",
+
       gender: "", //性别 0保密 1男 2女
       showYear: false,
       showMonth: false,
       showDay: false,
+      showProvince: false,
+      showCity: false,
       u_year: 1998,
       u_month: 12,
-      u_day: 20
+      u_day: 20,
+
+      u_province: "河南省",
+      u_city: "郑州市",
+
+      dialogVisible: false,
+
+      fileinfo: "",
+      img: "",
     };
   },
 
   methods: {
     showSelect(type) {
-      if (type == "y") {
-        this.showYear = !this.showYear;
-        this.showMonth = false;
-        this.showDay = false;
-      } else if (type == "m") {
-        this.showYear = false;
-        this.showMonth = !this.showMonth;
-        this.showDay = false;
-      } else if (type == "d") {
-        this.showYear = false;
-        this.showMonth = false;
-        this.showDay = !this.showDay;
+      switch (type) {
+        case "y":
+          this.showYear = !this.showYear;
+          this.showMonth = false;
+          this.showDay = false;
+          break;
+
+        case "m":
+          this.showYear = false;
+          this.showMonth = !this.showMonth;
+          this.showDay = false;
+          break;
+
+        case "d":
+          this.showYear = false;
+          this.showMonth = false;
+          this.showDay = !this.showDay;
+          break;
+
+        case "p":
+          this.showProvince = !this.showProvince;
+          this.showCity = false;
+          break;
+
+        case "c":
+          this.showProvince = false;
+          this.showCity = !this.showCity;
+          break;
       }
     },
 
-    setDate(type, value) {
-      if (type == "y") {
-        this.u_year = value;
-        this.showYear = false;
-      } else if (type == "m") {
-        this.u_month = value;
-        this.showMonth = false;
-      } else if (type == "d") {
-        this.u_day = value;
-        this.showDay = false;
+    setValue(type, value) {
+      switch (type) {
+        case "y":
+          this.u_year = value;
+          this.u_day = 1;
+          this.showYear = false;
+          break;
+
+        case "m":
+          this.u_month = value;
+          this.u_day = 1;
+          this.showMonth = false;
+          break;
+
+        case "d":
+          this.u_day = value;
+          this.showDay = false;
+          break;
+
+        case "p":
+          this.u_province = value;
+          this.showProvince = false;
+          break;
+
+        case "c":
+          this.u_city = value;
+          this.showCity = false;
+          break;
       }
+    },
+
+    upload(file, fileList) {
+      this.fileinfo = file;
+      console.log(file.raw.path);
+      this.$nextTick(() => {
+        this.img = file.raw.path;
+        this.dialogVisible = true;
+      });
     }
   }
 };
@@ -191,6 +311,7 @@ export default {
   .row2 {
     display: grid;
     grid-template-columns: 4fr 3fr;
+    height: 350px;
 
     .editArea {
       padding-top: 40px;
@@ -278,7 +399,8 @@ export default {
         }
       }
 
-      .date_select {
+      .date_select,
+      .area_select {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 2fr;
         .Label {
@@ -304,6 +426,17 @@ export default {
         .day {
           width: 55px;
           margin-left: 5px;
+          border-radius: 3px;
+        }
+
+        .province {
+          width: 100px;
+          border-radius: 3px;
+        }
+
+        .city {
+          width: 160px;
+          margin-left: 10px;
           border-radius: 3px;
         }
 
@@ -334,7 +467,29 @@ export default {
     }
 
     .avatar {
-      height: 200px;
+      padding-top: 40px;
+      text-align: center;
+
+      .upload {
+        margin: 15px 0;
+        .loadAvatar {
+          font-size: 11px;
+          font-weight: 400;
+          width: 99px;
+          height: 29px;
+          border-radius: 5px;
+          letter-spacing: 1px;
+          border: 0;
+          color: #dcdde4;
+          background: #25272b;
+          cursor: pointer;
+
+          &:hover {
+            color: #e2e2e2;
+            background: #2c2e32;
+          }
+        }
+      }
     }
   }
 

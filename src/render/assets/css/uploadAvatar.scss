@@ -1,0 +1,57 @@
+.a_animate-enter,
+.a_animate-leave-to {
+  opacity: 0;
+  transform: translateY(-50px); /*位移*/
+}
+
+.a_animate-enter-active,
+.a_animate-leave-active {
+  transition: all 0.3s ease;
+}
+
+.cropper_panel {
+  .cropper-content {
+    width: 575px;
+    height: 395px;
+    position: fixed;
+    top: 137px;
+    left: 242px;
+
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "cropper preview"
+      "footer footer";
+    grid-template-rows: 50px 3fr 1fr;
+    background-color: #2d2f33;
+
+    .c_header {
+      grid-area: header;
+      color: #adafb2;
+      font-size: 16px;
+      font-weight: 300;
+      padding: 10px 0 0 20px;
+      height: 50px;
+      border-bottom: 1px solid #3b3a3d;
+    }
+    .cropper {
+      grid-area: cropper;
+      margin: 20px 0 0 50px;
+
+      width: 240px;
+      height: 240px;
+    }
+
+    .preview {
+      margin: 20px 0 0 80px;
+      grid-area: preview;
+      width: 240px;
+      color: #68686d;
+      font-size: 13px;
+
+      p {
+          margin-top: 5px;
+      }
+    }
+  }
+}

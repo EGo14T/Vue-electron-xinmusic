@@ -10,6 +10,8 @@ import {getDataName} from './render/utils/utils'
 
 import vuescroll from 'vuescroll'
 
+import VueCropper from 'vue-xincropper'
+
 import 'hls.js'
 
 import './render/plugins/element.js'
@@ -44,7 +46,8 @@ Vue.use(vuescroll, {
   name: 'myScroll' // 在这里自定义组件名字，默认是vueScroll
 })
 .use(axiosplugin)
-.use(contentmenu);
+.use(contentmenu)
+.use(VueCropper);
 
 Vue.config.productionTip = false
 

@@ -6,7 +6,8 @@ import {
    ButtonGroup,
    Popover,
    Message,
-   Checkbox
+   Checkbox,
+   Upload
 } from 'element-ui'
 
 
@@ -16,5 +17,6 @@ Vue.use(Dialog)
    .use(ButtonGroup)
    .use(Popover)
    .use(Checkbox)
+   .use(Upload)
 
 Vue.prototype.$message = Message;

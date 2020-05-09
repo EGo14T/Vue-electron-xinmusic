@@ -5,6 +5,7 @@ import MyMusic from './components/MyMusic'
 import Comments from './components/Comments'
 import Users from './components/Users'
 import EditUsers from './components/EditUserInfo'
+import UploadAvatar from './components/UploadAvatar'
 import Register from './components/Register'
 import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
@@ -25,6 +26,7 @@ export default new Router({
   routes: [
     {path:'/',component:Users,name:"user"},
     {path:'/editUsers',component:EditUsers,name:"editUsers"},
+    {path:'/uploadAvatar',component:UploadAvatar,name:"uploadAvatar"},
     {path:'/My',component:MyMusic},
     {path:'/comment', name:"comment",component:Comments},
     {path:'/about',component:Users},
