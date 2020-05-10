@@ -82,13 +82,13 @@ export default {
 
   methods: {
     getUserInfo() {
-      let userId = JSON.parse(localStorage.user).id;
-
-      this.getRequest("/users/getUserInfo/" + userId, true).then(resp => {
-        this.userInfo = resp.data.data;
-
-        this.isFinish = true;
-      });
+      if(localStorage.user){
+        let userId = JSON.parse(localStorage.user).id;
+        this.getRequest("/users/getUserInfo/" + userId, true).then(resp => {
+          this.userInfo = resp.data.data;
+          this.isFinish = true;
+        });
+      }
     },
     toComponents(pathUrl, params) {
       this.$router.push({ name: pathUrl });

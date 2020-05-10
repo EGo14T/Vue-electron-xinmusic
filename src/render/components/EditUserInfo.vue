@@ -101,18 +101,19 @@
         <img :src="src" width="177px" height="177px" draggable="false" />
         <div class="upload">
           <el-upload
+            ref="editUpload"
             action
-            :limit="1"
             :auto-upload="false"
             :show-file-list="false"
             :on-change="upload"
+            :limit="1"
           >
             <button class="loadAvatar">修改头像</button>
           </el-upload>
         </div>
       </div>
     </div>
-    <uploadAvatar :visible.sync="dialogVisible" :img="img"></uploadAvatar>
+    <uploadAvatar :visible.sync="dialogVisible"></uploadAvatar>
   </div>
 </template>
 
@@ -121,10 +122,19 @@ import province from "../utils/country-level2-data";
 
 import UploadAvatar from "./UploadAvatar";
 
-export default {
+import * as types from "../store/types";
 
+import { mapGetters } from "vuex";
+
+export default {
   components: {
     uploadAvatar: UploadAvatar
+  },
+
+  computed: {
+    ...mapGetters({
+      imgUrl: "get_select_img"
+    })
   },
 
   mounted() {
@@ -212,8 +222,9 @@ export default {
 
       dialogVisible: false,
 
+      flieList: [],
       fileinfo: "",
-      img: "",
+      img: ""
     };
   },
 
@@ -282,12 +293,19 @@ export default {
     },
 
     upload(file, fileList) {
-      this.fileinfo = file;
-      console.log(file.raw.path);
-      this.$nextTick(() => {
-        this.img = file.raw.path;
+      console.log("11111");
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (!isLt5M) {
         this.dialogVisible = true;
-      });
+        this.$store.commit(types.SET_IMG,"");
+      } else {
+        this.fileinfo = file;
+        this.$nextTick(() => {
+          this.$refs.editUpload.clearFiles();
+          this.$store.commit(types.SET_IMG,file.raw.path);
+          this.dialogVisible = true;
+        });
+      }
     }
   }
 };

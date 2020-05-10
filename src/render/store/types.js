@@ -21,3 +21,5 @@ export const CHANGE_PLAY_STATUS = "changePlayStatus"  //切换播放状态
 
 export const SET_CONTEXT_MENU = "setContextMenu"   //设置右键选中的index  musiclist
 
+export const SET_IMG = "setImg"    //选择本地的图片的地址
+

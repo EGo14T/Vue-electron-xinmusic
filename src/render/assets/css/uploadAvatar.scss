@@ -19,14 +19,15 @@
 
     display: grid;
     grid-template-areas:
-      "header header"
+      "title close"
       "cropper preview"
-      "footer footer";
-    grid-template-rows: 50px 3fr 1fr;
+      "footer1 footer2";
+    grid-template-columns:  1fr 1fr;
+    row-gap: 20px;
     background-color: #2d2f33;
 
     .c_header {
-      grid-area: header;
+      grid-area: title;
       color: #adafb2;
       font-size: 16px;
       font-weight: 300;
@@ -34,23 +35,122 @@
       height: 50px;
       border-bottom: 1px solid #3b3a3d;
     }
+
+    .close {
+      height: 50px;
+      grid-area: close;
+      border-bottom: 1px solid #3b3a3d;
+      opacity: 1;
+
+      .closebtn {
+        width: 14px;
+        height: 14px;
+        color: #7d7d81;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        &:hover {
+          color: #ffffff;
+          cursor: pointer;
+        }
+      }
+    }
     .cropper {
       grid-area: cropper;
-      margin: 20px 0 0 50px;
-
+      margin: 0 0 0 50px;
+      background: #292b2f;
+      border: 1px solid #3b3a3d;
       width: 240px;
       height: 240px;
+
+      .no_img {
+        color: #b82525;
+        position: relative;
+        top: 100px;
+
+        font-size: 14px;
+      }
     }
 
     .preview {
-      margin: 20px 0 0 80px;
+      height: 250px;
+      padding: 0 0 0 60px;
       grid-area: preview;
       width: 240px;
       color: #68686d;
-      font-size: 13px;
+      font-size: 12px;
+
+      .no_b_img {
+        width: 120px;
+        height: 120px;
+        background: #292b2f;
+        border: 1px solid #3b3a3d;
+      }
+
+      .no_s_img {
+        width: 60px;
+        height: 60px;
+        background: #292b2f;
+        border: 1px solid #3b3a3d;
+      }
 
       p {
-          margin-top: 5px;
+        margin-top: 5px;
+      }
+    }
+
+    .f_btn {
+      font-weight: 350;
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      border: 1px solid #24262a;
+      margin-top: 10px;
+      outline: none;
+    }
+
+    .c_footer1 {
+      grid-area: footer1;
+      background: #292b2f;
+      text-align: right;
+      height: 55px;
+      
+
+      .re_select {
+        font-size: 14px;
+        color: #a5a7a8;
+        background: #37383c;
+        &:hover {
+          background: #3d3f43;
+          cursor: pointer;
+        }
+      }
+    }
+    .c_footer2 {
+      grid-area: footer2;
+      background: #292b2f;
+      text-align: left;
+      height: 55px;
+
+      .save_close {
+        position: relative;
+        left: 3px;
+        font-size: 12px;
+        color: #ffffff;
+        background: #2e4e7e;
+        &:hover {
+          background: #3a6098;
+          cursor: pointer;
+        }
+
+        &:disabled {
+          color: #667180;
+          background: #26354b;
+          &:hover {
+            cursor: default;
+          }
+        }
       }
     }
   }

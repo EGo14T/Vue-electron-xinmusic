@@ -39,7 +39,10 @@ export default new Vuex.Store({
 
         curPlayStatus: 1,       //当前的播放状态 0单曲循环  1列表循环  2随机播放
 
-        historylist: []
+        historylist: [],
+
+        //--------------------------------------------------------------------------
+        selectImg: ""          //当前选择的图片
     },
     mutations: {
         //登录
@@ -129,6 +132,12 @@ export default new Vuex.Store({
             else if (data == 2) {
                 state.curIndex = state.randomlist.map(item => item.id).indexOf(state.curMusicId);
             }
+        },
+
+
+        //设置选择的图片
+        [types.SET_IMG]: (state, data) => {
+            state.selectImg = data;
         }
     },
 
@@ -181,6 +190,11 @@ export default new Vuex.Store({
         //获取收藏歌单列表
         get_collect_list: state => {
             return state.collectMusicList;
+        },
+
+        //获取图片路径
+        get_select_img: state => {
+            return state.selectImg;
         }
 
 

@@ -23,6 +23,7 @@
     "qs": "^6.9.3",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4",
+    "upyun": "^3.4.2",
     "v-contextmenu": "^2.9.0",
     "vue": "^2.6.10",
     "vue-aplayer": "^1.6.1",
