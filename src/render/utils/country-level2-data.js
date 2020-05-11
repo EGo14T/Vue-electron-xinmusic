@@ -1002,8 +1002,8 @@ const options =
       "label": "迪庆藏族自治州"
     }]
   }, {
-    "value": "西藏自治区",
-    "label": "西藏自治区",
+    "value": "西藏",
+    "label": "西藏",
     "children": [{
       "value": "拉萨市",
       "label": "拉萨市"

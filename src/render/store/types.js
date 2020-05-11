@@ -23,3 +23,7 @@ export const SET_CONTEXT_MENU = "setContextMenu"   //设置右键选中的index 
 
 export const SET_IMG = "setImg"    //选择本地的图片的地址
 
+export const SET_AVATAR = 'setAvatar'    //重新设置头像
+
+export const SET_USERINFO = 'setUserInfo'    //重新设置用户信息
+

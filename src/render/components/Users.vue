@@ -2,7 +2,7 @@
   <div class="container" v-if="isFinish">
     <div class="row1">
       <div class="avatar">
-        <img :src="imgsrc" width="199px" height="199px" draggable="false" />
+        <img :src="avatarURL" width="199px" height="199px" draggable="false" />
       </div>
 
       <div class="info">
@@ -62,7 +62,8 @@ export default {
   computed: {
     ...mapGetters({
       createList: "get_create_list",
-      collectList: "get_collect_list"
+      collectList: "get_collect_list",
+      avatarURL: "get_avatar_url"
     })
   },
 
@@ -74,8 +75,6 @@ export default {
     return {
       isFinish: false,
 
-      imgsrc: "https://cdn.ego1st.cn/xinmusic/useravatar/1.jpg",
-
       userInfo: {} //用户信息
     };
   },
@@ -84,7 +83,7 @@ export default {
     getUserInfo() {
       if(localStorage.user){
         let userId = JSON.parse(localStorage.user).id;
-        this.getRequest("/users/getUserInfo/" + userId, true).then(resp => {
+        this.getRequest("/users/UserInfo/" + userId, true).then(resp => {
           this.userInfo = resp.data.data;
           this.isFinish = true;
         });

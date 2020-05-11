@@ -135,8 +135,7 @@ export default {
   },
 
   created() {
-    //获取歌单列表
-    this.getMusicList();
+    
   },
 
   watch: {

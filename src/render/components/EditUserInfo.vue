@@ -7,24 +7,24 @@
       <div class="editArea">
         <div>昵称：</div>
         <div>
-          <input type="text" class="editInput name" />
+          <input type="text" class="editInput name" v-model="userInfo.name" />
         </div>
         <div>介绍：</div>
         <div>
-          <textarea class="editInput introduce"></textarea>
+          <textarea class="editInput introduce" v-model="userInfo.introduce"></textarea>
         </div>
         <div>性别：</div>
         <div class="genderRadio">
           <div>
-            <input class="radio_type" type="radio" id="secret" value="secret" v-model="gender" />
+            <input class="radio_type" type="radio" id="secret" value="0" v-model="userInfo.gender" />
             <label for="secret">保密</label>
           </div>
           <div>
-            <input class="radio_type" type="radio" id="male" value="male" v-model="gender" />
+            <input class="radio_type" type="radio" id="male" value="1" v-model="userInfo.gender" />
             <label for="male">男</label>
           </div>
           <div>
-            <input class="radio_type" type="radio" id="female" value="female" v-model="gender" />
+            <input class="radio_type" type="radio" id="female" value="2" v-model="userInfo.gender" />
             <label for="female">女</label>
           </div>
           <div></div>
@@ -96,9 +96,14 @@
             </div>
           </div>
         </div>
+        <div></div>
+        <div class="submit">
+          <input type="button" class="btn save" @click="saveInfo()" value="保存" />
+          <input type="button" class="btn cancle" @click="cancleEdit()" value="取消" />
+        </div>
       </div>
       <div class="avatar">
-        <img :src="src" width="177px" height="177px" draggable="false" />
+        <img :src="avatarURL" width="177px" height="177px" draggable="false" />
         <div class="upload">
           <el-upload
             ref="editUpload"
@@ -131,10 +136,8 @@ export default {
     uploadAvatar: UploadAvatar
   },
 
-  computed: {
-    ...mapGetters({
-      imgUrl: "get_select_img"
-    })
+  created() {
+    this.initInfo();
   },
 
   mounted() {
@@ -152,6 +155,12 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      imgUrl: "get_select_img",
+      avatarURL: "get_avatar_url",
+      userid: "get_user_id"
+    }),
+
     year: function() {
       var date = new Date();
       var year = date.getFullYear();
@@ -199,15 +208,12 @@ export default {
         "children",
         this.u_province
       );
-      this.u_city = city[0]["value"];
       return city;
     }
   },
   data() {
     return {
-      src: "https://cdn.ego1st.cn/xinmusic/useravatar/1.jpg",
 
-      gender: "", //性别 0保密 1男 2女
       showYear: false,
       showMonth: false,
       showDay: false,
@@ -216,9 +222,17 @@ export default {
       u_year: 1998,
       u_month: 12,
       u_day: 20,
+      u_province: "",
+      u_city: "",
 
-      u_province: "河南省",
-      u_city: "郑州市",
+      userInfo: {
+        id: "",
+        name: "",
+        gender: "", //性别 0保密 1男 2女
+        introduce: "",
+        birth: "",
+        area: "",
+      },
 
       dialogVisible: false,
 
@@ -229,6 +243,25 @@ export default {
   },
 
   methods: {
+    initInfo() {
+      var userInfo = JSON.parse(localStorage.user);
+      var birth = new Date(userInfo.birth);
+      var areaReg = /新疆|宁夏|西藏|.+?(省|市|澳门|区|县|盟|自治州)|香港|澳门/g;
+
+      //id 昵称 介绍 性别
+      this.userInfo.id = userInfo.id;
+      this.userInfo.name = userInfo.name;
+      this.userInfo.introduce = userInfo.introduce;
+      this.userInfo.gender = userInfo.gender;
+      //出生年月日
+      this.u_year = birth.getFullYear();
+      this.u_month = birth.getMonth() + 1;
+      this.u_day = birth.getDate();
+      //所在地
+      this.u_province = userInfo.area.match(areaReg)[0];
+      this.u_city = userInfo.area.match(areaReg)[1];
+    },
+
     showSelect(type) {
       switch (type) {
         case "y":
@@ -282,6 +315,7 @@ export default {
 
         case "p":
           this.u_province = value;
+          this.u_city = this.city[0]["value"];
           this.showProvince = false;
           break;
 
@@ -297,15 +331,33 @@ export default {
       const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isLt5M) {
         this.dialogVisible = true;
-        this.$store.commit(types.SET_IMG,"");
+        this.$refs.editUpload.clearFiles();
+        this.$store.commit(types.SET_IMG, "");
       } else {
         this.fileinfo = file;
         this.$nextTick(() => {
           this.$refs.editUpload.clearFiles();
-          this.$store.commit(types.SET_IMG,file.raw.path);
+          this.$store.commit(types.SET_IMG, file.raw.path);
           this.dialogVisible = true;
         });
       }
+    },
+
+    saveInfo() {
+      this.userInfo.id = this.userid;
+      let month = this.u_month<10?'0'+this.u_month:this.u_month;
+      let day = this.u_day<10?'0'+this.u_day:this.u_day;
+      this.userInfo.birth = this.u_year +'-' + month + '-' + day;
+      this.userInfo.area = this.u_province + this.u_city;
+      this.patchRequest('/users/UserInfo',true,this.userInfo).then(resp => {
+        console.log(resp)
+        if(resp.data){
+          this.$store.commit(types.SET_USERINFO,resp.data.data);
+          this.$message.success("更新信息成功！")
+        }
+      })
+      
+      
     }
   }
 };
@@ -480,6 +532,34 @@ export default {
               }
             }
           }
+        }
+      }
+
+      .submit {
+        .btn {
+          font-size: 16px;
+          font-weight: 400;
+          width: 80px;
+          height: 30px;
+          border-radius: 5px;
+          border: 0;
+          padding: 0;
+          margin-top: 60px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .save {
+          background: #2e4e7e;
+          color: #ffffff;
+
+          margin-right: 20px;
+        }
+
+        .cancle {
+          background: #25272b;
+          color: #dcdde4;
         }
       }
     }

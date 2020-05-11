@@ -73,7 +73,7 @@ export default new Vuex.Store({
             localStorage.defaultMusicListID = state.defaultMusicListID;
         },
 
-        [types.LOAD_Menu_ID]: (state,data) => {
+        [types.LOAD_Menu_ID]: (state, data) => {
             state.menuId = data;
         },
 
@@ -138,6 +138,15 @@ export default new Vuex.Store({
         //设置选择的图片
         [types.SET_IMG]: (state, data) => {
             state.selectImg = data;
+        },
+
+        [types.SET_AVATAR]: (state, data) => {
+            state.user.avatar = data;
+        },
+
+        [types.SET_USERINFO]: (state, data) => {
+            state.user = data;
+            localStorage.user = JSON.stringify(data);
         }
     },
 
@@ -195,6 +204,14 @@ export default new Vuex.Store({
         //获取图片路径
         get_select_img: state => {
             return state.selectImg;
+        },
+
+        get_avatar_url: state => {
+            return state.user.avatar;
+        },
+
+        get_user_id: state => {
+            return state.user.id;
         }
 
 
