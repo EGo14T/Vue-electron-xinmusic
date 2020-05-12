@@ -23,7 +23,7 @@
 import Header from './components/Header'
 import Music from './components/music'
 import LeftMenu from './components/LeftMeun'
-import footerbar from './components/footer'
+import footerbar from './components/footer/footer'
 
 export default {
   components:{

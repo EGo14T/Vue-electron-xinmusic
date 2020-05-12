@@ -1,0 +1,251 @@
+.container {
+    padding: 20px 25px;
+    margin: 0;
+    .row1 {
+      padding-bottom: 6px;
+      border-bottom: 1px solid #23262c;
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+  
+        color: #dcdde4;
+      }
+    }
+  
+    .row2 {
+      display: grid;
+      grid-template-columns: 4fr 3fr;
+      height: 350px;
+  
+      .editArea {
+        padding-top: 40px;
+        height: 200px;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        row-gap: 25px;
+  
+        & > div:nth-child(odd) {
+          font-size: 12px;
+          color: #5f5f63;
+        }
+  
+        .editInput {
+          background: #25272b;
+          border: none;
+          width: 100%;
+          outline: none;
+          color: #828385;
+          padding-left: 10px;
+          font-size: 12px;
+          &:focus {
+            color: #dcdde4;
+          }
+        }
+  
+        .name {
+          height: 25px;
+        }
+  
+        .introduce {
+          resize: none;
+          height: 75px;
+        }
+  
+        .genderRadio {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 3fr;
+          color: #5f5f63;
+          font-size: 12px;
+  
+          .radio_type {
+            vertical-align: middle;
+            margin-top: -6px;
+  
+            appearance: none;
+            position: relative;
+            outline: none;
+  
+            &:before {
+              content: "";
+              width: 16px;
+              height: 16px;
+              border: 1px solid #7d7d7d;
+              display: inline-block;
+              border-radius: 50%;
+              vertical-align: middle;
+            }
+  
+            &:checked:before {
+              content: "";
+              width: 16px;
+              height: 16px;
+              display: inline-block;
+              border-radius: 50%;
+              vertical-align: middle;
+            }
+  
+            &:checked:after {
+              content: "";
+              width: 6px;
+              height: 5px;
+              border-radius: 50%;
+              background-color: #b82525;
+              text-align: center;
+              display: block;
+              position: absolute;
+              top: 9px;
+              left: 5px;
+            }
+          }
+  
+          label {
+            margin-left: 5px;
+          }
+        }
+  
+        .date_select,
+        .area_select {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 2fr;
+          .Label {
+            background: #25272b;
+            color: #dcdde4;
+            padding-left: 10px;
+            height: 23px;
+            font-size: 12px;
+            line-height: 23px;
+          }
+  
+          .year {
+            width: 75px;
+            border-radius: 3px;
+          }
+  
+          .month {
+            width: 55px;
+            margin-left: 10px;
+            border-radius: 3px;
+          }
+  
+          .day {
+            width: 55px;
+            margin-left: 5px;
+            border-radius: 3px;
+          }
+  
+          .province {
+            width: 100px;
+            border-radius: 3px;
+          }
+  
+          .city {
+            width: 160px;
+            margin-left: 10px;
+            border-radius: 3px;
+          }
+  
+          .optionSelect {
+            background: #25272b;
+            margin-top: 2px;
+            color: #dcdde4;
+            font-size: 12px;
+            line-height: 23px;
+            position: absolute;
+            .selectOptions {
+              position: relative;
+              max-height: 210px;
+  
+              .option {
+                padding-left: 10px;
+                margin-right: 18px;
+                color: #828385;
+  
+                &:hover {
+                  background: #2a2c30;
+                  color: #d0dde4;
+                }
+              }
+            }
+          }
+        }
+  
+        .submit {
+          .btn {
+            font-size: 16px;
+            font-weight: 400;
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+            border: 0;
+            padding: 0;
+            margin-top: 60px;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+  
+          .save {
+            background: #2e4e7e;
+            color: #ffffff;
+  
+            margin-right: 20px;
+          }
+  
+          .cancle {
+            background: #25272b;
+            color: #dcdde4;
+          }
+        }
+      }
+  
+      .avatar {
+        padding-top: 40px;
+        text-align: center;
+  
+        .upload {
+          margin: 15px 0;
+          .loadAvatar {
+            font-size: 11px;
+            font-weight: 400;
+            width: 99px;
+            height: 29px;
+            border-radius: 5px;
+            letter-spacing: 1px;
+            border: 0;
+            color: #dcdde4;
+            background: #25272b;
+            cursor: pointer;
+  
+            &:hover {
+              color: #e2e2e2;
+              background: #2c2e32;
+            }
+          }
+        }
+      }
+    }
+  
+    ::-webkit-scrollbar {
+      position: absolute;
+      left: 20px;
+      width: 8px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    /*定义滚动条的轨道，内阴影及圆角*/
+    ::-webkit-scrollbar-track {
+      border-radius: 0px;
+      background-color: #25272b;
+    }
+    /*定义滑块，内阴影及圆角*/
+    ::-webkit-scrollbar-thumb {
+      width: 10px;
+      height: 10px;
+      border-radius: 10px;
+      background-color: #3d3f43;
+      &:hover {
+        background-color: #484a4e;
+      }
+    }
+  }

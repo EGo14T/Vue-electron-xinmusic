@@ -84,10 +84,10 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import timebar from "../components/timebar";
-import volumebar from "../components/VolumeProgress";
+import timebar from "../footer/timebar";
+import volumebar from "../footer/VolumeProgress";
 
-import * as types from "../store/types";
+import * as types from "../../store/types";
 
 export default {
   components: {
@@ -287,5 +287,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/footer.scss";
+@import "../../assets/css/footer.scss";
 </style>

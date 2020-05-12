@@ -8,7 +8,7 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-ic_addmusic" />
             </svg>
-            <span class="navtext" @click="toComponents('user','discover')">发现音乐</span>
+            <span class="navtext" @click="toComponents('discovery','discover')">发现音乐</span>
           </div>
 
           <div :class="['nav-citem' ,menuId=='friends'?'nav-active':'']">
@@ -205,6 +205,7 @@ export default {
 
     //跳转其他模块
     toComponents(pathUrl, params) {
+
       this.$store.commit(types.LOAD_Menu_ID,params);
       this.$router.push({ name: pathUrl });
     },
