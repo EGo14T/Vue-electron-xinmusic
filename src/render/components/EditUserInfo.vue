@@ -258,8 +258,8 @@ export default {
       this.u_month = birth.getMonth() + 1;
       this.u_day = birth.getDate();
       //所在地
-      this.u_province = userInfo.area.match(areaReg)[0];
-      this.u_city = userInfo.area.match(areaReg)[1];
+      this.u_province = userInfo.area?.match(areaReg)[0];
+      this.u_city = userInfo.area?.match(areaReg)[1];
     },
 
     showSelect(type) {

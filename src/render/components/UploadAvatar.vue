@@ -186,7 +186,12 @@ export default {
             var delfile = userInfo.avatar;
             var reg = /.+\/(.+)$/g;
             var service = new UpyunCloud(upyunConfig);
-            service.deleteFile("/xinmusic/useravatar/" + reg.exec(delfile)[1]);
+
+            if (!reg.exec(delfile)[1] == "defaultAvatar.jpg") {
+              service.deleteFile(
+                "/xinmusic/useravatar/" + reg.exec(delfile)[1]
+              );
+            }
             this.updateAvatar();
             this.close();
           }
@@ -198,12 +203,11 @@ export default {
       var json = {
         id: this.userid,
         avatar: this.avatarURL
-      }
-      this.patchRequest('/users/UserInfo',true,json).then(resp => {
-        this.$message.success("更新头像成功！")
-      })
-
-    },
+      };
+      this.patchRequest("/users/UserInfo", true, json).then(resp => {
+        this.$message.success("更新头像成功！");
+      });
+    }
   }
 };
 </script>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 
 //axios.defaults.baseURL = "http://frp.ego1st.cn"
 
@@ -13,7 +13,7 @@ Axios.interceptors.request.use(config => {
     // if(localStorage.accessToken) {
     //     config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
     // }
-    if(config.isToken){
+    if (config.isToken) {
         config.headers.common['Authorization'] = 'Bearer ' + localStorage.accessToken
     }
     return config
@@ -21,19 +21,21 @@ Axios.interceptors.request.use(config => {
 
 Axios.interceptors.response.use(data => {
     return data;
-  }, err => {
+}, err => {
     if (err.response.status == 504 || err.response.status == 503) {
         Message.error("服务器异常，请联系管理员！");
-    }else if(err.response.status == 401){
+    } else if (err.response.status == 401) {
         Message("请先登录~");
-    }else if(err.response.status == 400){
+    } else if (err.response.status == 400) {
         Message.error(err.response.data.error_description);
-    }else {
+    } else if (err.response.status == 405) {
+        Message.error(err.response.data.msg);
+    } else {
         Message.error("服务器异常，请联系管理员！");
     }
     // return Promise.resolve(err);
-    
-  })
+
+})
 
 
 export default {
@@ -43,12 +45,12 @@ export default {
         Object.defineProperty(Vue.prototype, 'patchRequest', { value: patchRequest })
         Object.defineProperty(Vue.prototype, 'delRequest', { value: delRequest })
         Object.defineProperty(Vue.prototype, 'oauthRequest', { value: oauthRequest })
-        Object.defineProperty(Vue.prototype, '$http', {value: axios})
+        Object.defineProperty(Vue.prototype, '$http', { value: axios })
     }
 }
 
 //get方法
-const getRequest = (url,istoken) => {
+const getRequest = (url, istoken) => {
     return Axios({
         method: 'get',
         url: url,
@@ -57,7 +59,7 @@ const getRequest = (url,istoken) => {
 };
 
 //post方法
-const postRequest = (url, istoken ,params) => {
+const postRequest = (url, istoken, params) => {
     return Axios({
         method: 'post',
         url: url,
@@ -70,7 +72,7 @@ const postRequest = (url, istoken ,params) => {
 };
 
 //delete
-const delRequest = (url, istoken ,params) => {
+const delRequest = (url, istoken, params) => {
     return Axios({
         method: 'delete',
         url: url,
@@ -82,7 +84,7 @@ const delRequest = (url, istoken ,params) => {
     });
 };
 //patch
-const patchRequest = (url, istoken ,params) => {
+const patchRequest = (url, istoken, params) => {
     return Axios({
         method: 'patch',
         url: url,
