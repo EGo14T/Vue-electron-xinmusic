@@ -1,114 +1,136 @@
 <template>
-  <myScroll>
-    <div class="leftmenu">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <div class="navtitle">推荐</div>
-          <div :class="['nav-citem' ,menuId=='discover'?'nav-active':'']">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-ic_addmusic" />
-            </svg>
-            <span class="navtext" @click="toComponents('discovery','discover')">发现音乐</span>
-          </div>
-
-          <div :class="['nav-citem' ,menuId=='friends'?'nav-active':'']">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-pengyou" />
-            </svg>
-            <span class="navtext" @click="toComponents('comment','friends')">朋友</span>
-          </div>
-        </li>
-      </ul>
-
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <div class="navtitle">我的音乐</div>
-          <div class="nav-citem">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-xihuan" />
-            </svg>
-            <span class="navtext">我的收藏</span>
-          </div>
-
-          <div class="nav-citem">
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use xlink:href="#icon-bendiyinle" />
-            </svg>
-            <span class="navtext">本地音乐</span>
-          </div>
-        </li>
-      </ul>
-
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
-            <span class="span-right">创建的歌单</span>
-            <el-popover
-              placement="right-start"
-              width="270"
-              :offset="-10"
-              trigger="click"
-              popper-class="createList"
-              @hide="destroyPop"
-              v-model="visible "
-            >
-              <div style="margin-left:10px;font-size:16px">新建歌单</div>
-              <input type="text" class="pop_input" placeholder="请输入新歌单标题" v-model="new_title" />
-              <div class="overWord" v-show="isOverWord">歌单名不能超过40个字符，20个汉字</div>
-              <el-checkbox v-model="ishide">设置为隐私歌单</el-checkbox>
-              <div class="sub_block">
-                <input
-                  class="sub_btn create"
-                  type="button"
-                  value="创建"
-                  @click="createMusicList()"
-                  :disabled="isInput"
-                />
-                <input class="sub_btn cancle" type="button" value="取消" @click />
-              </div>
-              <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop slot="reference">
-                <use xlink:href="#icon-jia" />
+  <div class="left">
+    <myScroll>
+      <div class="leftmenu">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="navtitle">推荐</div>
+            <div :class="['nav-citem' ,menuId=='discover'?'nav-active':'']">
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use xlink:href="#icon-ic_addmusic" />
               </svg>
-            </el-popover>
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'" />
-            </svg>
-          </div>
+              <span class="navtext" @click="toComponents('discovery','discover')">发现音乐</span>
+            </div>
 
-          <div
-            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
-            v-for="item in showCreateList"
-            @click.stop="toMusciList(item.musiclistid,'created')"
-          >
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use :xlink:href="addclass(item.status)" />
-            </svg>
-            <span class="navitem">{{item.musiclistName}}</span>
-          </div>
-        </li>
+            <div :class="['nav-citem' ,menuId=='friends'?'nav-active':'']">
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use xlink:href="#icon-pengyou" />
+              </svg>
+              <span class="navtext" @click="toComponents('comment','friends')">朋友</span>
+            </div>
+          </li>
+        </ul>
 
-        <li class="nav-item">
-          <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
-            <span style="margin-right:98px">收藏的歌单</span>
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'" />
-            </svg>
-          </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="navtitle">我的音乐</div>
+            <div class="nav-citem">
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use xlink:href="#icon-xihuan" />
+              </svg>
+              <span class="navtext">我的收藏</span>
+            </div>
 
-          <div
-            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
-            v-for="item in showCollectionList"
-            @click="toMusciList(item.musiclistid,'collected')"
-          >
-            <svg class="icon svg-icon leftbtn" aria-hidden="true">
-              <use :xlink:href="addclass(item.status)" />
-            </svg>
-            <span class="navitem">{{item.musiclistName}}</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </myScroll>
+            <div class="nav-citem">
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use xlink:href="#icon-bendiyinle" />
+              </svg>
+              <span class="navtext">本地音乐</span>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <div class="navtitleMusicList" @click="showAllCr = !showAllCr">
+              <span class="span-right">创建的歌单</span>
+              <el-popover
+                placement="right-start"
+                width="270"
+                :offset="-10"
+                trigger="click"
+                popper-class="createList"
+                @hide="destroyPop"
+                v-model="visible "
+              >
+                <div style="margin-left:10px;font-size:16px">新建歌单</div>
+                <input type="text" class="pop_input" placeholder="请输入新歌单标题" v-model="new_title" />
+                <div class="overWord" v-show="isOverWord">歌单名不能超过40个字符，20个汉字</div>
+                <el-checkbox v-model="ishide">设置为隐私歌单</el-checkbox>
+                <div class="sub_block">
+                  <input
+                    class="sub_btn create"
+                    type="button"
+                    value="创建"
+                    @click="createMusicList()"
+                    :disabled="isInput"
+                  />
+                  <input class="sub_btn cancle" type="button" value="取消" @click />
+                </div>
+                <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop slot="reference">
+                  <use xlink:href="#icon-jia" />
+                </svg>
+              </el-popover>
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use :xlink:href="showAllCr ? '#icon-Group-3' : '#icon-Group-2'" />
+              </svg>
+            </div>
+
+            <div
+              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
+              v-for="item in showCreateList"
+              v-contextmenu:lcontextmenu
+              :contextId="item.musiclistid"
+              @click.stop="toMusciList(item.musiclistid,'created')"
+            >
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use :xlink:href="addclass(item.status)" />
+              </svg>
+              <span class="navitem">{{item.musiclistName}}</span>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
+              <span style="margin-right:98px">收藏的歌单</span>
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use :xlink:href="showAllCo ? '#icon-Group-3' : '#icon-Group-2'" />
+              </svg>
+            </div>
+
+            <div
+              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
+              v-for="item in showCollectionList"
+              v-contextmenu:lcontextmenu
+              :contextId="item.musiclistid"
+              @click="toMusciList(item.musiclistid,'collected')"
+            >
+              <svg class="icon svg-icon leftbtn" aria-hidden="true">
+                <use :xlink:href="addclass(item.status)" />
+              </svg>
+              <span class="navitem">{{item.musiclistName}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </myScroll>
+    <v-contextmenu ref="lcontextmenu" @contextmenu="menu">
+      <v-contextmenu-item @click="shareList()">
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-fenxiang" />
+        </svg>分享(Share)
+      </v-contextmenu-item>
+      <v-contextmenu-item @click="editList()">
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-pan_icon-copy" />
+        </svg>编辑歌单(Edit)
+      </v-contextmenu-item>
+      <v-contextmenu-item @click="deleteList()">
+        <svg class="icon svg-icon contextBtn" aria-hidden="true">
+          <use xlink:href="#icon-lajitong" />
+        </svg>删除歌单(Delete)
+      </v-contextmenu-item>
+    </v-contextmenu>
+  </div>
 </template>
 
 <script>
@@ -134,9 +156,7 @@ export default {
     };
   },
 
-  created() {
-    
-  },
+  created() {},
 
   watch: {
     "$store.state.user": function() {
@@ -148,7 +168,6 @@ export default {
     ...mapGetters({
       menuId: "cur_menu_id"
     }),
-
 
     showCreateList: function() {
       if (this.showAllCr == false) {
@@ -195,8 +214,26 @@ export default {
     }
   },
   methods: {
+    menu(vnode) {
+      var contextId = vnode.data.attrs.contextId;
+      this.$store.commit(types.LOAD_Menu_ID, contextId);
+    },
+
+    contextPlay() {},
+
+    //右键分享歌单
+    shareList() {},
+
+    //右键编辑歌单
+    editList() {},
+
+    //删除歌单
+    deleteList() {},
+
     //跳转到歌单
     toMusciList(musiclistid, isCreated) {
+      this.$refs.lcontextmenu.hide();
+      this.$store.commit(types.LOAD_Menu_ID, musiclistid);
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }
@@ -205,8 +242,7 @@ export default {
 
     //跳转其他模块
     toComponents(pathUrl, params) {
-
-      this.$store.commit(types.LOAD_Menu_ID,params);
+      this.$store.commit(types.LOAD_Menu_ID, params);
       this.$router.push({ name: pathUrl });
     },
 
@@ -294,6 +330,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../assets/css/leftbar.scss";
+</style>
+
+<style lang="scss">
+@import "../assets/css/contextMenu.scss";
 </style>
 
 <style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>听友评论</div>
+    <div>听友评论{{musicListid}}</div>
     <div class="comments">
       <div class="c_input" @click="toComments('')">
         <svg class="icon svg-icon ico_input" aria-hidden="true">
@@ -254,7 +254,7 @@ export default {
 
     //获取评论
     getComments() {
-      this.getRequest("/comments/getComments/123456789/1/10").then(resp => {
+      this.getRequest("/comments/getComments/"+this.musicListid+"/1/10").then(resp => {
         //console.log(resp.data);
         for (const iterator of resp.data.data) {
           //console.log(iterator.replyComments.content)
@@ -280,7 +280,7 @@ export default {
         alert("字数超过限制");
       } else {
         let commentJson = {
-          showId: "123456789",
+          showId: this.musicListid,
           fromId: "1",
           toId: this.currentId,
           content: this.textarea

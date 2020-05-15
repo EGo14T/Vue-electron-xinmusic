@@ -7,6 +7,8 @@ import {
    Popover,
    Message,
    Checkbox,
+   Carousel,
+   CarouselItem,
    Upload
 } from 'element-ui'
 
@@ -18,5 +20,7 @@ Vue.use(Dialog)
    .use(Popover)
    .use(Checkbox)
    .use(Upload)
+   .use(Carousel)
+   .use(CarouselItem)
 
 Vue.prototype.$message = Message;

@@ -28,27 +28,11 @@
     </div>
     <div class="row2">
       <div class="title">我创建的歌单（{{createList.length}}）</div>
-      <div class="musiclist">
-        <div class="list" v-for="item in createList">
-          <div style="cursor: pointer;">
-            <img :src="item.musiclistImg" width="100%" draggable="false" />
-            <span style="font-size:12px">{{item.musiclistName}}</span>
-          </div>
-          <span style="font-size:13px;color:#5f5f63">{{Math.floor(Math.random()*100)}}首</span>
-        </div>
-      </div>
+      <musicListShow :list="createList"isCreated= "created"></musicListShow>
     </div>
     <div class="row3">
       <div class="title">我收藏的歌单（{{collectList.length}}）</div>
-      <div class="musiclist">
-        <div class="list" v-for="item in collectList">
-          <div style="cursor: pointer;">
-            <img :src="item.musiclistImg" width="100%" draggable="false" />
-            <span style="font-size:12px">{{item.musiclistName}}</span>
-          </div>
-          <span style="font-size:13px;color:#5f5f63">{{Math.floor(Math.random()*100)}}首</span>
-        </div>
-      </div>
+      <musicListShow :list="collectList" isCreated= "collected"></musicListShow>
     </div>
   </div>
 </template>
@@ -58,6 +42,8 @@ import * as types from "../store/types";
 
 import { mapGetters } from "vuex";
 
+import MusicListShow from './MusicListShow'
+
 export default {
   computed: {
     ...mapGetters({
@@ -65,6 +51,10 @@ export default {
       collectList: "get_collect_list",
       avatarURL: "get_avatar_url"
     })
+  },
+
+  components: {
+    musicListShow: MusicListShow
   },
 
   created() {
@@ -111,8 +101,7 @@ export default {
     grid-template-columns: 1fr 3fr;
     gap: 25px;
 
-    .avatar {
-    }
+    
 
     .info {
       .userName {
