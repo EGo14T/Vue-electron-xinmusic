@@ -1,7 +1,7 @@
 <template>
   <div class="musiclist">
     <div class="list" v-for="item in list">
-      <div style="cursor: pointer;" @click.stop="toMusciList(item.musiclistid)">
+      <div style="cursor: pointer;" @click="toMusciList(item.musiclistid)">
         <img :src="item.musiclistImg" width="100%" draggable="false" />
         <span style="font-size:12px">{{item.musiclistName}}</span>
       </div>

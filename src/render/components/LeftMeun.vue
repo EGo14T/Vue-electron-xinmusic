@@ -67,7 +67,7 @@
                   />
                   <input class="sub_btn cancle" type="button" value="取消" @click />
                 </div>
-                <svg class="icon svg-icon leftbtn" aria-hidden="true" @click.stop slot="reference">
+                <svg class="icon svg-icon leftbtn" aria-hidden="true" @click slot="reference">
                   <use xlink:href="#icon-jia" />
                 </svg>
               </el-popover>
@@ -77,10 +77,11 @@
             </div>
 
             <div
-              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
+              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
               v-for="item in showCreateList"
               v-contextmenu:lcontextmenu
               :contextId="item.musiclistid"
+              :contextStatus="item.status"
               @click.stop="toMusciList(item.musiclistid,'created')"
             >
               <svg class="icon svg-icon leftbtn" aria-hidden="true">
@@ -89,6 +90,7 @@
               <span class="navitem">{{item.musiclistName}}</span>
             </div>
           </li>
+          <div v-contextmenu:lcontextmenu></div>
           <li class="nav-item">
             <div class="navtitleMusicList" @click="showAllCo = !showAllCo">
               <span style="margin-right:98px">收藏的歌单</span>
@@ -98,10 +100,11 @@
             </div>
 
             <div
-              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':'']"
+              :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
               v-for="item in showCollectionList"
               v-contextmenu:lcontextmenu
               :contextId="item.musiclistid"
+              :contextStatus="item.status"
               @click="toMusciList(item.musiclistid,'collected')"
             >
               <svg class="icon svg-icon leftbtn" aria-hidden="true">
@@ -113,7 +116,7 @@
         </ul>
       </div>
     </myScroll>
-    <v-contextmenu ref="lcontextmenu" @contextmenu="menu">
+    <v-contextmenu ref="lcontextmenu" @contextmenu="menu" @hide="anActiveContext">
       <v-contextmenu-item @click="shareList()">
         <svg class="icon svg-icon contextBtn" aria-hidden="true">
           <use xlink:href="#icon-fenxiang" />
@@ -124,7 +127,7 @@
           <use xlink:href="#icon-pan_icon-copy" />
         </svg>编辑歌单(Edit)
       </v-contextmenu-item>
-      <v-contextmenu-item @click="deleteList()">
+      <v-contextmenu-item @click="deleteList()" v-show="contextStatus!=0">
         <svg class="icon svg-icon contextBtn" aria-hidden="true">
           <use xlink:href="#icon-lajitong" />
         </svg>删除歌单(Delete)
@@ -152,7 +155,10 @@ export default {
 
       visible: false,
       ishide: false, //是否创建隐私歌单
-      new_title: "" //新建歌单名
+      new_title: "", //新建歌单名
+
+      contextMenuId: "", //右键歌单ID
+      contextStatus: ""  //右键歌单的状态
     };
   },
 
@@ -211,15 +217,21 @@ export default {
       set: function() {
         return false;
       }
-    }
+    },
+
+
   },
   methods: {
     menu(vnode) {
-      var contextId = vnode.data.attrs.contextId;
-      this.$store.commit(types.LOAD_Menu_ID, contextId);
+      this.contextMenuId = vnode.data.attrs.contextId;
+      this.contextStatus = vnode.data.attrs.contextStatus;
     },
 
     contextPlay() {},
+
+    anActiveContext() {
+      this.contextMenuId = "unActive"
+    },
 
     //右键分享歌单
     shareList() {},
@@ -234,6 +246,7 @@ export default {
     toMusciList(musiclistid, isCreated) {
       this.$refs.lcontextmenu.hide();
       this.$store.commit(types.LOAD_Menu_ID, musiclistid);
+      this.contextMenuId = "unActive"
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }
