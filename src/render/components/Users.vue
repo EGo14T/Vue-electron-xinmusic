@@ -79,6 +79,7 @@ export default {
         });
       }
     },
+    
     toComponents(pathUrl, params) {
       this.$router.push({ name: pathUrl });
       this.$store.commit(types.LOAD_Menu_ID, "editUser");

@@ -5,6 +5,7 @@ import Comments from './components/Comments'
 import Discovery from './components/Discovery'
 import Users from './components/Users'
 import EditUsers from './components/EditUserInfo'
+import EditListInfo from './components/EditListInfo'
 import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
 
@@ -25,6 +26,7 @@ export default new Router({
     {path:'/',component:Discovery,name:"discovery"},
     {path:'/users',component:Users,name:"user"},
     {path:'/editUsers',component:EditUsers,name:"editUsers"},
+    {path:'/editListInfo/:id',component:EditListInfo,name:"editListInfo"},
     {path:'/comment', name:"comment",component:Comments},
     {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},
     {path:'/musiclist',component:MusicList},

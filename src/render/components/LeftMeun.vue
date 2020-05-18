@@ -122,7 +122,7 @@
           <use xlink:href="#icon-fenxiang" />
         </svg>分享(Share)
       </v-contextmenu-item>
-      <v-contextmenu-item @click="editList()">
+      <v-contextmenu-item @click="toEditList()">
         <svg class="icon svg-icon contextBtn" aria-hidden="true">
           <use xlink:href="#icon-pan_icon-copy" />
         </svg>编辑歌单(Edit)
@@ -236,9 +236,6 @@ export default {
     //右键分享歌单
     shareList() {},
 
-    //右键编辑歌单
-    editList() {},
-
     //删除歌单
     deleteList() {},
 
@@ -250,6 +247,17 @@ export default {
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }
+      });
+    },
+
+    //跳转到编辑歌单
+    toEditList() {
+      var musiclistid = this.contextMenuId;
+      this.$store.commit(types.LOAD_Menu_ID, musiclistid);
+      this.contextMenuId = "unActive"
+      this.$router.push({
+        name: "editListInfo",
+        params: { id: musiclistid }
       });
     },
 

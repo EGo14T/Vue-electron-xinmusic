@@ -2,7 +2,7 @@
   <div class="cropper_panel">
     <transition name="a_animate">
       <div class="cropper-content" v-show="visible">
-        <div class="c_header">上传头像</div>
+        <div class="c_header">{{title}}</div>
         <div class="close" @click="close()">
           <svg class="icon svg-icon closebtn" aria-hidden="true">
             <use xlink:href="#icon-close" />
@@ -85,7 +85,34 @@ import { UpyunCloud } from "../plugins/upload";
 import upyunConfig from "../utils/userConfig";
 
 export default {
-  props: ["visible"],
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+
+    imgSize: {
+      type: Number,
+      default: 200
+    },
+
+    cdnPath: {
+      type: String
+    },
+
+    fileNo: {
+      type: String
+    },
+
+    uploadURL: {
+      type: String
+    },
+
+    title: {
+      type: String,
+      default: "上传图片"
+    }
+  },
 
   computed: {
     ...mapGetters({
@@ -93,6 +120,18 @@ export default {
       userid: "get_user_id",
       avatarURL: "get_avatar_url"
     })
+  },
+
+  created() {
+    console.log(
+      this.imgSize +
+        "---" +
+        this.cdnPath +
+        "----" +
+        this.fileNo +
+        "-----" +
+        this.uploadURL
+    );
   },
 
   data() {
@@ -173,39 +212,17 @@ export default {
     },
 
     saveClose() {
-      this.option.enlarge = 180 / this.$refs.cropper.cropW;
-      var cdnPath = "https://cdn.ego1st.cn/xinmusic/useravatar/";
-      var fileName = this.userid + "img" + new Date().getTime() + ".jpg";
+      this.option.enlarge = this.imgSize / this.$refs.cropper.cropW;
+      var fileName = this.fileNo + new Date().getTime() + ".jpg";
       var service = new UpyunCloud(upyunConfig);
-
       this.$refs.cropper.getCropBlob(data => {
-        service.upload("/xinmusic/useravatar/" + fileName, data).then(res => {
+        service.upload(this.uploadURL + fileName, data).then(res => {
           if (res) {
-            this.$store.commit(types.SET_AVATAR, cdnPath + fileName);
-            var userInfo = JSON.parse(localStorage.user);
-            var delfile = userInfo.avatar;
-            var reg = /.+\/(.+)$/g;
-            var service = new UpyunCloud(upyunConfig);
-
-            if (!reg.exec(delfile)[1] == "defaultAvatar.jpg") {
-              service.deleteFile(
-                "/xinmusic/useravatar/" + reg.exec(delfile)[1]
-              );
-            }
-            this.updateAvatar();
+            var url = this.cdnPath + fileName;
+            this.$emit("saveClose", url);
             this.close();
           }
         });
-      });
-    },
-
-    updateAvatar() {
-      var json = {
-        id: this.userid,
-        avatar: this.avatarURL
-      };
-      this.patchRequest("/users/UserInfo", true, json).then(resp => {
-        this.$message.success("更新头像成功！");
       });
     }
   }

@@ -118,7 +118,15 @@
         </div>
       </div>
     </div>
-    <uploadAvatar :visible.sync="dialogVisible"></uploadAvatar>
+    <uploadAvatar
+      :visible.sync="dialogVisible"
+      title="上传头像"
+      :imgSize="imgSize"
+      :cdnPath="cdnPath"
+      :fileNo="userInfo.id+'avatar'"
+      :uploadURL="uploadURL"
+      @saveClose="saveClose"
+    ></uploadAvatar>
   </div>
 </template>
 
@@ -128,6 +136,9 @@ import province from "../utils/country-level2-data";
 import UploadAvatar from "./UploadAvatar";
 
 import * as types from "../store/types";
+
+import { UpyunCloud } from "../plugins/upload";
+import upyunConfig from "../utils/userConfig";
 
 import { mapGetters } from "vuex";
 
@@ -213,7 +224,6 @@ export default {
   },
   data() {
     return {
-
       showYear: false,
       showMonth: false,
       showDay: false,
@@ -231,18 +241,44 @@ export default {
         gender: "", //性别 0保密 1男 2女
         introduce: "",
         birth: "",
-        area: "",
+        area: ""
       },
 
       dialogVisible: false,
 
       flieList: [],
       fileinfo: "",
-      img: ""
+      img: "",
+      imgSize: 180,
+      cdnPath: "https://cdn.ego1st.cn/xinmusic/useravatar/",
+      uploadURL: "/xinmusic/useravatar/"
     };
   },
 
   methods: {
+    saveClose(url) {
+      this.$store.commit(types.SET_AVATAR, url);
+      var userInfo = JSON.parse(localStorage.user);
+      var delfile = userInfo.avatar;
+      var reg = /.+\/(.+)$/g;
+      var delfileName = reg.exec(delfile)[1];
+      var service = new UpyunCloud(upyunConfig);
+      if (delfileName != "defaultAvatar.jpg") {
+        service.deleteFile(this.uploadURL + delfileName);
+      }
+      this.updateAvatar();
+    },
+
+    updateAvatar() {
+      var json = {
+        id: this.userid,
+        avatar: this.avatarURL
+      };
+      this.patchRequest("/users/UserInfo", true, json).then(resp => {
+        this.$message.success("更新头像成功！");
+      });
+    },
+
     initInfo() {
       var userInfo = JSON.parse(localStorage.user);
       var birth = new Date(userInfo.birth);
@@ -327,7 +363,6 @@ export default {
     },
 
     upload(file, fileList) {
-      console.log("11111");
       const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isLt5M) {
         this.dialogVisible = true;
@@ -345,19 +380,16 @@ export default {
 
     saveInfo() {
       this.userInfo.id = this.userid;
-      let month = this.u_month<10?'0'+this.u_month:this.u_month;
-      let day = this.u_day<10?'0'+this.u_day:this.u_day;
-      this.userInfo.birth = this.u_year +'-' + month + '-' + day;
+      let month = this.u_month < 10 ? "0" + this.u_month : this.u_month;
+      let day = this.u_day < 10 ? "0" + this.u_day : this.u_day;
+      this.userInfo.birth = this.u_year + "-" + month + "-" + day;
       this.userInfo.area = this.u_province + this.u_city;
-      this.patchRequest('/users/UserInfo',true,this.userInfo).then(resp => {
-        console.log(resp)
-        if(resp.data){
-          this.$store.commit(types.SET_USERINFO,resp.data.data);
-          this.$message.success("更新信息成功！")
+      this.patchRequest("/users/UserInfo", true, this.userInfo).then(resp => {
+        if (resp.data) {
+          this.$store.commit(types.SET_USERINFO, resp.data.data);
+          this.$message.success("更新信息成功！");
         }
-      })
-      
-      
+      });
     }
   }
 };
