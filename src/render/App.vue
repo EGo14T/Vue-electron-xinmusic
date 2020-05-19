@@ -5,7 +5,9 @@
     </div>
     
       <div class="leftbar">
+        <myScroll>
         <LeftMenu></LeftMenu>
+        </myScroll>
       </div>
 
     <div class="main">

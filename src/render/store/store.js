@@ -42,7 +42,10 @@ export default new Vuex.Store({
         historylist: [],
 
         //--------------------------------------------------------------------------
-        selectImg: ""          //当前选择的图片
+        selectImg: "",          //当前选择的图片
+
+        //--------------------------------------------------------------------------
+        isEditList: 0
     },
     mutations: {
         //登录
@@ -71,6 +74,10 @@ export default new Vuex.Store({
 
             //console.log(state.createMusicList)
             localStorage.defaultMusicListID = state.defaultMusicListID;
+        },
+
+        [types.RESET_LISTINFO]: (state) => {
+            state.isEditList++;
         },
 
         [types.LOAD_Menu_ID]: (state, data) => {

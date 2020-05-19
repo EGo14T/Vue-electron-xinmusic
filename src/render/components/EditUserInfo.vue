@@ -388,8 +388,13 @@ export default {
         if (resp.data) {
           this.$store.commit(types.SET_USERINFO, resp.data.data);
           this.$message.success("更新信息成功！");
+          this.$router.push({ name: 'user' });
         }
       });
+    },
+
+    cancleEdit() {
+      this.$router.push({ name: 'user' });
     }
   }
 };

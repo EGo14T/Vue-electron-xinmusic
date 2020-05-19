@@ -26,7 +26,7 @@ export default new Router({
     {path:'/',component:Discovery,name:"discovery"},
     {path:'/users',component:Users,name:"user"},
     {path:'/editUsers',component:EditUsers,name:"editUsers"},
-    {path:'/editListInfo/:id',component:EditListInfo,name:"editListInfo"},
+    {path:'/editListInfo/:isCreated/:id',component:EditListInfo,name:"editListInfo"},
     {path:'/comment', name:"comment",component:Comments},
     {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},
     {path:'/musiclist',component:MusicList},

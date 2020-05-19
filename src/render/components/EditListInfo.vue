@@ -20,7 +20,7 @@
         <div></div>
         <div class="submit">
           <input type="button" class="btn save" @click="saveInfo()" value="保存" />
-          <input type="button" class="btn cancle" @click="cancleEdit()" value="取消" />
+          <input type="button" class="btn cancle" @click="toMusicListInfo()" value="取消" />
         </div>
       </div>
       <div class="cover">
@@ -64,12 +64,14 @@ export default {
 
   created() {
     this.musiclistid = this.$route.params.id;
+    this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
   },
 
   data() {
     return {
       musiclistid: "",
+      isCreated: "",
 
       listCover: "",
 
@@ -96,14 +98,11 @@ export default {
         service.deleteFile(this.uploadURL + delfileName);
       }
 
-      console.log(url)
-
-      let json = {
+      this.patchRequest("/my/musiclist/" + this.musiclistid, true, {
         musiclistImg: url
-      };
-
-      this.patchRequest("/my/musiclist/" + this.musiclistid, true, json).then(resp => {
-        if(resp){
+      }).then(resp => {
+        if (resp) {
+          this.$message.success("修改封面成功！");
           this.listCover = url;
         }
       });
@@ -145,10 +144,18 @@ export default {
         true,
         this.listInfo
       ).then(resp => {
-        console.log(resp);
         if (resp.data) {
+          this.$store.commit(types.RESET_LISTINFO);
+          this.toMusicListInfo();
           this.$message.success("更新信息成功！");
         }
+      });
+    },
+
+    toMusicListInfo() {
+      this.$router.push({
+        name: "musiclstinfo",
+        params: { isCreated: this.isCreated, id: this.musiclistid }
       });
     }
   }

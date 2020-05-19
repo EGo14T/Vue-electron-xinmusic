@@ -27,3 +27,5 @@ export const SET_AVATAR = 'setAvatar'    //重新设置头像
 
 export const SET_USERINFO = 'setUserInfo'    //重新设置用户信息
 
+export const RESET_LISTINFO = 'reSetListInfo'   //重新设置歌单信息
+

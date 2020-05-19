@@ -1,6 +1,5 @@
 <template>
   <div class="left">
-    <myScroll>
       <div class="leftmenu">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -78,9 +77,10 @@
 
             <div
               :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
-              v-for="item in showCreateList"
+              v-for="(item,index) in showCreateList"
               v-contextmenu:lcontextmenu
               :contextId="item.musiclistid"
+              contextType="created"
               :contextStatus="item.status"
               @click.stop="toMusciList(item.musiclistid,'created')"
             >
@@ -101,9 +101,10 @@
 
             <div
               :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
-              v-for="item in showCollectionList"
+              v-for="(item,index) in showCollectionList"
               v-contextmenu:lcontextmenu
               :contextId="item.musiclistid"
+              contextType="collected"
               :contextStatus="item.status"
               @click="toMusciList(item.musiclistid,'collected')"
             >
@@ -115,7 +116,6 @@
           </li>
         </ul>
       </div>
-    </myScroll>
     <v-contextmenu ref="lcontextmenu" @contextmenu="menu" @hide="anActiveContext">
       <v-contextmenu-item @click="shareList()">
         <svg class="icon svg-icon contextBtn" aria-hidden="true">
@@ -144,10 +144,6 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      CreateMusicListInfo: [],
-
-      CollectionMusicListInfo: [],
-
       showAllCr: false,
       showAllCo: false,
       skin: "",
@@ -158,7 +154,8 @@ export default {
       new_title: "", //新建歌单名
 
       contextMenuId: "", //右键歌单ID
-      contextStatus: ""  //右键歌单的状态
+      contextStatus: "", //右键歌单的状态
+      contextType: "",   //右键歌单的类型 收藏or创建
     };
   },
 
@@ -167,12 +164,18 @@ export default {
   watch: {
     "$store.state.user": function() {
       this.getMusicList();
+    },
+
+    "$store.state.isEditList": function() {
+      this.getMusicList();
     }
   },
 
   computed: {
     ...mapGetters({
-      menuId: "cur_menu_id"
+      menuId: "cur_menu_id",
+      createList: "get_create_list",
+      collectList: "get_collect_list"
     }),
 
     showCreateList: function() {
@@ -181,7 +184,7 @@ export default {
         var showList = []; //定义一个空数组
         return showList; //返回当前数组
       } else {
-        return this.CreateMusicListInfo;
+        return this.createList;
       }
     },
 
@@ -191,7 +194,7 @@ export default {
         var showList = []; //定义一个空数组
         return showList; //返回当前数组
       } else {
-        return this.CollectionMusicListInfo;
+        return this.collectList;
       }
     },
 
@@ -217,20 +220,19 @@ export default {
       set: function() {
         return false;
       }
-    },
-
-
+    }
   },
   methods: {
     menu(vnode) {
       this.contextMenuId = vnode.data.attrs.contextId;
       this.contextStatus = vnode.data.attrs.contextStatus;
+      this.contextType = vnode.data.attrs.contextType;
     },
 
     contextPlay() {},
 
     anActiveContext() {
-      this.contextMenuId = "unActive"
+      this.contextMenuId = "unActive";
     },
 
     //右键分享歌单
@@ -243,7 +245,7 @@ export default {
     toMusciList(musiclistid, isCreated) {
       this.$refs.lcontextmenu.hide();
       this.$store.commit(types.LOAD_Menu_ID, musiclistid);
-      this.contextMenuId = "unActive"
+      this.contextMenuId = "unActive";
       this.$router.push({
         name: "musiclstinfo",
         params: { isCreated: isCreated, id: musiclistid }
@@ -254,10 +256,10 @@ export default {
     toEditList() {
       var musiclistid = this.contextMenuId;
       this.$store.commit(types.LOAD_Menu_ID, musiclistid);
-      this.contextMenuId = "unActive"
+      this.contextMenuId = "unActive";
       this.$router.push({
         name: "editListInfo",
-        params: { id: musiclistid }
+        params: { isCreated: this.contextType, id: musiclistid }
       });
     },
 
@@ -305,8 +307,6 @@ export default {
           ])
           .then(
             this.$http.spread((createResp, collectResp) => {
-              this.CreateMusicListInfo = createResp.data.data;
-              this.CollectionMusicListInfo = collectResp.data.data;
               this.$store.commit(types.SET_DEFAULT_LIST, {
                 create: createResp.data.data,
                 collect: collectResp.data.data
