@@ -17,8 +17,8 @@
     </div>
 
     <div class="col-auto search">
-      <input type="text" class="searchinput" placeholder="搜索音乐" />
-      <svg class="icon svg-icon searchbtn" aria-hidden="true">
+      <input type="text" class="searchinput" v-model="keyword" placeholder="搜索音乐" />
+      <svg class="icon svg-icon searchbtn" aria-hidden="true" @click="searchMusic()">
         <use xlink:href="#icon-sousuo" />
       </svg>
     </div>
@@ -84,7 +84,9 @@ export default {
 
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+
+      keyword: "",   //关键字
     };
   },
 
@@ -111,6 +113,12 @@ export default {
           this.$store.commit(types.LOGIN, resp.data);
         });
       } else {
+      }
+    },
+
+    searchMusic() {
+      if(this.keyword.trim().length != 0){
+        this.$router.push({ name: 'searchMusic', params:{keyword:this.keyword}});
       }
     },
 

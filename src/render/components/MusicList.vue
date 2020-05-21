@@ -73,7 +73,7 @@
         </svg>
         分享
       </v-contextmenu-item>
-      <v-contextmenu-submenu>
+      <v-contextmenu-submenu v-if="isLogin">
         <span slot="title">
           <svg class="icon svg-icon contextBtn" aria-hidden="true">
             <use xlink:href="#icon-xinjianwenjian" />
@@ -100,7 +100,7 @@ import * as types from "../store/types";
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["musicListid", "isCreated"],
+  props: ["musicListid", "isCreated", "keyword"],
 
   watch: {
     "$store.state.curIndex": function() {
@@ -124,7 +124,8 @@ export default {
   computed: {
     ...mapGetters({
       musicInfo: "cur_context_menu_music",
-      createList: "get_create_list"
+      createList: "get_create_list",
+      isLogin: "get_isLogin"
     })
   },
 
@@ -150,7 +151,11 @@ export default {
   },
 
   created() {
-    this.getMusicInList();
+    if (this.keyword) {
+      this.searchMusic();
+    } else {
+      this.getMusicInList();
+    }
   },
 
   methods: {
@@ -194,11 +199,36 @@ export default {
         ).then(resp => {
           this.musiclist = resp.data.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
+          this.$emit("getNum", resp.data.data.length);
         });
       } else {
         this.getRequest("/my/musiclist/" + this.musicListid).then(resp => {
           this.musiclist = resp.data.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
+          this.$emit("getNum", resp.data.data.length);
+        });
+      }
+    },
+
+    searchMusic() {
+      if (localStorage.user) {
+        let userID = JSON.parse(localStorage.user).id;
+        this.getRequest(
+          "/search/musiclist/" + userID + "?keyword=" + this.keyword,
+          true
+        ).then(resp => {
+          this.musiclist = resp.data.data;
+          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
+          this.$emit("getNum", resp.data.data.length);
+        });
+      } else {
+        this.getRequest(
+          "/search/musiclist?keyword=" + this.keyword,
+          false
+        ).then(resp => {
+          this.musiclist = resp.data.data;
+          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
+          this.$emit("getNum", resp.data.data.length);
         });
       }
     },

@@ -8,6 +8,7 @@ import EditUsers from './components/EditUserInfo'
 import EditListInfo from './components/EditListInfo'
 import MusicListinfo from './components/MusicListInfo'
 import MusicList from './components/MusicList'
+import SearchMusic from './components/SearchMusic'
 
 
 // 解决重复点击导航路由报错
@@ -30,6 +31,7 @@ export default new Router({
     {path:'/comment', name:"comment",component:Comments},
     {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},
     {path:'/musiclist',component:MusicList},
+    {path:'/searchMusic/:keyword',component:SearchMusic,name:"searchMusic"},
     {path:'*',redirect:'/'}
 
   ]

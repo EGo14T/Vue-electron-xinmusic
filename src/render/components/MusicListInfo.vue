@@ -119,14 +119,12 @@ import { mapGetters } from "vuex";
 
 import Comments from "./Comments";
 import MusicList from "./MusicList";
-import Collector from "./Collector";
 import Spread from "./Spread/spread";
 
 export default {
   components: {
     comment: Comments,
     musiclist: MusicList,
-    collector: Collector,
     spread: Spread
   },
   data() {
