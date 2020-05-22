@@ -100,10 +100,6 @@
           :class="['col-row',comName=='comment'?'tabsBtn':'']"
           @click.prevent="comName='comment'"
         >评论</div>
-        <div
-          :class="['col-row',comName=='collector'?'tabsBtn':'']"
-          @click.prevent="comName='collector'"
-        >收藏</div>
       </div>
       <component :is="comName" :musicListid="this.musicListId" :isCreated="this.isCreated"></component>
     </div>

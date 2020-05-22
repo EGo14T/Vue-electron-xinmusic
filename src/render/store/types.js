@@ -29,3 +29,7 @@ export const SET_USERINFO = 'setUserInfo'    //重新设置用户信息
 
 export const RESET_LISTINFO = 'reSetListInfo'   //重新设置歌单信息
 
+export const CREATE_MUSICLIST = 'createMusicList'   //创建歌单
+
+export const DEL_MUSICLIST = 'delMusicList'   //删除歌单
+

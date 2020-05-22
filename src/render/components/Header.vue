@@ -136,7 +136,6 @@ export default {
     },
 
     minwindow() {
-      3;
       ipcRenderer.send("minwindow");
     },
 

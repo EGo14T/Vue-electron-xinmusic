@@ -102,6 +102,22 @@ export default new Vuex.Store({
             state.contextMenuIndex = data;
         },
 
+        //创建歌单
+        [types.CREATE_MUSICLIST]: (state, data) => {
+            state.createMusicList.splice(1, 0, data);
+        },
+
+        //删除歌单
+        [types.DEL_MUSICLIST]: (state, data) => {
+            if(data.type == "created"){
+                state.createMusicList.splice(data.index,1);
+            }else{
+                state.collectMusicList.splice(data.index,1);
+            }
+
+            
+        },
+
         //切歌
         [types.CHANGE_MUSIC]: (state, data) => {
             let len = state.curMusicList.length;

@@ -23,7 +23,7 @@ function createWindow () {
     height: 670, 
     resizable: true,
     skipTaskbar: false,
-    frame: false,
+    frame: true,
     backgroundColor: '#2e2c29',
     webPreferences: {
     nodeIntegration: true,
@@ -116,10 +116,15 @@ app.on('ready', async () => {
   }
   tray = new Tray(`${__static}/bitbug_favicon.ico`);
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
+    { label: '上一首',click:function(){
+      win.webContents.send('lastMusic')
+    }},
+    { label: '下一首',click:function(){
+      win.webContents.send('nextMusic')
+    }},
+    { label: '退出',click:function(){
+      app.quit();
+    }},
   ])
   tray.setToolTip('昕音乐')
   tray.setContextMenu(contextMenu)

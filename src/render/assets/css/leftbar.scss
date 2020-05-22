@@ -176,3 +176,55 @@
     border: 1px solid #414347;
   }
 }
+
+::v-deep .c_delDialog {
+  background-color: #2d2f33;
+  border-radius: 6px;
+  .el-dialog__title {
+    font-size: 16px;
+    color: #dcdde4;
+  }
+
+  .el-dialog__header {
+    padding-bottom: 0;
+  }
+
+  .el-dialog__body {
+    text-align: center;
+    height: 70px;
+  }
+  .btn {
+    font-size: 16px;
+    font-weight: 400;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    padding: 0;
+    outline: 0;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      box-shadow:none;
+    }
+  }
+
+  .save {
+    background: #2e4e7e;
+    color: #ffffff;
+    margin-right: 20px;
+    &:hover {
+      outline: 0;
+      background: #3a6098;
+    }
+  }
+
+  .cancle {
+    background: #3a3c40;
+    color: #dcdde4;
+    &:hover {
+      background: #414346;
+    }
+  }
+}

@@ -84,6 +84,8 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import { ipcRenderer } from "electron";
+
 import timebar from "../footer/timebar";
 import volumebar from "../footer/VolumeProgress";
 
@@ -93,6 +95,15 @@ export default {
   components: {
     slider: timebar,
     volumebar: volumebar
+  },
+
+  created(){
+    ipcRenderer.on('lastMusic', () => {
+      this.last();
+    }),
+    ipcRenderer.on('nextMusic', () => {
+      this.next();
+    })
   },
   data() {
     return {
@@ -281,7 +292,9 @@ export default {
         //console.log("当前是单曲循环");
         this.$refs.audio.loop = true;
       }
-    }
+    },
+
+    
   }
 };
 </script>
