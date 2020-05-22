@@ -23,7 +23,7 @@ function createWindow () {
     height: 670, 
     resizable: true,
     skipTaskbar: false,
-    frame: true,
+    frame: false,
     backgroundColor: '#2e2c29',
     webPreferences: {
     nodeIntegration: true,

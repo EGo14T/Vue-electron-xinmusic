@@ -3,10 +3,15 @@
     <div class="row1">
       <span>搜索</span>
       <span style="color:#2e6bb0">"{{keyword}}"</span>
-      <span>，找到{{musicNum}}首单曲</span>
+      <span v-show="musicNum>0">，找到{{musicNum}}首单曲</span>
     </div>
     <div class="row2">
-      <musiclist musicListid="1" isCreated="search" :keyword="keyword"  @getNum="getMusicNum"></musiclist>
+      <musiclist musicListid="1" isCreated="search" :keyword="keyword" @getNum="getMusicNum"></musiclist>
+    </div>
+    <div class="row3" v-show="musicNum == 0">
+      <span>很抱歉,未能找到与</span>
+      <span style="color:#2e6bb0">"{{keyword}}"</span>
+      <span>相关的任何歌曲</span>
     </div>
   </div>
 </template>
@@ -49,11 +54,16 @@ export default {
     padding-left: 20px;
     line-height: 70px;
     color: #dcdde4;
-    font-size: 14px;
+    font-size: 13px;
     border-bottom: 1px solid #23262c;
   }
 
-  .row2 {
+  .row3 {
+    height: 240px;
+    line-height: 240px;
+    color: #dcdde4;
+    font-size: 13px;
+    text-align: center;
   }
 }
 </style>

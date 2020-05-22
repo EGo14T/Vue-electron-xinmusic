@@ -24,3 +24,7 @@ yarn-error.log*
 /dist_electron
 
 /src/render/utils/userConfig.js
+.VSCodeCounter/details.md
+.VSCodeCounter/results.csv
+.VSCodeCounter/results.md
+.VSCodeCounter/results.txt
