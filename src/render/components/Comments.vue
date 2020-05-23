@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <div>听友评论{{musicListid}}</div>
+    <div>听友{{title?title:'动态'}}</div>
     <div class="comments">
       <div class="c_input" @click="toComments('')">
         <svg class="icon svg-icon ico_input" aria-hidden="true">
           <use xlink:href="#icon-pan_icon-copy" />
         </svg>
-        发表评论
+        发布{{title?title:'动态'}}
       </div>
     </div>
-    <div>最新评论</div>
+    <div>最新{{title?title:'动态'}}</div>
     <div class="media" v-for="item in comments">
       <img
         class="align-self-start mr-3"
@@ -49,7 +49,7 @@
     </div>
 
     <el-dialog
-      :title="commentsTitle"
+      :title="title"
       :visible.sync="dialogVisible"
       width="477px"
       @closed="handleClose"
@@ -96,8 +96,7 @@
 import EmojiPanel from "../components/emoji/EmojiPanel";
 
 export default {
-
-  props:['musicListid'],
+  props: ["itemId", "title"],
 
   data() {
     return {
@@ -169,7 +168,7 @@ export default {
   mounted() {
     document.addEventListener("click", e => {
       if (
-        typeof(e.target.className)=='string'&&
+        typeof e.target.className == "string" &&
         e.target.className.indexOf("emoji-item-common") == -1 &&
         e.target.className.indexOf("emoji-panel-wrap") == -1
       ) {
@@ -254,7 +253,9 @@ export default {
 
     //获取评论
     getComments() {
-      this.getRequest("/comments/getComments/"+this.musicListid+"/1/10").then(resp => {
+      this.getRequest(
+        "/comments/getComments/" + this.itemId + "/1/10"
+      ).then(resp => {
         //console.log(resp.data);
         for (const iterator of resp.data.data) {
           //console.log(iterator.replyComments.content)
@@ -280,8 +281,8 @@ export default {
         alert("字数超过限制");
       } else {
         let commentJson = {
-          showId: this.musicListid,
-          fromId: "1",
+          showId: this.itemId?this.itemId:'friends',
+          fromId: JSON.parse(localStorage.user).id,
           toId: this.currentId,
           content: this.textarea
         };

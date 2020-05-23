@@ -23,15 +23,15 @@ Axios.interceptors.response.use(data => {
     return data;
 }, err => {
     if (err.response.status == 504 || err.response.status == 503) {
-        Message.error("服务器异常，请联系管理员！");
+        Message.error({message:"服务器异常，请联系管理员！",duration:1000});
     } else if (err.response.status == 401) {
-        Message("请先登录~");
+        Message({message:"请先登录~",duration:1000});
     } else if (err.response.status == 400) {
         Message.error(err.response.data.error_description);
     } else if (err.response.status == 405) {
-        Message.error(err.response.data.msg);
+        Message.error({message:err.response.data.msg,duration:1000});
     } else {
-        Message.error("服务器异常，请联系管理员！");
+        Message.error({message:"服务器异常，请联系管理员！",duration:1000});
     }
     // return Promise.resolve(err);
 

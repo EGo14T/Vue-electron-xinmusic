@@ -4,10 +4,13 @@
         <appHeader></appHeader>
     </div>
     
-      <div class="leftbar">
+      <div :class="['leftbar',musicId == ''?'noplaying':'playing']">
         <myScroll>
         <LeftMenu></LeftMenu>
         </myScroll>
+
+
+        <MusicBar v-if="musicId != ''"></MusicBar>
       </div>
 
     <div class="main">
@@ -25,15 +28,26 @@
 import Header from './components/Header'
 import Music from './components/music'
 import LeftMenu from './components/LeftMeun'
+import MusicBar from './components/MusicBar'
 import footerbar from './components/footer/footer'
+
+import { mapGetters } from "vuex";
 
 export default {
   components:{
     'appHeader':Header,
     'musicplayer':Music,
     'LeftMenu':LeftMenu,
+    'MusicBar':MusicBar,
     'footerbar': footerbar
-  }
+  },
+  
+
+  computed: {
+    ...mapGetters({
+      musicId: "cur_playing_id",
+    })
+  },
 
 }
 </script>
@@ -48,8 +62,15 @@ export default {
   left: 0;
   top: 50px;
   width: 199px;
-  height: calc(100% - 99px);
   background: rgb(22, 24, 28);
+}
+
+.playing{
+  height: calc(100% - 155px);
+}
+
+.noplaying{
+  height: calc(100% - 99px);
 }
 
 .main{

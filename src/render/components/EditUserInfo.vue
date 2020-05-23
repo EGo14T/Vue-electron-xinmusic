@@ -275,7 +275,8 @@ export default {
         avatar: this.avatarURL
       };
       this.patchRequest("/users/UserInfo", true, json).then(resp => {
-        this.$message.success("更新头像成功！");
+        this.$message.success({message:'更新头像成功！',duration:1000});
+        
       });
     },
 
@@ -387,7 +388,7 @@ export default {
       this.patchRequest("/users/UserInfo", true, this.userInfo).then(resp => {
         if (resp.data) {
           this.$store.commit(types.SET_USERINFO, resp.data.data);
-          this.$message.success("更新信息成功！");
+          this.$message.success({message:'更新信息成功！',duration:1000});
           this.$router.push({ name: 'user' });
         }
       });

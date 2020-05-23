@@ -15,12 +15,12 @@
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use xlink:href="#icon-pengyou" />
             </svg>
-            <span class="navtext" @click="toComponents('comment','friends')">朋友</span>
+            <span class="navtext" @click="toComponents('friends','friends')">朋友</span>
           </div>
         </li>
       </ul>
 
-      <ul class="nav flex-column">
+      <!-- <ul class="nav flex-column">
         <li class="nav-item">
           <div class="navtitle">我的音乐</div>
           <div class="nav-citem">
@@ -37,7 +37,7 @@
             <span class="navtext">本地音乐</span>
           </div>
         </li>
-      </ul>
+      </ul> -->
 
       <ul class="nav flex-column">
         <li class="nav-item">

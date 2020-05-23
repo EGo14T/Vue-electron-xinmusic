@@ -33,3 +33,5 @@ export const CREATE_MUSICLIST = 'createMusicList'   //创建歌单
 
 export const DEL_MUSICLIST = 'delMusicList'   //删除歌单
 
+export const LIKE_MUSIC = 'likeMusic'    //喜欢音乐
+

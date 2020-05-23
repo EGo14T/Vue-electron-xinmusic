@@ -99,21 +99,27 @@ export default {
     },
 
     userRegister() {
-      if(this.register.password == this.register.repassword){
+      if (this.register.password == this.register.repassword) {
         let json = {
-        nickName: this.register.nickName,
-        username: this.register.account,
-        password: this.register.password
-      };
+          nickName: this.register.nickName,
+          username: this.register.account,
+          password: this.register.password
+        };
 
-      this.postRequest("/users/register",false,json).then(resp => {
-        if(resp.status == 200){
-          this.$message.success("注册成功，现在登录吧");
-          this.change();
-        }
-      })
-      }else {
-        this.$message.error("两次密码输入不一致，请重新输入！");
+        this.postRequest("/users/register", false, json).then(resp => {
+          if (resp.status == 200) {
+            this.$message.success({
+              message: "注册成功，现在登录吧",
+              duration: 1000
+            });
+            this.change();
+          }
+        });
+      } else {
+        this.$message.success({
+          message: "两次密码输入不一致，请重新输入！",
+          duration: 1000
+        });
         this.register.password = "";
         this.register.repassword = "";
       }

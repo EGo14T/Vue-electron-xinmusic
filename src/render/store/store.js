@@ -109,13 +109,11 @@ export default new Vuex.Store({
 
         //删除歌单
         [types.DEL_MUSICLIST]: (state, data) => {
-            if(data.type == "created"){
-                state.createMusicList.splice(data.index,1);
-            }else{
-                state.collectMusicList.splice(data.index,1);
+            if (data.type == "created") {
+                state.createMusicList.splice(data.index, 1);
+            } else {
+                state.collectMusicList.splice(data.index, 1);
             }
-
-            
         },
 
         //切歌
@@ -170,7 +168,16 @@ export default new Vuex.Store({
         [types.SET_USERINFO]: (state, data) => {
             state.user = data;
             localStorage.user = JSON.stringify(data);
-        }
+        },
+
+
+        [types.LIKE_MUSIC]: (state, data) => {
+            if (state.curPlayStatus == 1 || state.curPlayStatus == 0) {
+                 state.curMusicList[state.curIndex].collection = data;
+            } else {
+                return state.randomlist[state.curIndex].collection = data;
+            }
+        },
     },
 
 
@@ -189,6 +196,15 @@ export default new Vuex.Store({
         //获取当前播放歌曲的ID
         cur_playing_id: state => {
             return state.curMusicId;
+        },
+
+        //获取当前播放歌曲的信息
+        cur_playing_info: state => {
+            if (state.curPlayStatus == 1 || state.curPlayStatus == 0) {
+                return state.curMusicList[state.curIndex];
+            } else {
+                return state.randomlist[state.curIndex];
+            }
         },
 
         //获取当前右键选中歌曲的信息

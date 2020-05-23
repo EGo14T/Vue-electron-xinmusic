@@ -101,7 +101,7 @@
           @click.prevent="comName='comment'"
         >评论</div>
       </div>
-      <component :is="comName" :musicListid="this.musicListId" :isCreated="this.isCreated"></component>
+      <component :is="comName" :musicListid="this.musicListId" :itemId="this.musicListId" :isCreated="this.isCreated" title="评论"></component>
     </div>
   </div>
 </template>

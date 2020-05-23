@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Comments from './components/Comments'
+import Friends from './components/Friends'
+import MusicComments from './components/MusicComments'
 import Discovery from './components/Discovery'
 import Users from './components/Users'
 import EditUsers from './components/EditUserInfo'
@@ -28,7 +29,8 @@ export default new Router({
     {path:'/users',component:Users,name:"user"},
     {path:'/editUsers',component:EditUsers,name:"editUsers"},
     {path:'/editListInfo/:isCreated/:id',component:EditListInfo,name:"editListInfo"},
-    {path:'/comment', name:"comment",component:Comments},
+    {path:'/friends', name:"friends",component:Friends},
+    {path:'/musicComments/:id', name:"musicComments",component:MusicComments},
     {path:'/musiclstinfo/:isCreated/:id' ,name:"musiclstinfo",component:MusicListinfo},
     {path:'/musiclist',component:MusicList},
     {path:'/searchMusic/:keyword',component:SearchMusic,name:"searchMusic"},

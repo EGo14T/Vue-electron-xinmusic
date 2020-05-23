@@ -102,7 +102,7 @@ export default {
         musiclistImg: url
       }).then(resp => {
         if (resp) {
-          this.$message.success("修改封面成功！");
+          this.$message.success({message:'修改封面成功!',duration:1000});
           this.listCover = url;
         }
       });
@@ -147,7 +147,7 @@ export default {
         if (resp.data) {
           this.$store.commit(types.RESET_LISTINFO);
           this.toMusicListInfo();
-          this.$message.success("更新信息成功！");
+          this.$message.success({message:'更新信息成功!',duration:1000});
         }
       });
     },

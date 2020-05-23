@@ -18,12 +18,12 @@
         :contextId="item.id"
       >
         <td class="td-number">
-          {{ item.id === $store.getters.cur_playing_id ? "none": index | musicIndex}}
+          {{ item.id === musicId ? "none": index | musicIndex}}
           <svg
             class="icon svg-icon icon-2"
             aria-hidden="true"
             style="width:16px;height:16px"
-            v-show="item.id === $store.getters.cur_playing_id"
+            v-show="item.id === musicId"
           >
             <use xlink:href="#icon-shengyinwu-copy" />
           </svg>
@@ -125,7 +125,8 @@ export default {
     ...mapGetters({
       musicInfo: "cur_context_menu_music",
       createList: "get_create_list",
-      isLogin: "get_isLogin"
+      isLogin: "get_isLogin",
+      musicId: "cur_playing_id"
     })
   },
 
