@@ -13,22 +13,23 @@
     <div class="media" v-for="item in comments">
       <img
         class="align-self-start mr-3"
-        style="border-radius: 50%;"
+        style="border-radius: 50%;cursor:pointer"
         :src="item.replyComments.avatar"
         width="36"
         height="36"
+        @click="toUserInfo(item.replyComments.fromId)"
       />
       <div class="media-body">
         <div v-if="item.originComments==null?false:true">
-          <a href class="fromName">{{ item.replyComments.name }}：</a>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.name }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
           <div class="reply">
-            <a href class="fromName">@{{ item.originComments.name }}：</a>
+            <span class="fromName" @click="toUserInfo(item.originComments.fromId)">@{{ item.originComments.name }}：</span>
             <span class="content" v-html="item.originComments.content"></span>
           </div>
         </div>
         <div v-else>
-          <a href class="fromName">{{ item.replyComments.name }}：</a>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.name }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
         </div>
 
@@ -200,6 +201,10 @@ export default {
     toComments(id) {
       this.currentId = id;
       this.dialogVisible = true;
+    },
+
+    toUserInfo(id) {
+      this.$router.push({ name: "user",params:{userId: id} });
     },
 
     //评论框关闭 初始化数据

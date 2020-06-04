@@ -188,6 +188,14 @@ export default {
   watch: {
     "$store.state.user": function() {
       this.getMusicList();
+      
+      if(this.$store.state.user == ''){
+        this.showAllCr = false;
+        this.showAllCo = false;
+      }else{
+        this.showAllCr = true;
+        this.showAllCo = true;
+      }
     },
 
     "$store.state.isEditList": function() {

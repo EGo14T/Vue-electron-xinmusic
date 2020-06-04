@@ -389,13 +389,13 @@ export default {
         if (resp.data) {
           this.$store.commit(types.SET_USERINFO, resp.data.data);
           this.$message.success({message:'更新信息成功！',duration:1000});
-          this.$router.push({ name: 'user' });
+          this.$router.push({ name: "user",params:{userId: this.userid} });
         }
       });
     },
 
     cancleEdit() {
-      this.$router.push({ name: 'user' });
+      this.$router.push({ name: "user",params:{userId: this.userid} });
     }
   }
 };

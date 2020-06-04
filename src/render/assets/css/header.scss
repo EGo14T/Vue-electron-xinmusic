@@ -70,10 +70,24 @@
     .userName {
       -webkit-app-region: no-drag;
       color: #adafb2;
-      &:hover{
-        text-decoration: none;
+      &:hover {
         color: #a5a7a8;
+        cursor: pointer;
+      }
     }
+
+    .userPop {
+      background: #2d2f33;
+      margin-top: 3px;
+      
+      .u_Pop_item {
+        padding: 10px 15px;
+        color: #dcdde4;
+        &:hover {
+          background: #393b3e;
+          cursor: pointer;
+        }
+      }
     }
   }
 

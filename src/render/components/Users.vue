@@ -2,13 +2,14 @@
   <div class="container" v-if="isFinish">
     <div class="row1">
       <div class="avatar">
-        <img :src="avatarURL" width="199px" height="199px" draggable="false" />
+        <img :src="avatarURL" width="199px" height="199px" draggable="false" v-if="isSelf" />
+        <img :src="userInfo.avatar" width="199px" height="199px" draggable="false" v-if="!isSelf" />
       </div>
 
       <div class="info">
         <div class="userName">
           <h2>{{userInfo.name}}</h2>
-          <div class="editInfo">
+          <div class="editInfo" v-if="isSelf">
             <button class="editInfoBtn" @click="toComponents('editUsers')">编辑个人信息</button>
           </div>
         </div>
@@ -28,11 +29,11 @@
     </div>
     <div class="row2">
       <div class="title">我创建的歌单（{{createList.length}}）</div>
-      <musicListShow :list="createList"isCreated= "created"></musicListShow>
+      <musicListShow :list="createList" isCreated="created"></musicListShow>
     </div>
     <div class="row3">
       <div class="title">我收藏的歌单（{{collectList.length}}）</div>
-      <musicListShow :list="collectList" isCreated= "collected"></musicListShow>
+      <musicListShow :list="collectList" isCreated="collected"></musicListShow>
     </div>
   </div>
 </template>
@@ -42,15 +43,24 @@ import * as types from "../store/types";
 
 import { mapGetters } from "vuex";
 
-import MusicListShow from './MusicListShow'
+import MusicListShow from "./MusicListShow";
 
 export default {
+  props: ["userId"],
+
   computed: {
     ...mapGetters({
-      createList: "get_create_list",
-      collectList: "get_collect_list",
-      avatarURL: "get_avatar_url"
-    })
+      avatarURL: "get_avatar_url",
+      selfID: "get_user_id"
+    }),
+
+    isSelf: function() {
+      if (this.userId == this.selfID) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
 
   components: {
@@ -59,30 +69,48 @@ export default {
 
   created() {
     this.getUserInfo();
+
+    this.getMusicList();
   },
 
   data() {
     return {
       isFinish: false,
 
-      userInfo: {} //用户信息
+      userInfo: {}, //用户信息
+
+      createList: [],
+      collectList: [],
     };
   },
 
   methods: {
     getUserInfo() {
-      if(localStorage.user){
-        let userId = JSON.parse(localStorage.user).id;
-        this.getRequest("/users/UserInfo/" + userId, true).then(resp => {
+      if (localStorage.user) {
+        this.getRequest("/users/UserInfo/" + this.userId, true).then(resp => {
           this.userInfo = resp.data.data;
           this.isFinish = true;
         });
       }
     },
-    
+
     toComponents(pathUrl, params) {
       this.$router.push({ name: pathUrl });
       this.$store.commit(types.LOAD_Menu_ID, "editUser");
+    },
+
+    getMusicList() {
+      this.$http
+        .all([
+          this.getRequest("/my/create/musiclist/" + this.userId, false),
+          this.getRequest("/my/collect/musiclist/" + this.userId, false)
+        ])
+        .then(
+          this.$http.spread((createResp, collectResp) => {
+            this.createList = createResp.data.data;
+            this.collectList = collectResp.data.data;
+          })
+        );
     }
   }
 };
@@ -101,8 +129,6 @@ export default {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 25px;
-
-    
 
     .info {
       .userName {

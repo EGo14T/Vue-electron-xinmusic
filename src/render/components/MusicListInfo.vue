@@ -27,8 +27,10 @@
             :src="musicListInfo.avatar"
             width="32"
             height="32"
+            draggable="false"
+            @click="toUserInfo"
           />
-          <a href class="createUser">{{musicListInfo.username}}</a>
+          <span  class="createUser" @click="toUserInfo">{{musicListInfo.username}}</span>
           <span class="createTime">{{musicListInfo.createTime}}创建</span>
         </div>
         <div class="listInfoDown">
@@ -173,7 +175,12 @@ export default {
           this.musicListInfo = resp.data.data;
         }
       );
-    }
+    },
+
+    toUserInfo() {
+      this.$router.push({ name: "user",params:{userId: this.musicListInfo.userid} });
+      this.$store.commit(types.LOAD_Menu_ID, "user");
+    },
   }
 };
 </script>

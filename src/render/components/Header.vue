@@ -29,9 +29,18 @@
         :src="this.$store.state.user.avatar"
         width="24"
         height="24"
-        @click="toComponents('user')"
+        draggable="false"
+        @click="toUserInfo"
       />
-      <a href class="userName">{{this.$store.state.user.name}}</a>
+      <span  class="userName" @click.prevent= "showUserPop = !showUserPop">{{this.$store.state.user.name}}</span>
+      <div class="userPop" v-if="showUserPop">
+        <div class="u_Pop_item" @click="toEditUserInfo">
+          编辑个人信息
+        </div>
+        <div class="u_Pop_item" @click="logOut">
+          注销
+        </div>
+      </div>
     </div>
 
     <div class="col-auto userInfo" v-if="!islogin">
@@ -76,9 +85,21 @@ export default {
     login: Login
   },
 
+  mounted() {
+    document.addEventListener("click", e => {
+      if (
+        typeof e.target.className == "string" &&
+        e.target.className.indexOf("userName") == -1
+      ) {
+        this.showUserPop = false;
+      }
+    });
+  },
+
   computed: {
     ...mapGetters({
-      islogin: "get_isLogin"
+      islogin: "get_isLogin",
+      userId: "get_user_id"
     })
   },
 
@@ -86,7 +107,9 @@ export default {
     return {
       dialogVisible: false,
 
-      keyword: "",   //关键字
+      showUserPop: false,
+
+      keyword: "" //关键字
     };
   },
 
@@ -95,9 +118,19 @@ export default {
   },
 
   methods: {
-    history(val){
+    history(val) {
       this.$router.go(val);
     },
+
+
+    //登出
+    logOut() {
+      this.$store.commit(types.LOGOUT);
+      this.$store.commit(types.LOAD_Menu_ID, 'discover');
+      this.$router.push({ name: 'discovery' });
+    },
+
+
     //验证登录，若没登录则使用refrsh token刷新登录，若第一次登录，则弹窗登录
     oauthLogin() {
       if (localStorage.refreshToken) {
@@ -117,8 +150,11 @@ export default {
     },
 
     searchMusic() {
-      if(this.keyword.trim().length != 0){
-        this.$router.push({ name: 'searchMusic', params:{keyword:this.keyword}});
+      if (this.keyword.trim().length != 0) {
+        this.$router.push({
+          name: "searchMusic",
+          params: { keyword: this.keyword }
+        });
       }
     },
 
@@ -126,9 +162,14 @@ export default {
       this.dialogVisible = !this.dialogVisible;
     },
 
-    toComponents(pathUrl, params) {
-      this.$router.push({ name: pathUrl });
-      this.$store.commit(types.LOAD_Menu_ID,"user");
+    toUserInfo() {
+      this.$router.push({ name: "user",params:{userId: this.userId} });
+      this.$store.commit(types.LOAD_Menu_ID, "user");
+    },
+
+    toEditUserInfo() {
+      this.$router.push({ name: 'editUsers' });
+      this.$store.commit(types.LOAD_Menu_ID, "editUser");
     },
 
     closewindow() {

@@ -26,7 +26,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {path:'/',component:Discovery,name:"discovery"},
-    {path:'/users',component:Users,name:"user"},
+    {path:'/users/:userId',component:Users,name:"user",props:true},
     {path:'/editUsers',component:EditUsers,name:"editUsers"},
     {path:'/editListInfo/:isCreated/:id',component:EditListInfo,name:"editListInfo"},
     {path:'/friends', name:"friends",component:Friends},

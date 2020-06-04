@@ -6,6 +6,7 @@ import Vue from 'vue'
 import * as types from './types'
 
 import { shuffle } from '../utils/shuffle'
+import { stat } from 'fs';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -47,6 +48,8 @@ export default new Vuex.Store({
         //--------------------------------------------------------------------------
         isEditList: 0
     },
+
+
     mutations: {
         //登录
         [types.LOGIN]: (state, data) => {
@@ -62,8 +65,18 @@ export default new Vuex.Store({
         },
         //注销
         [types.LOGOUT]: (state) => {
-            localStorage.removeItem('token');
-            state.token = null
+            localStorage.clear();
+
+            state.islogin = false;
+            state.user = '';
+            state.accessToken = null;
+            state.refreshToken = null;
+            state.defaultMusicListID = "";
+            state.createMusicList = [];
+            state.collectMusicList = [];
+            state.showMusicList = [];
+            state.menuId = "";
+            
         },
 
         //获取用户默认歌单ID （我喜欢的音乐 的 歌单ID）

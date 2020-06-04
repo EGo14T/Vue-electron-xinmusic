@@ -5,7 +5,7 @@
         <img :src="item.musiclistImg" width="100%" draggable="false" />
         <span style="font-size:12px">{{item.musiclistName}}</span>
       </div>
-      <span style="font-size:13px;color:#5f5f63">{{Math.floor(Math.random()*100)}}首</span>
+      <span style="font-size:13px;color:#5f5f63">{{item.sumMusic}}首</span>
     </div>
   </div>
 </template>
