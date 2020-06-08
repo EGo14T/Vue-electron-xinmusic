@@ -23,7 +23,7 @@
         <div class="listInfoCenter">
           <img
             class="align-self-start mr-3"
-            style="border-radius: 50%;"
+            style="border-radius: 50%;cursor:pointer"
             :src="musicListInfo.avatar"
             width="32"
             height="32"

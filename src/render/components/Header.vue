@@ -25,7 +25,7 @@
 
     <div class="col-auto userInfo" v-if="islogin">
       <img
-        style="border-radius: 50%;margin-right:10px"
+        style="border-radius: 50%;margin-right:10px;cursor:pointer"
         :src="this.$store.state.user.avatar"
         width="24"
         height="24"
