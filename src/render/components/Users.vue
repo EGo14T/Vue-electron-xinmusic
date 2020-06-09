@@ -28,11 +28,11 @@
       </div>
     </div>
     <div class="row2">
-      <div class="title">我创建的歌单（{{createList.length}}）</div>
+      <div class="title">{{isSelf?'我':'TA'}}创建的歌单（{{createList.length}}）</div>
       <musicListShow :list="createList" isCreated="created"></musicListShow>
     </div>
     <div class="row3">
-      <div class="title">我收藏的歌单（{{collectList.length}}）</div>
+      <div class="title">{{isSelf?'我':'TA'}}收藏的歌单（{{collectList.length}}）</div>
       <musicListShow :list="collectList" isCreated="collected"></musicListShow>
     </div>
   </div>

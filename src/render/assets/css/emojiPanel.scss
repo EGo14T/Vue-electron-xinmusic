@@ -13,6 +13,9 @@
 .emoji-item-common {
   background: url("../assets/img/emoji_sprite.png");
   display: inline-block;
+  position: relative;
+  top: 10px;
+  margin: 0 10px;
 }
 
 

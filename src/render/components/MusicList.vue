@@ -16,6 +16,7 @@
         v-contextmenu:contextmenu
         :contextindex="index"
         :contextId="item.id"
+        :contextName="item.name"
       >
         <td class="td-number">
           {{ item.id === musicId ? "none": index | musicIndex}}
@@ -67,7 +68,7 @@
         </svg>
         播放
       </v-contextmenu-item>
-      <v-contextmenu-item @click>
+      <v-contextmenu-item @click="shareMusic()">
         <svg class="icon svg-icon contextBtn" aria-hidden="true">
           <use xlink:href="#icon-fenxiang" />
         </svg>
@@ -99,6 +100,8 @@
 import * as types from "../store/types";
 import { mapGetters } from "vuex";
 
+import { clipboard } from "electron";
+
 export default {
   props: ["musicListid", "isCreated", "keyword"],
 
@@ -117,7 +120,9 @@ export default {
 
       contextMenuIndex: 0, //右键下标
 
-      contextId: 0 //右键ID
+      contextId: 0, //右键ID
+
+      contextName: ""
     };
   },
 
@@ -164,11 +169,20 @@ export default {
       let index = vnode.data.attrs.contextindex;
       this.contextId = vnode.data.attrs.contextId;
       this.contextMenuIndex = index;
+      this.contextName = vnode.data.attrs.contextName;
       this.$store.commit(types.SET_CONTEXT_MENU, index);
     },
 
     contextPlay() {
       this.playMusic(this.contextMenuIndex);
+    },
+
+    shareMusic() {
+      clipboard.writeText(this.contextName);
+      this.$message.success({
+        message: "歌曲名已复制到剪贴板!",
+        duration: 1000
+      });
     },
 
     //收藏歌曲

@@ -37,7 +37,7 @@
             <span class="navtext">本地音乐</span>
           </div>
         </li>
-      </ul> -->
+      </ul>-->
 
       <ul class="nav flex-column">
         <li class="nav-item">
@@ -83,6 +83,7 @@
             :contextId="item.musiclistid"
             :contextIndex="index"
             :listID="item.musiclistid"
+            :listName="item.musiclistName"
             contextType="created"
             :contextStatus="item.status"
             @click.stop="toMusciList(item.musiclistid,'created')"
@@ -109,6 +110,7 @@
             :contextId="item.musiclistid"
             :contextIndex="index"
             :listID="item.musiclistid"
+            :listName="item.musiclistName"
             contextType="collected"
             :contextStatus="item.status"
             @click="toMusciList(item.musiclistid,'collected')"
@@ -160,6 +162,8 @@ import * as types from "../store/types";
 
 import { mapGetters } from "vuex";
 
+import { clipboard } from "electron";
+
 export default {
   data() {
     return {
@@ -178,6 +182,7 @@ export default {
       contextType: "", //右键歌单的类型 收藏or创建
       contextIndex: 0,
       listID: "",
+      listName: "",
 
       delDialog: false
     };
@@ -188,11 +193,11 @@ export default {
   watch: {
     "$store.state.user": function() {
       this.getMusicList();
-      
-      if(this.$store.state.user == ''){
+
+      if (this.$store.state.user == "") {
         this.showAllCr = false;
         this.showAllCo = false;
-      }else{
+      } else {
         this.showAllCr = true;
         this.showAllCo = true;
       }
@@ -261,6 +266,7 @@ export default {
       this.contextType = vnode.data.attrs.contextType;
       this.contextIndex = vnode.data.attrs.contextIndex;
       this.listID = vnode.data.attrs.listID;
+      this.listName = vnode.data.attrs.listName;
     },
 
     contextPlay() {},
@@ -270,7 +276,10 @@ export default {
     },
 
     //右键分享歌单
-    shareList() {},
+    shareList() {
+      clipboard.writeText(this.listName);
+      this.$message.success({ message: "歌单名已复制到剪贴板!", duration: 1000 });
+    },
 
     //删除歌单
     deleteList() {
@@ -283,11 +292,22 @@ export default {
           type: this.contextType
         });
         this.delDialog = false;
-        this.toMusciList(
-          this.createList[this.contextIndex - 1 < 0 ? 0 : this.contextIndex - 1]
-            .musiclistid,
-          this.contextType
-        );
+
+        if (this.contextType == "created") {
+          this.toMusciList(
+            this.createList[
+              this.contextIndex - 1 < 0 ? 0 : this.contextIndex - 1
+            ].musiclistid,
+            this.contextType
+          );
+        } else {
+          this.toMusciList(
+            this.collectList[
+              this.contextIndex - 1 < 0 ? 0 : this.contextIndex - 1
+            ].musiclistid,
+            this.contextType
+          );
+        }
       });
     },
 
@@ -319,6 +339,7 @@ export default {
       this.$router.push({ name: pathUrl });
     },
 
+    //创建歌单
     createMusicList() {
       //是否是隐私歌单
       let ishide = this.ishide ? 2 : 1;

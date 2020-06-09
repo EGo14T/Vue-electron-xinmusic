@@ -22,6 +22,8 @@ export default new Vuex.Store({
 
         createMusicList: [],   //用户创建的歌单列表
 
+        showListIndex: 0,
+
         collectMusicList: [],  //用户收藏歌单列表
 
         showMusicList: [],     //展示的歌单，没有点击
@@ -76,7 +78,7 @@ export default new Vuex.Store({
             state.collectMusicList = [];
             state.showMusicList = [];
             state.menuId = "";
-            
+
         },
 
         //获取用户默认歌单ID （我喜欢的音乐 的 歌单ID）
@@ -94,6 +96,12 @@ export default new Vuex.Store({
         },
 
         [types.LOAD_Menu_ID]: (state, data) => {
+
+            for (let i = 0; i < state.collectMusicList.length; i++) {
+                if (state.collectMusicList[i]['musiclistid'] == data) {
+                    state.showListIndex = i;
+                }
+            }
             state.menuId = data;
         },
 
@@ -125,8 +133,17 @@ export default new Vuex.Store({
             if (data.type == "created") {
                 state.createMusicList.splice(data.index, 1);
             } else {
-                state.collectMusicList.splice(data.index, 1);
+                if (data.index == null) {
+                    state.collectMusicList.splice(state.showListIndex, 1);
+                } else {
+                    state.collectMusicList.splice(data.index, 1);
+                }
             }
+        },
+
+        //收藏歌单
+        [types.COLLECT_MUSICLIST]: (state, data) => {
+            state.collectMusicList.unshift(data);
         },
 
         //切歌
@@ -186,7 +203,7 @@ export default new Vuex.Store({
 
         [types.LIKE_MUSIC]: (state, data) => {
             if (state.curPlayStatus == 1 || state.curPlayStatus == 0) {
-                 state.curMusicList[state.curIndex].collection = data;
+                state.curMusicList[state.curIndex].collection = data;
             } else {
                 return state.randomlist[state.curIndex].collection = data;
             }

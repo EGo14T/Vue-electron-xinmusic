@@ -30,7 +30,7 @@
             draggable="false"
             @click="toUserInfo"
           />
-          <span  class="createUser" @click="toUserInfo">{{musicListInfo.username}}</span>
+          <span class="createUser" @click="toUserInfo">{{musicListInfo.username}}</span>
           <span class="createTime">{{musicListInfo.createTime}}创建</span>
         </div>
         <div class="listInfoDown">
@@ -55,11 +55,7 @@
           </el-button>
 
           <el-button class="listFunc" :disabled="isCreated=='created'" @click="collectMusicList()">
-            <svg
-              class="icon svg-icon"
-              style="height:17px;width:17px;"
-              aria-hidden="true"
-            >
+            <svg class="icon svg-icon" style="height:17px;width:17px;" aria-hidden="true">
               <use xlink:href="#icon-xinjianwenjian" />
             </svg>
             {{collection}}
@@ -78,13 +74,19 @@
 
           <div class="tag">
             <span>标签：</span>
-            <a class="tagLink" href>日系</a>/
-            <a class="tagLink" href>开口跪</a>/
-            <a class="tagLink" href>电子</a>
+            <span v-if="musicListInfo.tags == null" style="color:#2e6bb0;cursor:pointer;" @click="toEditList()">添加标签</span>
+            <span v-else v-for="(item,index) in listTags">
+              <span style="color:#2e6bb0;cursor:pointer;">{{item}}</span>
+              <span v-if="index !=2">/</span>
+            </span>
           </div>
 
           <div class="description">
-            <spread :mes2="musicListInfo.description"></spread>
+            <spread :mes2="musicListInfo.description" v-show="musicListInfo.description!=null"></spread>
+            <span v-show="musicListInfo.description == null">
+              <span>简介：</span>
+              <span style="color:#2e6bb0;cursor:pointer;" @click="toEditList()">添加简介</span>
+            </span>
           </div>
         </div>
       </div>
@@ -103,8 +105,27 @@
           @click.prevent="comName='comment'"
         >评论</div>
       </div>
-      <component :is="comName" :musicListid="this.musicListId" :itemId="this.musicListId" :isCreated="this.isCreated" title="评论"></component>
+      <component
+        :is="comName"
+        :musicListid="this.musicListId"
+        :itemId="this.musicListId"
+        :isCreated="this.isCreated"
+        title="评论"
+      ></component>
     </div>
+
+    <el-dialog
+      title="确定不再收藏该歌单？"
+      :visible.sync="delDialog"
+      width="250px"
+      top="30%"
+      :show-close="false"
+      center
+      custom-class="c_delDialog"
+    >
+      <input type="button" class="btn save" @click="cancleCollect()" value="确定" />
+      <input type="button" class="btn cancle" @click="delDialog = false" value="取消" />
+    </el-dialog>
   </div>
 </template>
 
@@ -133,6 +154,8 @@ export default {
 
       isCreated: "",
 
+      delDialog: false,
+
       musicListInfo: {}
     };
   },
@@ -145,19 +168,25 @@ export default {
     }),
 
     collection() {
-      if(this.isCreated=='collected'){
-        return "已收藏"
-      }else {
-        return "收藏  "
+      if (this.isCreated == "collected") {
+        return "已收藏";
+      } else {
+        return "收藏  ";
       }
+    },
+
+    listTags() {
+      let tag = this.musicListInfo.tags;
+      let tags = tag.split("|");
+      return tags;
     }
   },
   created() {
-    let musiclistId = this.$route.params.id
+    let musiclistId = this.$route.params.id;
     this.musicListId = musiclistId;
     this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
-    this.$store.commit(types.LOAD_Menu_ID,musiclistId);
+    this.$store.commit(types.LOAD_Menu_ID, musiclistId);
   },
 
   watch: {},
@@ -165,22 +194,85 @@ export default {
   methods: {
     //收藏歌单
     collectMusicList() {
-      
+      if (this.isCreated == "collected") {
+        //取消收藏对话框
+        this.delDialog = true;
+      } else {
+        //收藏歌单
+        this.postRequest(
+          "/my/collect/musiclist/" +
+            JSON.parse(localStorage.user).id +
+            "/" +
+            this.musicListId,
+          true
+        ).then(resp => {
+          if (resp.data.data == 1) {
+            let newList = {
+              musiclistid: this.musicListId,
+              musiclistName: this.musicListInfo.musiclistName,
+              musiclistImg: this.musicListInfo.musiclistImg,
+              status: this.musicListInfo.status,
+              sumMusic: this.lenOfList
+            };
+            this.$store.commit(types.COLLECT_MUSICLIST, newList);
+            this.isCreated = "collected";
+          }
+        });
+      }
     },
+
+    cancleCollect() {
+      //取消收藏歌单
+      this.delRequest(
+        "/my/musiclist/" +
+          JSON.parse(localStorage.user).id +
+          "/" +
+          this.musicListId,
+        true
+      ).then(resp => {
+        this.isCreated = "unCollected";
+        this.delDialog = false;
+        this.$store.commit(types.DEL_MUSICLIST, {
+          index: null,
+          type: "collected"
+        });
+      });
+    },
+
+    //编辑歌单
+    toEditList() {
+      this.$store.commit(types.LOAD_Menu_ID, this.musicListId);
+      this.$router.push({
+        name: "editListInfo",
+        params: { isCreated: 'created', id: this.musicListId }
+      });
+    },
+
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest("/my/musiclistinfo/" + this.musicListId, false).then(
-        resp => {
-          //console.log(resp.data.data)
-          this.musicListInfo = resp.data.data;
+      this.getRequest(
+        "/my/musiclistinfo/" +
+          JSON.parse(localStorage.user).id +
+          "/" +
+          this.musicListId,
+        false
+      ).then(resp => {
+        //console.log(resp.data.data)
+        this.musicListInfo = resp.data.data;
+
+        if (resp.data.data.isCollected == 1) {
+          this.isCreated = "collected";
         }
-      );
+      });
     },
 
     toUserInfo() {
-      this.$router.push({ name: "user",params:{userId: this.musicListInfo.userid} });
+      this.$router.push({
+        name: "user",
+        params: { userId: this.musicListInfo.userid }
+      });
       this.$store.commit(types.LOAD_Menu_ID, "user");
-    },
+    }
   }
 };
 </script>

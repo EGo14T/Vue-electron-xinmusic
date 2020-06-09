@@ -102,7 +102,7 @@ export default {
         musiclistImg: url
       }).then(resp => {
         if (resp) {
-          this.$message.success({message:'修改封面成功!',duration:1000});
+          this.$message.success({ message: "修改封面成功!", duration: 1000 });
           this.listCover = url;
         }
       });
@@ -110,16 +110,20 @@ export default {
 
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest("/my/musiclistinfo/" + this.musiclistid, false).then(
-        resp => {
-          //console.log(resp.data.data)
-          let listInfo = resp.data.data;
-          this.listCover = listInfo.musiclistImg;
-          this.listInfo.musiclistName = listInfo.musiclistName;
-          this.listInfo.tags = listInfo.tags;
-          this.listInfo.description = listInfo.description;
-        }
-      );
+      this.getRequest(
+        "/my/musiclistinfo/" +
+          JSON.parse(localStorage.user).id +
+          "/" +
+          this.musiclistid,
+        false
+      ).then(resp => {
+        //console.log(resp.data.data)
+        let listInfo = resp.data.data;
+        this.listCover = listInfo.musiclistImg;
+        this.listInfo.musiclistName = listInfo.musiclistName;
+        this.listInfo.tags = listInfo.tags;
+        this.listInfo.description = listInfo.description;
+      });
     },
 
     upload(file, fileList) {
@@ -147,7 +151,7 @@ export default {
         if (resp.data) {
           this.$store.commit(types.RESET_LISTINFO);
           this.toMusicListInfo();
-          this.$message.success({message:'更新信息成功!',duration:1000});
+          this.$message.success({ message: "更新信息成功!", duration: 1000 });
         }
       });
     },
@@ -163,119 +167,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  padding: 20px 25px;
-  margin: 0;
-  .row1 {
-    padding-bottom: 6px;
-    border-bottom: 1px solid #23262c;
-    .title {
-      font-size: 18px;
-      font-weight: 500;
-
-      color: #dcdde4;
-    }
-  }
-
-  .row2 {
-    display: grid;
-    grid-template-columns: 4fr 3fr;
-    height: 350px;
-
-    .editArea {
-      padding-top: 40px;
-      display: grid;
-      grid-template-columns: 1fr 6fr;
-      grid-template-rows: min-content min-content;
-      row-gap: 25px;
-
-      & > div:nth-child(odd) {
-        font-size: 12px;
-        color: #5f5f63;
-      }
-
-      .editInput {
-        background: #25272b;
-        border: none;
-        width: 100%;
-        outline: none;
-        color: #828385;
-        padding-left: 10px;
-        font-size: 12px;
-        &:focus {
-          color: #dcdde4;
-        }
-      }
-
-      .name {
-        height: 25px;
-        width: 420px;
-      }
-
-      .introduce {
-        resize: none;
-        height: 75px;
-      }
-
-      .submit {
-        .btn {
-          font-size: 16px;
-          font-weight: 400;
-          width: 80px;
-          height: 30px;
-          border-radius: 5px;
-          border: 0;
-          padding: 0;
-          margin-top: 60px;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        .save {
-          background: #2e4e7e;
-          color: #ffffff;
-          margin-right: 20px;
-          &:hover {
-            background: #3a6098;
-          }
-        }
-
-        .cancle {
-          background: #25272b;
-          color: #dcdde4;
-          &:hover {
-            background: #2c2e32;
-          }
-        }
-      }
-    }
-
-    .cover {
-      padding-top: 40px;
-      text-align: center;
-      .upload {
-        margin: 15px 0;
-
-        .loadAvatar {
-          font-size: 11px;
-          font-weight: 400;
-          width: 99px;
-          height: 29px;
-          border-radius: 5px;
-          letter-spacing: 1px;
-          border: 0;
-          color: #dcdde4;
-          background: #25272b;
-          cursor: pointer;
-
-          &:hover {
-            color: #e2e2e2;
-            background: #2c2e32;
-          }
-        }
-      }
-    }
-  }
-}
+@import "../assets/css/editListInfo.scss";
 </style>
