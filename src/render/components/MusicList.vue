@@ -208,10 +208,7 @@ export default {
     getMusicInList() {
       if (localStorage.user) {
         let userID = JSON.parse(localStorage.user).id;
-        this.getRequest(
-          "/my/musiclist/" + userID + "/" + this.musicListid,
-          true
-        ).then(resp => {
+        this.getRequest("/my/musiclist/" + this.musicListid,true).then(resp => {
           this.musiclist = resp.data.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
           this.$emit("getNum", resp.data.data.length);
