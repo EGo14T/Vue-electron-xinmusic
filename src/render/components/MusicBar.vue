@@ -37,6 +37,7 @@
 import { mapGetters } from "vuex";
 
 import * as types from "../store/types";
+import * as API from "../api/api"
 
 export default {
   computed: {
@@ -68,7 +69,7 @@ export default {
     //收藏音乐
     like(index) {
       this.postRequest(
-        "/my/song/" + localStorage.defaultMusicListID + "/" + this.musicId,
+        API.SONG_OPERATOR + "/"+ localStorage.defaultMusicListID + "/" + this.musicId,
         true
       ).then(resp => {
         this.$store.commit(types.LIKE_MUSIC, 1);
@@ -78,7 +79,7 @@ export default {
     //取消收藏音乐
     dislike(index) {
       this.delRequest(
-        "/my/song/" + localStorage.defaultMusicListID + "/" + this.musicId,
+        API.SONG_OPERATOR + "/" + localStorage.defaultMusicListID + "/" + this.musicId,
         true
       ).then(resp => {
         this.$store.commit(types.LIKE_MUSIC, 0);

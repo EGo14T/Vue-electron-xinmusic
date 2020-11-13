@@ -132,6 +132,7 @@
 <script>
 //import x from ''
 import * as types from "../store/types";
+import * as API from "../api/api";
 import qs from "qs";
 
 import { mapGetters } from "vuex";
@@ -200,7 +201,7 @@ export default {
       } else {
         //收藏歌单
         this.postRequest(
-          "/my/collect/musiclist/" +
+          API.MUSICLIST_OPERATOR + "/collect" +
             JSON.parse(localStorage.user).id +
             "/" +
             this.musicListId,
@@ -224,7 +225,7 @@ export default {
     cancleCollect() {
       //取消收藏歌单
       this.delRequest(
-        "/my/musiclist/" +
+        API.MUSICLIST_OPERATOR + "/" +
           JSON.parse(localStorage.user).id +
           "/" +
           this.musicListId,
@@ -251,7 +252,7 @@ export default {
     //获取歌单信息
     getMusicListInfo() {
       this.getRequest(
-        "/my/musiclistinfo/" +
+        API.MUSICLISTINFO_OPERATOR +
           JSON.parse(localStorage.user).id +
           "/" +
           this.musicListId,

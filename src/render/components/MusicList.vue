@@ -98,8 +98,8 @@
 
 <script>
 import * as types from "../store/types";
+import * as API from "../api/api"
 import { mapGetters } from "vuex";
-
 import { clipboard } from "electron";
 
 export default {
@@ -189,7 +189,7 @@ export default {
     collectMusicToList(listId) {
       //console.log(listId + "============" + this.contextId);
       this.postRequest(
-        "/my/song/" + listId + "/" + this.contextId,
+        API.SONG_OPERATOR + "/" + listId + "/" + this.contextId,
         true
       ).then(resp => {});
     },
@@ -197,7 +197,7 @@ export default {
     //从歌单中删除歌曲
     delMusicFromList() {
       this.delRequest(
-        "/my/song/" + this.musicListid + "/" + this.contextId,
+        API.SONG_OPERATOR + "/" + this.musicListid + "/" + this.contextId,
         true
       ).then(resp => {
         this.musiclist.splice(this.contextMenuIndex, 1);
@@ -208,13 +208,13 @@ export default {
     getMusicInList() {
       if (localStorage.user) {
         let userID = JSON.parse(localStorage.user).id;
-        this.getRequest("/my/musiclist/" + this.musicListid,true).then(resp => {
+        this.getRequest(API.MUSICLIST_OPERATOR + "/" + this.musicListid,true).then(resp => {
           this.musiclist = resp.data.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
           this.$emit("getNum", resp.data.data.length);
         });
       } else {
-        this.getRequest("/my/musiclist/" + this.musicListid).then(resp => {
+        this.getRequest(API.MUSICLIST_OPERATOR + "/" + this.musicListid).then(resp => {
           this.musiclist = resp.data.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
           this.$emit("getNum", resp.data.data.length);
@@ -226,7 +226,7 @@ export default {
       if (localStorage.user) {
         let userID = JSON.parse(localStorage.user).id;
         this.getRequest(
-          "/search/musiclist/" + userID + "?keyword=" + this.keyword,
+          API.MUSICLIST_OPERATOR + "/search" + userID + "?keyword=" + this.keyword,
           true
         ).then(resp => {
           this.musiclist = resp.data.data;
@@ -254,7 +254,7 @@ export default {
     like(index) {
       this.musiclist[index].collection = 1;
       this.postRequest(
-        "/my/song/" +
+        API.SONG_OPERATOR + "/" +
           localStorage.defaultMusicListID +
           "/" +
           this.musiclist[index].id,
@@ -266,7 +266,7 @@ export default {
     dislike(index) {
       this.musiclist[index].collection = 0;
       this.delRequest(
-        "/my/song/" +
+        API.SONG_OPERATOR + "/" +
           localStorage.defaultMusicListID +
           "/" +
           this.musiclist[index].id,

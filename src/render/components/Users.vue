@@ -102,8 +102,8 @@ export default {
     getMusicList() {
       this.$http
         .all([
-          this.getRequest("/my/create/musiclist/" + this.userId, false),
-          this.getRequest("/my/collect/musiclist/" + this.userId, false)
+          this.getRequest(API.MUSICLIST_OPERATOR + "/create" + this.userId, false),
+          this.getRequest(API.MUSICLIST_OPERATOR + "/collect" + this.userId, false)
         ])
         .then(
           this.$http.spread((createResp, collectResp) => {

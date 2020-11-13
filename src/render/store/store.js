@@ -6,7 +6,6 @@ import Vue from 'vue'
 import * as types from './types'
 
 import { shuffle } from '../utils/shuffle'
-import { stat } from 'fs';
 
 Vue.use(Vuex);
 export default new Vuex.Store({

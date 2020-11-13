@@ -56,6 +56,7 @@ import UploadAvatar from "./UploadAvatar";
 import * as types from "../store/types";
 import { UpyunCloud } from "../plugins/upload";
 import upyunConfig from "../utils/userConfig";
+import * as API from "../api/api";
 
 export default {
   components: {
@@ -98,7 +99,7 @@ export default {
         service.deleteFile(this.uploadURL + delfileName);
       }
 
-      this.patchRequest("/my/musiclist/" + this.musiclistid, true, {
+      this.patchRequest(API.MUSICLIST_OPERATOR + "/" + this.musiclistid, true, {
         musiclistImg: url
       }).then(resp => {
         if (resp) {
@@ -111,7 +112,7 @@ export default {
     //获取歌单信息
     getMusicListInfo() {
       this.getRequest(
-        "/my/musiclistinfo/" +
+        API.MUSICLISTINFO_OPERATOR +
           JSON.parse(localStorage.user).id +
           "/" +
           this.musiclistid,
@@ -144,7 +145,7 @@ export default {
 
     saveInfo() {
       this.patchRequest(
-        "/my/musiclist/" + this.musiclistid,
+        API.MUSICLIST_OPERATOR + "/" + this.musiclistid,
         true,
         this.listInfo
       ).then(resp => {

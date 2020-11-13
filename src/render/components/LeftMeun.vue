@@ -159,6 +159,7 @@
 
 <script>
 import * as types from "../store/types";
+import * as API from "../api/api"
 
 import { mapGetters } from "vuex";
 
@@ -284,7 +285,7 @@ export default {
     //删除歌单
     deleteList() {
       this.delRequest(
-        "/my/musiclist/" + JSON.parse(localStorage.user).id + "/" + this.listID,
+        API.MUSICLIST_OPERATOR + "/" + JSON.parse(localStorage.user).id + "/" + this.listID,
         true
       ).then(resp => {
         this.$store.commit(types.DEL_MUSICLIST, {
@@ -368,11 +369,11 @@ export default {
         this.$http
           .all([
             this.getRequest(
-              "/my/create/musiclist/" + this.$store.state.user.id,
+              API.MUSICLIST_OPERATOR + "/create" + this.$store.state.user.id,
               true
             ),
             this.getRequest(
-              "/my/collect/musiclist/" + this.$store.state.user.id,
+              API.MUSICLIST_OPERATOR + "/collect" + this.$store.state.user.id,
               true
             )
           ])
