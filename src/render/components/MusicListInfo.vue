@@ -107,8 +107,8 @@
       </div>
       <component
         :is="comName"
-        :musicListid="this.musicListId"
-        :itemId="this.musicListId"
+        :musiclistId="this.musiclistId"
+        :itemId="this.musiclistId"
         :isCreated="this.isCreated"
         title="评论"
       ></component>
@@ -130,15 +130,13 @@
 </template>
 
 <script>
-//import x from ''
 import * as types from "../store/types";
-import qs from "qs";
-
 import { mapGetters } from "vuex";
-
 import Comments from "./Comments";
 import MusicList from "./MusicList";
 import Spread from "./Spread/spread";
+import {getMusicListInfo, collectMusicList} from '../api/api'
+import {getCurrentUser} from '../utils/utils'
 
 export default {
   components: {
@@ -150,7 +148,7 @@ export default {
     return {
       comName: "musiclist",
 
-      musicListId: "",
+      musiclistId: "",
 
       isCreated: "",
 
@@ -183,7 +181,7 @@ export default {
   },
   created() {
     let musiclistId = this.$route.params.id;
-    this.musicListId = musiclistId;
+    this.musiclistId = musiclistId;
     this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
     this.$store.commit(types.LOAD_Menu_ID, musiclistId);
@@ -199,16 +197,10 @@ export default {
         this.delDialog = true;
       } else {
         //收藏歌单
-        this.postRequest(
-          "/my/collect/musiclist/" +
-            JSON.parse(localStorage.user).id +
-            "/" +
-            this.musicListId,
-          true
-        ).then(resp => {
-          if (resp.data.data == 1) {
+        var data = [this.musiclistId];
+        collectMusicList(data).then(resp => {
             let newList = {
-              musiclistid: this.musicListId,
+              musiclistId: this.musiclistId,
               musiclistName: this.musicListInfo.musiclistName,
               musiclistImg: this.musicListInfo.musiclistImg,
               status: this.musicListInfo.status,
@@ -216,7 +208,6 @@ export default {
             };
             this.$store.commit(types.COLLECT_MUSICLIST, newList);
             this.isCreated = "collected";
-          }
         });
       }
     },
@@ -227,7 +218,7 @@ export default {
         "/my/musiclist/" +
           JSON.parse(localStorage.user).id +
           "/" +
-          this.musicListId,
+          this.musiclistId,
         true
       ).then(resp => {
         this.isCreated = "unCollected";
@@ -241,26 +232,21 @@ export default {
 
     //编辑歌单
     toEditList() {
-      this.$store.commit(types.LOAD_Menu_ID, this.musicListId);
+      this.$store.commit(types.LOAD_Menu_ID, this.musiclistId);
       this.$router.push({
         name: "editListInfo",
-        params: { isCreated: 'created', id: this.musicListId }
+        params: { isCreated: 'created', id: this.musiclistId }
       });
     },
 
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest(
-        "/my/musiclistinfo/" +
-          JSON.parse(localStorage.user).id +
-          "/" +
-          this.musicListId,
-        false
-      ).then(resp => {
+      var data = [this.musiclistId]
+      getMusicListInfo(data).then(resp => {
         //console.log(resp.data.data)
-        this.musicListInfo = resp.data.data;
+        this.musicListInfo = resp.data;
 
-        if (resp.data.data.isCollected == 1) {
+        if (resp.data.isCollected == 1) {
           this.isCreated = "collected";
         }
       });

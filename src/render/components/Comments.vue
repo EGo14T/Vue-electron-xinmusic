@@ -247,7 +247,6 @@ export default {
     addTarget() {
       this.textarea = this.textarea + "#输入想说的话#";
       var pos = this.textarea.length;
-      //console.log(pos)
       setTimeout(() => {
         this.$refs.inputComment.$refs.textarea.selectionStart = pos - 7;
         this.$refs.inputComment.$refs.textarea.selectionEnd = pos - 1;

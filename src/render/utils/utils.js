@@ -15,3 +15,7 @@ export const getDataName = (arr,key,value,ans) => {
     }
     return ans
 }
+
+export const getCurrentUser = () => {
+  return JSON.parse(localStorage.user)
+}

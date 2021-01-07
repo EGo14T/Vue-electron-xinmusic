@@ -71,7 +71,8 @@
 </template>
 
 <script>
-import { ipcRenderer } from "electron";
+const { ipcRenderer } = window.require('electron');
+
 import { Minimatch } from "minimatch";
 
 import * as types from "../store/types";

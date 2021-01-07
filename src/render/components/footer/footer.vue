@@ -84,7 +84,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { ipcRenderer } from "electron";
+const { ipcRenderer } = window.require('electron');
 
 import timebar from "../footer/timebar";
 import volumebar from "../footer/VolumeProgress";

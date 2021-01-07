@@ -162,7 +162,7 @@ import * as types from "../store/types";
 
 import { mapGetters } from "vuex";
 
-import { clipboard } from "electron";
+const { clipboard } = window.require('electron');
 
 export default {
   data() {

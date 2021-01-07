@@ -19,6 +19,8 @@
 <script>
 import MusicListShow from "./MusicListShow";
 
+import {getDiscoverMusicListInfo} from '../api/api'
+
 export default {
   components: {
     musicListShow: MusicListShow
@@ -36,8 +38,8 @@ export default {
 
   methods: {
     getDiscoverLists() {
-      this.getRequest("/my/discover/musiclist", false).then(resp => {
-        this.list = resp.data.data;
+      getDiscoverMusicListInfo().then(resp => {
+        this.list = resp.data;
       });
     }
   }

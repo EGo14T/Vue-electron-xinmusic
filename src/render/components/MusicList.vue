@@ -16,7 +16,7 @@
         v-contextmenu:contextmenu
         :contextindex="index"
         :contextId="item.id"
-        :contextName="item.name"
+        :contextName="item.musicName"
       >
         <td class="td-number">
           {{ item.id === musicId ? "none": index | musicIndex}}
@@ -54,7 +54,7 @@
             <use xlink:href="#icon-xiazai" />
           </svg>
         </td>
-        <td class="td-name">{{item.name}}</td>
+        <td class="td-name">{{item.musicName}}</td>
         <td class="td-singer">{{item.singer}}</td>
         <td class="td-album">{{item.album}}</td>
         <td class="td-length">{{item.length}}</td>
@@ -84,7 +84,7 @@
         <v-contextmenu-item
           v-for="item in createList"
           :key="item.id"
-          @click="collectMusicToList(item.musiclistid)"
+          @click="collectMusicToList(item.musiclistId)"
         >{{item.musiclistName | overWordNum}}</v-contextmenu-item>
       </v-contextmenu-submenu>
       <v-contextmenu-item v-if="isCreated=='created'" @click="delMusicFromList()">
@@ -99,16 +99,14 @@
 <script>
 import * as types from "../store/types";
 import { mapGetters } from "vuex";
-
-import { clipboard } from "electron";
+import {getUserMusicList} from '../api/api'
+const { clipboard } = window.require('electron');
 
 export default {
-  props: ["musicListid", "isCreated", "keyword"],
-
+  props: ["musiclistId", "isCreated", "keyword"],
   watch: {
     "$store.state.curIndex": function() {
       this.m_cur_play = this.$store.state.curIndex;
-      //console.log(this.m_cur_play);
     }
   },
 
@@ -197,7 +195,7 @@ export default {
     //从歌单中删除歌曲
     delMusicFromList() {
       this.delRequest(
-        "/my/song/" + this.musicListid + "/" + this.contextId,
+        "/my/song/" + this.musiclistId + "/" + this.contextId,
         true
       ).then(resp => {
         this.musiclist.splice(this.contextMenuIndex, 1);
@@ -206,23 +204,12 @@ export default {
 
     //获取歌单中的音乐列表
     getMusicInList() {
-      if (localStorage.user) {
-        let userID = JSON.parse(localStorage.user).id;
-        this.getRequest(
-          "/my/musiclist/" + userID + "/" + this.musicListid,
-          true
-        ).then(resp => {
-          this.musiclist = resp.data.data;
+        var data = [this.musiclistId]
+        getUserMusicList(data).then(resp => {
+          this.musiclist = resp.data;
           this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
-          this.$emit("getNum", resp.data.data.length);
+          this.$emit("getNum", resp.data.length);
         });
-      } else {
-        this.getRequest("/my/musiclist/" + this.musicListid).then(resp => {
-          this.musiclist = resp.data.data;
-          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
-          this.$emit("getNum", resp.data.data.length);
-        });
-      }
     },
 
     searchMusic() {
@@ -258,7 +245,7 @@ export default {
       this.musiclist[index].collection = 1;
       this.postRequest(
         "/my/song/" +
-          localStorage.defaultMusicListID +
+          localStorage.defaultmusiclistId +
           "/" +
           this.musiclist[index].id,
         true
@@ -270,12 +257,12 @@ export default {
       this.musiclist[index].collection = 0;
       this.delRequest(
         "/my/song/" +
-          localStorage.defaultMusicListID +
+          localStorage.defaultmusiclistId +
           "/" +
           this.musiclist[index].id,
         true
       ).then(resp => {
-        if (this.musicListid == localStorage.defaultMusicListID) {
+        if (this.musiclistId == localStorage.defaultmusiclistId) {
           this.musiclist.splice(index, 1);
         }
       });
