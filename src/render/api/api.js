@@ -10,7 +10,7 @@ export const addMusicToList = data => http.postRequest("/music/song", false, dat
 //把歌曲从歌单删除
 export const delMusic = data => http.deleteRequest("/music/song", false, data);
 //检索歌曲
-export const searchMusic = data => http.defaultGet("/song/search", false,data);
+export const searchMusic = data => http.getKvRequest("/music/song/search", false,data);
 
 /**
  * musiclist相关
@@ -23,6 +23,8 @@ export const getCollectMusicListInfo = data => http.getRequest("/musiclist/colle
 export const getDiscoverMusicListInfo = data => http.getRequest("/musiclist/discover", false, data);
 //收藏歌单操作
 export const collectMusicList = data => http.postRequest("/musiclist/collect", false, data);
+//取消收藏歌单操作
+export const unCollectMusicList = data => http.deleteRequest("/musiclist/unCollect", false, data);
 //根据歌单ID查询带状态的歌单歌曲列表
 export const getUserMusicList = data => http.getRequest("/musiclist", false, data);
 //根据歌单id返回歌单详细信息

@@ -135,7 +135,7 @@ import { mapGetters } from "vuex";
 import Comments from "./Comments";
 import MusicList from "./MusicList";
 import Spread from "./Spread/spread";
-import {getMusicListInfo, collectMusicList} from '../api/api'
+import {getMusicListInfo, collectMusicList, unCollectMusicList} from '../api/api'
 import {getCurrentUser} from '../utils/utils'
 
 export default {
@@ -214,13 +214,8 @@ export default {
 
     cancleCollect() {
       //取消收藏歌单
-      this.delRequest(
-        "/my/musiclist/" +
-          JSON.parse(localStorage.user).id +
-          "/" +
-          this.musiclistId,
-        true
-      ).then(resp => {
+      var data = [this.musiclistId];
+      unCollectMusicList(data).then(resp => {
         this.isCreated = "unCollected";
         this.delDialog = false;
         this.$store.commit(types.DEL_MUSICLIST, {
@@ -246,7 +241,7 @@ export default {
         //console.log(resp.data.data)
         this.musicListInfo = resp.data;
 
-        if (resp.data.isCollected == 1) {
+        if (resp.data.collect == 1) {
           this.isCreated = "collected";
         }
       });

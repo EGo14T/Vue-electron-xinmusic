@@ -99,7 +99,7 @@
 <script>
 import * as types from "../store/types";
 import { mapGetters } from "vuex";
-import {getUserMusicList} from '../api/api'
+import {getUserMusicList, searchMusic, addMusicToList, delMusic} from '../api/api'
 const { clipboard } = window.require('electron');
 
 export default {
@@ -183,21 +183,16 @@ export default {
       });
     },
 
-    //收藏歌曲
+    //歌曲添加到歌单中
     collectMusicToList(listId) {
-      //console.log(listId + "============" + this.contextId);
-      this.postRequest(
-        "/my/song/" + listId + "/" + this.contextId,
-        true
-      ).then(resp => {});
+      var data = [listId,this.contextId]
+      addMusicToList(data).then(resp => {});
     },
 
     //从歌单中删除歌曲
     delMusicFromList() {
-      this.delRequest(
-        "/my/song/" + this.musiclistId + "/" + this.contextId,
-        true
-      ).then(resp => {
+      var data = [this.musiclistId, this.contextId]
+      delMusic(data).then(resp => {
         this.musiclist.splice(this.contextMenuIndex, 1);
       });
     },
@@ -213,26 +208,12 @@ export default {
     },
 
     searchMusic() {
-      if (localStorage.user) {
-        let userID = JSON.parse(localStorage.user).id;
-        this.getRequest(
-          "/search/musiclist/" + userID + "?keyword=" + this.keyword,
-          true
-        ).then(resp => {
-          this.musiclist = resp.data.data;
-          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
-          this.$emit("getNum", resp.data.data.length);
-        });
-      } else {
-        this.getRequest(
-          "/search/musiclist?keyword=" + this.keyword,
-          false
-        ).then(resp => {
-          this.musiclist = resp.data.data;
-          this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
-          this.$emit("getNum", resp.data.data.length);
-        });
-      }
+      var data = {keyword: this.keyword}
+      searchMusic(data).then(resp => {
+        this.musiclist = resp.data;
+        this.$store.commit(types.LOAD_SHOW_LIST, this.musiclist);
+        this.$emit("getNum", resp.data.length);
+      });
     },
 
     //双击播放音乐
