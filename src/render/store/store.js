@@ -6,7 +6,6 @@ import Vue from 'vue'
 import * as types from './types'
 
 import { shuffle } from '../utils/shuffle'
-import { stat } from 'fs';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -113,7 +112,7 @@ export default new Vuex.Store({
         //载入当前歌单
         [types.LOAD_LIST]: (state, data) => {
             state.curMusicList = state.showMusicList;
-            state.curMusicId = state.curMusicList[data].id;
+            state.curMusicId = state.curMusicList[data].musicId;
             state.curIndex = data
             state.randomlist = shuffle(state.curMusicList)
         },

@@ -3,20 +3,23 @@ import * as http from "./http"
 /**
  * music相关
  */
-//检索歌曲
+//获取歌曲信息
 export const getMusicInfo = data => http.getRequest("/music/song", false, data);
 //歌曲添加到歌单中
 export const addMusicToList = data => http.postRequest("/music/song", false, data);
 //把歌曲从歌单删除
 export const delMusic = data => http.deleteRequest("/music/song", false, data);
 //检索歌曲
-export const searchMusic = data => http.getKvRequest("/music/song/search", false,data);
-
+export const searchMusic = data => http.getKvRequest("/music/song/search", false, data);
+//喜欢音乐
+export const likeMusic = data => http.postRequest("/music/song/likeMusic", false, data)
+//不喜欢音乐
+export const dislikeMusic = data => http.deleteRequest("/music/song/dislikeMusic", false, data)
 /**
  * musiclist相关
  */
 //检索用户的歌单列表(创建&默认)
-export const getCreateMusicListInfo = data => http.getRequest("/musiclist/created", false ,data);
+export const getCreateMusicListInfo = data => http.getRequest("/musiclist/created", false , data);
 //检索用户的歌单列表(收藏)
 export const getCollectMusicListInfo = data => http.getRequest("/musiclist/collected", false, data);
 //推荐歌单

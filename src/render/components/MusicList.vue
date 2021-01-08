@@ -99,7 +99,14 @@
 <script>
 import * as types from "../store/types";
 import { mapGetters } from "vuex";
-import {getUserMusicList, searchMusic, addMusicToList, delMusic} from '../api/api'
+import {getUserMusicList, 
+        searchMusic, 
+        addMusicToList, 
+        delMusic, 
+        likeMusic, 
+        dislikeMusic
+        } from '../api/api'
+
 const { clipboard } = window.require('electron');
 
 export default {
@@ -224,25 +231,17 @@ export default {
     //收藏音乐
     like(index) {
       this.musiclist[index].collection = 1;
-      this.postRequest(
-        "/my/song/" +
-          localStorage.defaultmusiclistId +
-          "/" +
-          this.musiclist[index].id,
-        true
-      ).then(resp => {});
+      var data = [this.musiclist[index].musicId]
+      likeMusic(data).catch(err => {
+        this.musiclist[index].collection = 0;
+      });
     },
 
     //取消收藏音乐
     dislike(index) {
       this.musiclist[index].collection = 0;
-      this.delRequest(
-        "/my/song/" +
-          localStorage.defaultmusiclistId +
-          "/" +
-          this.musiclist[index].id,
-        true
-      ).then(resp => {
+      var data = [this.musiclist[index].musicId]
+      dislikeMusic(data).then(resp => {
         if (this.musiclistId == localStorage.defaultmusiclistId) {
           this.musiclist.splice(index, 1);
         }

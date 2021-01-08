@@ -3,7 +3,7 @@
     <div class="info">
       <img :src="imgSrc" width="70px" height="70px" draggable="false" />
       <div class="musicInfo">
-        <div class="title">{{musicInfo.name}}</div>
+        <div class="title">{{musicInfo.musicName}}</div>
         <div class="singer">
             <span style="color:#828385">专辑：</span>
             <span style="color:#5f5f63;margin-right:30px;">{{musicInfo.album}}</span>
@@ -18,6 +18,7 @@
 
 <script>
 import Comments from "./Comments";
+import {getMusicInfo} from '../api/api'
 
 export default {
   components: {
@@ -46,7 +47,8 @@ export default {
 
   methods: {
     getMusicInfo() {
-      this.getRequest("/my/song/" + this.musicId).then(resp => {
+      var data = [this.musicId]
+      getMusicInfo(data).then(resp => {
         this.musicInfo = resp.data;
       });
     }

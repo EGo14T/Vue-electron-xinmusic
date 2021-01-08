@@ -94,7 +94,8 @@
 </template>
 
 <script>
-import EmojiPanel from "../components/emoji/EmojiPanel";
+import EmojiPanel from "../components/emoji/EmojiPanel"
+import {getComment} from '../api/api'
 
 export default {
   props: ["itemId", "title"],
@@ -257,9 +258,8 @@ export default {
 
     //获取评论
     getComments() {
-      this.getRequest(
-        "/comments/getComments/" + this.itemId + "/1/10"
-      ).then(resp => {
+      var data = [this.itemId,1,10]
+      getComment().then(resp => {
         //console.log(resp.data);
         for (const iterator of resp.data.data) {
           //console.log(iterator.replyComments.content)
