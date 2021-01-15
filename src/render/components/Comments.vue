@@ -21,15 +21,15 @@
       />
       <div class="media-body">
         <div v-if="item.originComments==null?false:true">
-          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.name }}：</span>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.nickname }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
           <div class="reply">
-            <span class="fromName" @click="toUserInfo(item.originComments.fromId)">@{{ item.originComments.name }}：</span>
+            <span class="fromName" @click="toUserInfo(item.originComments.fromId)">@{{ item.originComments.nickname }}：</span>
             <span class="content" v-html="item.originComments.content"></span>
           </div>
         </div>
         <div v-else>
-          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.name }}：</span>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.nickname }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
         </div>
 
@@ -95,7 +95,7 @@
 
 <script>
 import EmojiPanel from "../components/emoji/EmojiPanel"
-import {getComment} from '../api/api'
+import {getComment, getAllComments, saveComments} from '../api/api'
 
 export default {
   props: ["itemId", "title"],
@@ -259,10 +259,9 @@ export default {
     //获取评论
     getComments() {
       var data = [this.itemId,1,10]
-      getComment().then(resp => {
-        //console.log(resp.data);
-        for (const iterator of resp.data.data) {
-          //console.log(iterator.replyComments.content)
+      getAllComments(data).then(resp => {
+        console.log(resp.data);
+        for (const iterator of resp.data) {
           iterator.replyComments.content = iterator.replyComments.content.replace(
             /\[.*?\]/g,
             this.emoji
@@ -274,7 +273,7 @@ export default {
             );
           }
         }
-        this.comments = resp.data.data;
+        this.comments = resp.data;
       });
     },
 
@@ -289,24 +288,25 @@ export default {
           fromId: JSON.parse(localStorage.user).id,
           toId: this.currentId,
           content: this.textarea
-        };
-        this.postRequest("/comments/saveComments", true, commentJson).then(
-          resp => {
-            //this.comments.push(this.content.replace(/:.*?:/g, this.emoji)); // 替换":"符号包含的字符串,通过emoji方法生成表情<span></span>
+        }
+        saveComments(commentJson).then(resp => {
+          var data = [resp.data]
+          getComment(data).then(resp => {
+             //this.comments.push(this.content.replace(/:.*?:/g, this.emoji)); // 替换":"符号包含的字符串,通过emoji方法生成表情<span></span>
             //console.log(resp.data.replyComments.content);
-            resp.data.data.replyComments.content = resp.data.data.replyComments.content.replace(
+            resp.data.replyComments.content = resp.data.replyComments.content.replace(
               /\[.*?\]/g,
               this.emoji
             );
-            if (resp.data.data.originComments != null) {
-              resp.data.data.originComments.content = resp.data.data.originComments.content.replace(
+            if (resp.data.originComments != null) {
+              resp.data.originComments.content = resp.data.originComments.content.replace(
                 /\[.*?\]/g,
                 this.emoji
               );
             }
-            this.comments.unshift(resp.data.data);
-            //console.log(resp.data.data.replyComments)
+            this.comments.unshift(resp.data);
             this.dialogVisible = false;
+          })
           }
         );
       }

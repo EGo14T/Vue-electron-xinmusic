@@ -85,10 +85,7 @@ export function postKvRequest(url, isToken ,params) {
 
 export function postForJson(url, isToken ,params) {
     return new Promise((resolve, reject) =>{
-        axios.post(url, {
-            isToken: isToken,
-            data: params
-            }).then(res => {
+        axios.post(url,params,{isToken:isToken}).then(res => {
                 resolve(res.data)
             }).catch(err => {
                 reject(err.data)
@@ -110,10 +107,7 @@ export function patchRequest(url, isToken ,params) {
 
 export function patchForJson(url, isToken ,params) {
     return new Promise((resolve, reject) =>{
-        axios.patch(url, {
-            isToken: isToken,
-            data: params
-            }).then(res => {
+        axios.patch(url,params,{isToken: isToken}).then(res => {
                 resolve(res.data)
             }).catch(err => {
                 reject(err.data)
