@@ -61,9 +61,7 @@ export function getKvRequest(url, isToken ,params) {
 
 export function postRequest(url, isToken ,params) {
     return new Promise((resolve, reject) =>{
-        axios.post(getRestfulParams(url, params), {
-            isToken: isToken
-            }).then(res => {
+        axios.post(getRestfulParams(url, params), null, {isToken: isToken}).then(res => {
                 resolve(res.data)
             }).catch(err => {
                 reject(err.data)
@@ -120,6 +118,17 @@ export function deleteRequest(url, isToken ,params) {
         axios.delete(getRestfulParams(url, params), {
             isToken: isToken
             }).then(res => {
+                resolve(res.data)
+            }).catch(err => {
+                reject(err.data)
+        })
+    });
+}
+
+export function login(url, params) {
+    return new Promise((resolve, reject) =>{
+        axios.post(getKvParam(url, params),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+        .then(res => {
                 resolve(res.data)
             }).catch(err => {
                 reject(err.data)

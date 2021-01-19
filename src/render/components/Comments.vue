@@ -260,20 +260,21 @@ export default {
     getComments() {
       var data = [this.itemId,1,10]
       getAllComments(data).then(resp => {
-        console.log(resp.data);
-        for (const iterator of resp.data) {
-          iterator.replyComments.content = iterator.replyComments.content.replace(
-            /\[.*?\]/g,
-            this.emoji
-          );
-          if (iterator.originComments !== null) {
-            iterator.originComments.content = iterator.originComments.content.replace(
+        if(resp.data != null){
+          for (const iterator of resp.data) {
+            iterator.replyComments.content = iterator.replyComments.content.replace(
               /\[.*?\]/g,
               this.emoji
             );
+            if (iterator.originComments !== null) {
+              iterator.originComments.content = iterator.originComments.content.replace(
+                /\[.*?\]/g,
+                this.emoji
+              );
+            }
           }
+          this.comments = resp.data;
         }
-        this.comments = resp.data;
       });
     },
 

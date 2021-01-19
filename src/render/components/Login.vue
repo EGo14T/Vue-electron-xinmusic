@@ -46,6 +46,7 @@
 
 <script>
 import * as types from "../store/types";
+import {login} from "../api/api"
 
 export default {
   props: ["visible"],
@@ -90,9 +91,9 @@ export default {
         client_id: "client",
         client_secret: "secret"
       };
-      this.oauthRequest("/oauth/token", json).then(resp => {
+      login(json).then(resp => {
         if (resp) {
-          this.$store.commit(types.LOGIN, resp.data);
+          this.$store.commit(types.LOGIN, resp);
           this.close();
         }
       });

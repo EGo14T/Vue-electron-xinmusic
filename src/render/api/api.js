@@ -48,3 +48,8 @@ export const saveComments = data => http.postForJson("/comments/saveComments", f
 export const getComment = data => http.getRequest("/comments/getComment", false, data);
 //获取资源评论
 export const getAllComments = data => http.getRequest("/comments/getAllComments", false, data);
+
+/**
+ * 登录
+ */
+export const login = data => http.login("/oauth/token",data);

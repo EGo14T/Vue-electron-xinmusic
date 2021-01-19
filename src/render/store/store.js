@@ -54,7 +54,7 @@ export default new Vuex.Store({
     mutations: {
         //登录
         [types.LOGIN]: (state, data) => {
-
+            console.log(data)
             localStorage.user = JSON.stringify(data.user);
             localStorage.accessToken = data.access_token;
             localStorage.refreshToken = data.refresh_token;
