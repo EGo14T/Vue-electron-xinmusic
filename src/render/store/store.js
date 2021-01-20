@@ -82,7 +82,7 @@ export default new Vuex.Store({
 
         //获取用户默认歌单ID （我喜欢的音乐 的 歌单ID）
         [types.SET_DEFAULT_LIST]: (state, data) => {
-            state.defaultMusicListID = data.create[0]?.musiclistid;
+            state.defaultMusicListID = data.create[0]?.musiclistId;
             state.createMusicList = data.create;
             state.collectMusicList = data.collect;
 

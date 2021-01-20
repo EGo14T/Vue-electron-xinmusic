@@ -76,17 +76,17 @@
           </div>
 
           <div
-            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
+            :class="['nav-citem' ,menuId==item.musiclistId?'nav-active':(contextMenuId==item.musiclistId?'nav-active':'')]"
             v-for="(item,index) in showCreateList"
-            :key="item.musiclistid"
+            :key="item.musiclistId"
             v-contextmenu:lcontextmenu
-            :contextId="item.musiclistid"
+            :contextId="item.musiclistId"
             :contextIndex="index"
-            :listID="item.musiclistid"
+            :listID="item.musiclistId"
             :listName="item.musiclistName"
             contextType="created"
             :contextStatus="item.status"
-            @click.stop="toMusciList(item.musiclistid,'created')"
+            @click.stop="toMusciList(item.musiclistId,'created')"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
@@ -104,16 +104,16 @@
           </div>
 
           <div
-            :class="['nav-citem' ,menuId==item.musiclistid?'nav-active':(contextMenuId==item.musiclistid?'nav-active':'')]"
+            :class="['nav-citem' ,menuId==item.musiclistId?'nav-active':(contextMenuId==item.musiclistId?'nav-active':'')]"
             v-for="(item,index) in showCollectionList"
             v-contextmenu:lcontextmenu
-            :contextId="item.musiclistid"
+            :contextId="item.musiclistId"
             :contextIndex="index"
-            :listID="item.musiclistid"
+            :listID="item.musiclistId"
             :listName="item.musiclistName"
             contextType="collected"
             :contextStatus="item.status"
-            @click="toMusciList(item.musiclistid,'collected')"
+            @click="toMusciList(item.musiclistId,'collected')"
           >
             <svg class="icon svg-icon leftbtn" aria-hidden="true">
               <use :xlink:href="addclass(item.status)" />
@@ -163,6 +163,8 @@ import * as types from "../store/types";
 import { mapGetters } from "vuex";
 
 const { clipboard } = window.require('electron');
+
+import {getCreateMusicListInfo, getCollectMusicListInfo} from "../api/api"
 
 export default {
   data() {
@@ -313,6 +315,7 @@ export default {
 
     //跳转到歌单
     toMusciList(musiclistid, isCreated) {
+      console.log(musiclistid)
       this.$refs.lcontextmenu.hide();
       this.$store.commit(types.LOAD_Menu_ID, musiclistid);
       this.contextMenuId = "unActive";
@@ -364,23 +367,18 @@ export default {
 
     //获取创建歌单列表
     getMusicList() {
+      var userid = [this.$store.state.user.userid]
       if (localStorage.user) {
         this.$http
           .all([
-            this.getRequest(
-              "/my/create/musiclist/" + this.$store.state.user.id,
-              true
-            ),
-            this.getRequest(
-              "/my/collect/musiclist/" + this.$store.state.user.id,
-              true
-            )
+            getCreateMusicListInfo(userid),
+            getCollectMusicListInfo(userid)
           ])
           .then(
             this.$http.spread((createResp, collectResp) => {
               this.$store.commit(types.SET_DEFAULT_LIST, {
-                create: createResp.data.data,
-                collect: collectResp.data.data
+                create: createResp.data,
+                collect: collectResp.data
               });
             })
           );
