@@ -44,7 +44,7 @@
       title="上传封面"
       :imgSize="imgSize"
       :cdnPath="cdnPath"
-      :fileNo="musiclistid+'cover'"
+      :fileNo="musiclistId+'cover'"
       :uploadURL="uploadURL"
       @saveClose="saveClose"
     ></uploadAvatar>
@@ -57,25 +57,28 @@ import * as types from "../store/types";
 import { UpyunCloud } from "../plugins/upload";
 import upyunConfig from "../utils/userConfig";
 
+import {getMusicListInfo, updateMusiclist} from '../api/api'
+
 export default {
   components: {
     uploadAvatar: UploadAvatar
   },
 
   created() {
-    this.musiclistid = this.$route.params.id;
+    this.musiclistId = this.$route.params.id;
     this.isCreated = this.$route.params.isCreated;
     this.getMusicListInfo();
   },
 
   data() {
     return {
-      musiclistid: "",
+      musiclistId: "",
       isCreated: "",
 
       listCover: "",
 
       listInfo: {
+        musiclistId: "",
         musiclistName: "",
         tags: "",
         description: ""
@@ -98,9 +101,11 @@ export default {
         service.deleteFile(this.uploadURL + delfileName);
       }
 
-      this.patchRequest("/my/musiclist/" + this.musiclistid, true, {
-        musiclistImg: url
-      }).then(resp => {
+      var data = {
+        "musiclistId": this.musiclistId,
+        "musiclistImg": url
+      }
+      updateMusiclist(data).then(resp => {
         if (resp) {
           this.$message.success({ message: "修改封面成功!", duration: 1000 });
           this.listCover = url;
@@ -110,17 +115,13 @@ export default {
 
     //获取歌单信息
     getMusicListInfo() {
-      this.getRequest(
-        "/my/musiclistinfo/" +
-          JSON.parse(localStorage.user).id +
-          "/" +
-          this.musiclistid,
-        false
-      ).then(resp => {
+      var data = [this.musiclistId]
+      getMusicListInfo(data).then(resp => {
         //console.log(resp.data.data)
-        let listInfo = resp.data.data;
+        let listInfo = resp.data;
         this.listCover = listInfo.musiclistImg;
         this.listInfo.musiclistName = listInfo.musiclistName;
+        this.listInfo.musiclistId = listInfo.musiclistId;
         this.listInfo.tags = listInfo.tags;
         this.listInfo.description = listInfo.description;
       });
@@ -143,12 +144,8 @@ export default {
     },
 
     saveInfo() {
-      this.patchRequest(
-        "/my/musiclist/" + this.musiclistid,
-        true,
-        this.listInfo
-      ).then(resp => {
-        if (resp.data) {
+      updateMusiclist(this.listInfo).then(resp => {
+        if (resp) {
           this.$store.commit(types.RESET_LISTINFO);
           this.toMusicListInfo();
           this.$message.success({ message: "更新信息成功!", duration: 1000 });
@@ -159,7 +156,7 @@ export default {
     toMusicListInfo() {
       this.$router.push({
         name: "musiclstinfo",
-        params: { isCreated: this.isCreated, id: this.musiclistid }
+        params: { isCreated: this.isCreated, id: this.musiclistId }
       });
     }
   }

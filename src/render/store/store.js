@@ -54,7 +54,6 @@ export default new Vuex.Store({
     mutations: {
         //登录
         [types.LOGIN]: (state, data) => {
-            console.log(data)
             localStorage.user = JSON.stringify(data.user);
             localStorage.accessToken = data.access_token;
             localStorage.refreshToken = data.refresh_token;
@@ -85,8 +84,6 @@ export default new Vuex.Store({
             state.defaultMusicListID = data.create[0]?.musiclistId;
             state.createMusicList = data.create;
             state.collectMusicList = data.collect;
-
-            //console.log(state.createMusicList)
             localStorage.defaultMusicListID = state.defaultMusicListID;
         },
 
@@ -124,6 +121,7 @@ export default new Vuex.Store({
 
         //创建歌单
         [types.CREATE_MUSICLIST]: (state, data) => {
+            console.log(data)
             state.createMusicList.splice(1, 0, data);
         },
 
@@ -279,7 +277,7 @@ export default new Vuex.Store({
         },
 
         get_user_id: state => {
-            return state.user.id;
+            return state.user.userid;
         }
 
 

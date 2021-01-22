@@ -38,6 +38,8 @@ import { mapGetters } from "vuex";
 
 import * as types from "../store/types";
 
+import {likeMusic, dislikeMusic} from '../api/api'
+
 export default {
   computed: {
     ...mapGetters({
@@ -66,21 +68,17 @@ export default {
     },
 
     //收藏音乐
-    like(index) {
-      this.postRequest(
-        "/my/song/" + localStorage.defaultMusicListID + "/" + this.musicId,
-        true
-      ).then(resp => {
+    like() {
+      var data = [this.musicId]
+      likeMusic(data).then(resp => {
         this.$store.commit(types.LIKE_MUSIC, 1);
       });
     },
 
     //取消收藏音乐
-    dislike(index) {
-      this.delRequest(
-        "/my/song/" + localStorage.defaultMusicListID + "/" + this.musicId,
-        true
-      ).then(resp => {
+    dislike() {
+      var data = [this.musicId];
+      dislikeMusic(data).then(resp => {
         this.$store.commit(types.LIKE_MUSIC, 0);
       });
     }

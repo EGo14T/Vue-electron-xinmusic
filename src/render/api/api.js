@@ -50,6 +50,11 @@ export const getComment = data => http.getRequest("/comments/getComment", false,
 export const getAllComments = data => http.getRequest("/comments/getAllComments", false, data);
 
 /**
+ * 用户相关
+ */
+export const getUserInfo = data => http.getRequest("/users/userinfo", false, data);
+
+/**
  * 登录
  */
 export const login = data => http.login("/oauth/token",data);

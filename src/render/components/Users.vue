@@ -8,7 +8,7 @@
 
       <div class="info">
         <div class="userName">
-          <h2>{{userInfo.name}}</h2>
+          <h2>{{userInfo.nickname}}</h2>
           <div class="editInfo" v-if="isSelf">
             <button class="editInfoBtn" @click="toComponents('editUsers')">编辑个人信息</button>
           </div>
@@ -44,6 +44,8 @@ import * as types from "../store/types";
 import { mapGetters } from "vuex";
 
 import MusicListShow from "./MusicListShow";
+
+import {getCreateMusicListInfo, getCollectMusicListInfo, getUserInfo} from "../api/api"
 
 export default {
   props: ["userId"],
@@ -87,8 +89,9 @@ export default {
   methods: {
     getUserInfo() {
       if (localStorage.user) {
-        this.getRequest("/users/UserInfo/" + this.userId, true).then(resp => {
-          this.userInfo = resp.data.data;
+        var data = [this.userId]
+        getUserInfo(data).then(resp => {
+          this.userInfo = resp.data;
           this.isFinish = true;
         });
       }
@@ -100,15 +103,16 @@ export default {
     },
 
     getMusicList() {
+      var data = [this.userId];
       this.$http
         .all([
-          this.getRequest("/my/create/musiclist/" + this.userId, false),
-          this.getRequest("/my/collect/musiclist/" + this.userId, false)
+          getCreateMusicListInfo(data),
+          getCollectMusicListInfo(data)
         ])
         .then(
           this.$http.spread((createResp, collectResp) => {
-            this.createList = createResp.data.data;
-            this.collectList = collectResp.data.data;
+            this.createList = createResp.data;
+            this.collectList = collectResp.data;
           })
         );
     }

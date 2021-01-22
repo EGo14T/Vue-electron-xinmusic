@@ -2,13 +2,24 @@ import Upyun from 'upyun'
 
 export class UpyunCloud {
     constructor(options) {
-        let service = new Upyun.Service(
-            options.serviceName,
-            options.operatorName,
-            options.operatorPassword
-        );
-        this.upyun = new Upyun.Client(service);
+        const bucket = new Upyun.Service(options.serviceName,options.operatorName,options.operatorPassword)
+        this.upyun = new Upyun.Client(bucket, function (bucket, method, path) {
+            const params = {
+                bucket: bucket.bucketName,
+                method,
+                path
+            }
+            return signHeader(params);
+        });
+
         this.options = options;
+
+        function signHeader(payload) {
+            const bucket = new Upyun.Service(options.serviceName,options.operatorName,options.operatorPassword)
+            const headSign = Upyun.sign.getHeaderSign(bucket, payload.method, payload.path, payload.contentMD5)
+            return headSign
+        }
+    
     }
 
     async upload(path, content) {

@@ -16,17 +16,26 @@ let tray
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'xinmusic', privileges: { secure: true, standard: true } }])
 
+// electron打开本地图片时，替换file:///
+app.whenReady().then(() => {
+  protocol.registerFileProtocol('file', (request, callback) => {
+    const pathname = request.url.replace('file:///', '');
+    callback(pathname);
+  });
+});
+
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ 
-    width: 1060, 
+    width: 1080, 
     height: 670, 
     resizable: true,
     skipTaskbar: false,
-    frame: true,
+    frame: false,
     backgroundColor: '#2e2c29',
     webPreferences: {
     nodeIntegration: true,
+    nodeIntegrationInWorker: true,
     webSecurity: false
   } })
 

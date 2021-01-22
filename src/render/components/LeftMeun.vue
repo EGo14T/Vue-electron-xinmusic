@@ -164,7 +164,10 @@ import { mapGetters } from "vuex";
 
 const { clipboard } = window.require('electron');
 
-import {getCreateMusicListInfo, getCollectMusicListInfo} from "../api/api"
+import {getCreateMusicListInfo, 
+        getCollectMusicListInfo,
+        createMusicList,
+        delMusiclist} from "../api/api"
 
 export default {
   data() {
@@ -285,10 +288,8 @@ export default {
 
     //删除歌单
     deleteList() {
-      this.delRequest(
-        "/my/musiclist/" + JSON.parse(localStorage.user).id + "/" + this.listID,
-        true
-      ).then(resp => {
+      var data = ['created',this.listID]
+      delMusiclist(data).then(resp => {
         this.$store.commit(types.DEL_MUSICLIST, {
           index: this.contextIndex,
           type: this.contextType
@@ -299,14 +300,14 @@ export default {
           this.toMusciList(
             this.createList[
               this.contextIndex - 1 < 0 ? 0 : this.contextIndex - 1
-            ].musiclistid,
+            ].musiclistId,
             this.contextType
           );
         } else {
           this.toMusciList(
             this.collectList[
               this.contextIndex - 1 < 0 ? 0 : this.contextIndex - 1
-            ].musiclistid,
+            ].musiclistId,
             this.contextType
           );
         }
@@ -353,15 +354,15 @@ export default {
         status: ishide
       };
 
-      this.postRequest("/my/musiclist", true, json).then(resp => {
+      createMusicList(json).then(resp => {
         let newList = {
-          musiclistid: resp.data.data,
+          musiclistId: resp.data,
           musiclistName: this.new_title,
           status: ishide
         };
         this.$store.commit(types.CREATE_MUSICLIST, newList);
         this.visible = false;
-        this.toMusciList(resp.data.data, "created");
+        this.toMusciList(resp.data, "created");
       });
     },
 

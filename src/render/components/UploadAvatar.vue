@@ -121,19 +121,7 @@ export default {
       avatarURL: "get_avatar_url"
     })
   },
-
-  created() {
-    console.log(
-      this.imgSize +
-        "---" +
-        this.cdnPath +
-        "----" +
-        this.fileNo +
-        "-----" +
-        this.uploadURL
-    );
-  },
-
+  
   data() {
     return {
       option: {

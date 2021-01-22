@@ -32,7 +32,7 @@
         draggable="false"
         @click="toUserInfo"
       />
-      <span  class="userName" @click.prevent= "showUserPop = !showUserPop">{{this.$store.state.user.name}}</span>
+      <span  class="userName" @click.prevent= "showUserPop = !showUserPop">{{this.$store.state.user.nickname}}</span>
       <div class="userPop" v-if="showUserPop">
         <div class="u_Pop_item" @click="toEditUserInfo">
           编辑个人信息
