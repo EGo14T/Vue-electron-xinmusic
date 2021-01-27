@@ -242,7 +242,7 @@ export default {
       this.musiclist[index].collection = 0;
       var data = [this.musiclist[index].musicId]
       dislikeMusic(data).then(resp => {
-        if (this.musiclistId == localStorage.defaultmusiclistId) {
+        if (this.musiclistId == localStorage.defaultMusicListID) {
           this.musiclist.splice(index, 1);
         }
       });

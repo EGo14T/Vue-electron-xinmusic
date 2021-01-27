@@ -17,19 +17,19 @@
         :src="item.replyComments.avatar"
         width="36"
         height="36"
-        @click="toUserInfo(item.replyComments.fromId)"
+        @click="toUserInfo(item.replyComments.fromUserId)"
       />
       <div class="media-body">
         <div v-if="item.originComments==null?false:true">
-          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.nickname }}：</span>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromUserId)">{{ item.replyComments.nickname }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
           <div class="reply">
-            <span class="fromName" @click="toUserInfo(item.originComments.fromId)">@{{ item.originComments.nickname }}：</span>
+            <span class="fromName" @click="toUserInfo(item.originComments.fromUserId)">@{{ item.originComments.nickname }}：</span>
             <span class="content" v-html="item.originComments.content"></span>
           </div>
         </div>
         <div v-else>
-          <span class="fromName" @click="toUserInfo(item.replyComments.fromId)">{{ item.replyComments.nickname }}：</span>
+          <span class="fromName" @click="toUserInfo(item.replyComments.fromUserId)">{{ item.replyComments.nickname }}：</span>
           <span class="content" v-html="item.replyComments.content"></span>
         </div>
 
@@ -205,6 +205,7 @@ export default {
     },
 
     toUserInfo(id) {
+      console.log(id)
       this.$router.push({ name: "user",params:{userId: id} });
     },
 
@@ -286,7 +287,7 @@ export default {
       } else {
         let commentJson = {
           showId: this.itemId?this.itemId:'friends',
-          fromId: JSON.parse(localStorage.user).id,
+          fromUserId: JSON.parse(localStorage.user).id,
           toId: this.currentId,
           content: this.textarea
         }

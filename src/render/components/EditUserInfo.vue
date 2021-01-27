@@ -7,7 +7,7 @@
       <div class="editArea">
         <div>昵称：</div>
         <div>
-          <input type="text" class="editInput name" v-model="userInfo.name" />
+          <input type="text" class="editInput name" v-model="userInfo.nickname" />
         </div>
         <div>介绍：</div>
         <div>
@@ -237,7 +237,7 @@ export default {
 
       userInfo: {
         id: "",
-        name: "",
+        nickname: "",
         gender: "", //性别 0保密 1男 2女
         introduce: "",
         birth: "",
@@ -287,7 +287,7 @@ export default {
 
       //id 昵称 介绍 性别
       this.userInfo.id = userInfo.id;
-      this.userInfo.name = userInfo.name;
+      this.userInfo.nickname = userInfo.nickname;
       this.userInfo.introduce = userInfo.introduce;
       this.userInfo.gender = userInfo.gender;
       //出生年月日
@@ -387,7 +387,7 @@ export default {
       this.userInfo.area = this.u_province + this.u_city;
       this.patchRequest("/users/UserInfo", true, this.userInfo).then(resp => {
         if (resp.data) {
-          this.$store.commit(types.SET_USERINFO, resp.data.data);
+          this.$store.commit(types.SET_USERINFO, resp.data);
           this.$message.success({message:'更新信息成功！',duration:1000});
           this.$router.push({ name: "user",params:{userId: this.userid} });
         }
