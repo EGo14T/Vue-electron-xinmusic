@@ -4,7 +4,7 @@
       <img :src="imgSrc" width="45px" height="45px" draggable="false" />
     </div>
     <div class="musicInfo">
-      <div class="musicTitle">{{musicInfo.name}}</div>
+      <div class="musicTitle">{{musicInfo.musicName}}</div>
       <div class="album">{{musicInfo.singer}}</div>
     </div>
     <div class="musicFunc">

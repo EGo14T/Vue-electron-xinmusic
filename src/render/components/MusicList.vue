@@ -15,7 +15,7 @@
         @dblclick="playMusic(index)"
         v-contextmenu:contextmenu
         :contextindex="index"
-        :contextId="item.id"
+        :contextId="item.musicId"
         :contextName="item.musicName"
       >
         <td class="td-number">
@@ -198,6 +198,7 @@ export default {
 
     //从歌单中删除歌曲
     delMusicFromList() {
+      console.log(this.contextId)
       var data = [this.musiclistId, this.contextId]
       delMusic(data).then(resp => {
         this.musiclist.splice(this.contextMenuIndex, 1);

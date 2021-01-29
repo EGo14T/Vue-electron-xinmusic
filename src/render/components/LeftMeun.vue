@@ -316,7 +316,6 @@ export default {
 
     //跳转到歌单
     toMusciList(musiclistid, isCreated) {
-      console.log(musiclistid)
       this.$refs.lcontextmenu.hide();
       this.$store.commit(types.LOAD_Menu_ID, musiclistid);
       this.contextMenuId = "unActive";

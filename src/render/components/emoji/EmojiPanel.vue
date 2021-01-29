@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     handleEmojiClick(CN,EN) {
-      console.log(CN,EN);
       this.$emit("emojiClick", CN,EN);
     }
   }

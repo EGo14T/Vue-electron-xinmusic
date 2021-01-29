@@ -14,7 +14,6 @@ export default {
   props: ["EN", "CN", "isInput"],
   methods: {
     emojiClick() {
-      console.log(this.EN);
       this.$emit("onClick", this.CN,this.EN);
     }
   }

@@ -144,7 +144,7 @@ export default {
         };
         login(json).then(resp => {
           //console.log(resp.data.user);
-          this.$store.commit(types.LOGIN, resp.data);
+          this.$store.commit(types.LOGIN, resp);
         });
       } else {
       }

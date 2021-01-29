@@ -388,16 +388,19 @@ export default {
       this.userInfo.birth = this.u_year + "-" + month + "-" + day;
       this.userInfo.area = this.u_province + this.u_city;
       updateUserInfo(this.userInfo).then(resp => {
-        if (resp.data) {
+        this.$message.success({message:'更新信息成功！',duration:1000});
+        getUserInfo([this.userid]).then(resp => {
           this.$store.commit(types.SET_USERINFO, resp.data);
-          this.$message.success({message:'更新信息成功！',duration:1000});
-          this.$router.push({ name: "user",params:{userId: this.userid} });
-        }
+        })
+        this.$router.push({ name: "user",params:{userId: this.userid} });
       });
     },
 
     cancleEdit() {
-      this.$router.push({ name: "user",params:{userId: this.userid} });
+      this.$router.push({ 
+        name: "user",
+        params:{userId: this.userid} 
+      });
     }
   }
 };

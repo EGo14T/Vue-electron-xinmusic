@@ -205,7 +205,6 @@ export default {
     },
 
     toUserInfo(id) {
-      console.log(id)
       this.$router.push({ name: "user",params:{userId: id} });
     },
 
