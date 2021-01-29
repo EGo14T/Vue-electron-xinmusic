@@ -10,7 +10,6 @@ axios.defaults.timeout = 30000;
 
 //post请求的默认请求头
 axios.defaults.headers.post['Content-Type'] ='application/json';
-axios.defaults.headers['userId'] = '1';
 
 //request拦截
 axios.interceptors.request.use(config => {
