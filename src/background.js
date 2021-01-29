@@ -19,7 +19,7 @@ protocol.registerSchemesAsPrivileged([{scheme: 'xinmusic', privileges: { secure:
 // electron打开本地图片时，替换file:///
 app.whenReady().then(() => {
   protocol.registerFileProtocol('file', (request, callback) => {
-    const pathname = request.url.replace('file:///', '');
+    const pathname = decodeURI(request.url.replace('file:///', ''));
     callback(pathname);
   });
 });

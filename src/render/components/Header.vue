@@ -73,13 +73,13 @@
 <script>
 const { ipcRenderer } = window.require('electron');
 
-import { Minimatch } from "minimatch";
-
 import * as types from "../store/types";
 
 import Login from "./Login";
 
 import { mapGetters } from "vuex";
+
+import {login} from "../api/api"
 
 export default {
   components: {
@@ -142,7 +142,7 @@ export default {
           client_secret: "secret",
           refresh_token: localStorage.refreshToken
         };
-        this.oauthRequest("/oauth/token", json).then(resp => {
+        login(json).then(resp => {
           //console.log(resp.data.user);
           this.$store.commit(types.LOGIN, resp.data);
         });

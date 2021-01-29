@@ -52,7 +52,12 @@ export const getAllComments = data => http.getRequest("/comments/getAllComments"
 /**
  * 用户相关
  */
+//获取用户信息
 export const getUserInfo = data => http.getRequest("/users/userinfo", false, data);
+//修改用户信息
+export const updateUserInfo = data => http.patchForJson("/users/userinfo", false, data);
+//注册
+export const register = data => http.postForJson("/users/register", false, data);
 
 /**
  * 登录

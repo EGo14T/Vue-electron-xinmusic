@@ -123,7 +123,7 @@
       title="上传头像"
       :imgSize="imgSize"
       :cdnPath="cdnPath"
-      :fileNo="userInfo.id+'avatar'"
+      :fileNo="userInfo.userid+'avatar'"
       :uploadURL="uploadURL"
       @saveClose="saveClose"
     ></uploadAvatar>
@@ -141,6 +141,8 @@ import { UpyunCloud } from "../plugins/upload";
 import upyunConfig from "../utils/userConfig";
 
 import { mapGetters } from "vuex";
+
+import { getUserInfo, updateUserInfo, register } from "../api/api"
 
 export default {
   components: {
@@ -236,7 +238,7 @@ export default {
       u_city: "",
 
       userInfo: {
-        id: "",
+        userid: "",
         nickname: "",
         gender: "", //性别 0保密 1男 2女
         introduce: "",
@@ -271,10 +273,10 @@ export default {
 
     updateAvatar() {
       var json = {
-        id: this.userid,
+        userid: this.userid,
         avatar: this.avatarURL
       };
-      this.patchRequest("/users/UserInfo", true, json).then(resp => {
+      updateUserInfo(json).then(resp => {
         this.$message.success({message:'更新头像成功！',duration:1000});
         
       });
@@ -286,7 +288,7 @@ export default {
       var areaReg = /新疆|宁夏|西藏|.+?(省|市|澳门|区|县|盟|自治州)|香港|澳门/g;
 
       //id 昵称 介绍 性别
-      this.userInfo.id = userInfo.id;
+      this.userInfo.userid = userInfo.userid;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.introduce = userInfo.introduce;
       this.userInfo.gender = userInfo.gender;
@@ -380,12 +382,12 @@ export default {
     },
 
     saveInfo() {
-      this.userInfo.id = this.userid;
+      this.userInfo.userid = this.userid;
       let month = this.u_month < 10 ? "0" + this.u_month : this.u_month;
       let day = this.u_day < 10 ? "0" + this.u_day : this.u_day;
       this.userInfo.birth = this.u_year + "-" + month + "-" + day;
       this.userInfo.area = this.u_province + this.u_city;
-      this.patchRequest("/users/UserInfo", true, this.userInfo).then(resp => {
+      updateUserInfo(this.userInfo).then(resp => {
         if (resp.data) {
           this.$store.commit(types.SET_USERINFO, resp.data);
           this.$message.success({message:'更新信息成功！',duration:1000});
