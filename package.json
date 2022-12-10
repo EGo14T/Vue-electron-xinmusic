@@ -20,7 +20,7 @@
     "less": "^4.0.0",
     "less-loader": "^7.2.1",
     "node-sass": "^5.0.0",
-    "qs": "^6.9.3",
+    "qs": "^6.9.7",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "upyun": "^3.4.2",
